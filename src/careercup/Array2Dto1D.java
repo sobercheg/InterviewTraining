@@ -26,12 +26,14 @@ public class Array2Dto1D {
         for (int row = rowIndex[column]; row < array2D[column].length; row++) {
             int value = array2D[column][row];
             // try the next column if it exists and if it's next value is less than the next value of the current column
-            boolean tryNextColumn = column < array2D.length - 1 && value > array2D[column + 1][rowIndex[column + 1]];
+            boolean tryNextColumn = column < array2D.length - 1
+                    && rowIndex[column + 1] < array2D[column + 1].length
+                    && value > array2D[column + 1][rowIndex[column + 1]];
             if (tryNextColumn) {
                 array1DNextIndex = convertInternal(array2D, rowIndex, column + 1, array1D, array1DNextIndex, value);
             }
             // cannot process remaining elements in the column until elements in previous columns are not processed
-            if (value > limit) return array1DNextIndex;
+            if (value >= limit) return array1DNextIndex;
             rowIndex[column] = row + 1;
             array1D[array1DNextIndex++] = value;
         }
@@ -51,6 +53,17 @@ public class Array2Dto1D {
         A = new int[][]{{1}};
         output = convert(A);
         expected = new int[]{1};
+        compare(output, expected);
+
+        A = new int[][]{
+                {1, 1, 1, 1, 2},
+                {1, 1, 1, 2, 3},
+                {1, 1, 2, 3, 3},
+                {1, 2, 3, 3, 3},
+                {2, 3, 3, 3, 3},
+        };
+        output = convert(A);
+        expected = new int[]{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3};
         compare(output, expected);
 
     }
