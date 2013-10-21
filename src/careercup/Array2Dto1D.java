@@ -12,33 +12,30 @@ import java.util.Arrays;
  */
 public class Array2Dto1D {
 
-    private static int array1DIndex = 0;
-
     public static int[] convert(int[][] array2D) {
-        array1DIndex = 0;
         int[] columnIndex = new int[array2D.length];
         int[] output = new int[array2D.length * array2D[0].length];
-//        output[0] = array2D[0][0];
-        convertInternal(array2D, columnIndex, 0, output, Integer.MAX_VALUE);
+        convertInternal(array2D, columnIndex, 0, output, 0, Integer.MAX_VALUE);
         return output;
     }
 
-    private static void convertInternal(int[][] array2D, int[] rowIndex, int column, int[] array1D, int limit) {
-        if (column >= array2D.length) return;
-        if (rowIndex[column] >= array2D[column].length) return;
+    private static int convertInternal(int[][] array2D, int[] rowIndex, int column, int[] array1D, int array1Dindex, int limit) {
+        if (column >= array2D.length) return array1Dindex;
 
+        int array1DNextIndex = array1Dindex;
         for (int row = rowIndex[column]; row < array2D[column].length; row++) {
             int value = array2D[column][row];
-            boolean switchColumn = column + 1 < array2D.length && value > array2D[column + 1][rowIndex[column + 1]];
-            if (switchColumn) {
-                convertInternal(array2D, rowIndex, column + 1, array1D, value);
+            // try the next column if it exists and if it's next value is less than the next value of the current column
+            boolean tryNextColumn = column < array2D.length - 1 && value > array2D[column + 1][rowIndex[column + 1]];
+            if (tryNextColumn) {
+                array1DNextIndex = convertInternal(array2D, rowIndex, column + 1, array1D, array1DNextIndex, value);
             }
-            if (value > limit) return;
+            // cannot process remaining elements in the column until elements in previous columns are not processed
+            if (value > limit) return array1DNextIndex;
             rowIndex[column] = row + 1;
-            array1D[array1DIndex] = value;
-            array1DIndex++;
+            array1D[array1DNextIndex++] = value;
         }
-        convertInternal(array2D, rowIndex, column + 1, array1D, Integer.MAX_VALUE);
+        return convertInternal(array2D, rowIndex, column + 1, array1D, array1DNextIndex, Integer.MAX_VALUE);
     }
 
     public static void main(String[] args) {
