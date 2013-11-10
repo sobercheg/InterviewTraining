@@ -1,4 +1,4 @@
-package maxsubarray;
+package book;
 
 /**
  * Created by Sobercheg on 11/10/13.

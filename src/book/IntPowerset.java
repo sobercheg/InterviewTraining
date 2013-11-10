@@ -1,4 +1,4 @@
-package powerset;
+package book;
 
 import java.util.ArrayList;
 import java.util.Arrays;
