@@ -24,7 +24,6 @@ public class ChopoffStringPermutation {
             for (int i = 0; i < len; i++) {
                 newPermut.add(perm.substring(0, i) + ch + perm.substring(i, len - 1));
             }
-//            newPermut.add(perm + ch);
         }
 
         return newPermut;
