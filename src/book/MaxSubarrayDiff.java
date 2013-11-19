@@ -3,7 +3,7 @@ package book;
 /**
  * Created by Sobercheg on 11/10/13.
  */
-public class MaxSubarray {
+public class MaxSubarrayDiff {
 
     static class Subarray {
         int left;
@@ -42,7 +42,7 @@ public class MaxSubarray {
     }
 
     public static void main(String[] args) {
-        MaxSubarray subarray = new MaxSubarray();
+        MaxSubarrayDiff subarray = new MaxSubarrayDiff();
         System.out.println(subarray.getMaxSubarray(new int[]{-1, 1, -3, 1}));
     }
 }
