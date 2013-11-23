@@ -29,13 +29,10 @@ public class MaxSubarrayPractice {
             if (currSum <= 0) {
                 currSum = 0;
                 startIndex = i + 1;
-            } else {
-                if (currSum > subarray.sum) {
-                    subarray.sum = currSum;
-                    subarray.startIndex = startIndex;
-                    subarray.endIndex = i;
-                }
-
+            } else if (currSum > subarray.sum) {
+                subarray.sum = currSum;
+                subarray.startIndex = startIndex;
+                subarray.endIndex = i;
             }
 
         }
