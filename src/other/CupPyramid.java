@@ -4,14 +4,13 @@ package other;
  * Created by Sobercheg on 11/23/13.
  * <p/>
  * A cup pyramid is problem.
- * <p/>
- * |_|        level=0
- * |_|_|       level=1
- * |_|_|_|      level=2
- * |_|_|_|_|     ...
- * <p/>
+ * <pre>
+ *        |_|        level=0
+ *       |_|_|       level=1
+ *      |_|_|_|      level=2
+ *     |_|_|_|_|     ...
  * cup: 0 1 2 3 ...
- * <p/>
+ * </pre>
  * Each cup has 1 liter volume. Now someone pours some specific volume of water on the cup(0, 0).
  * Determine how much water there is in some particular cup (given level, cup).
  */
