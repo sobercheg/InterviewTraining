@@ -18,7 +18,7 @@ public class StackWithMin {
 
     public int pop() {
         if (values.isEmpty()) throw new IllegalStateException("No more elements");
-        if (values.peek() == mins.peek()) {
+        if (values.peek().equals(mins.peek())) {
             mins.pop();
         }
         return values.pop();
