@@ -3,7 +3,7 @@ package other;
 /**
  * Created by Sobercheg on 11/23/13.
  * <p/>
- * A cup pyramid is problem.
+ * A cup pyramid:
  * <pre>
  *        |_|        level=0
  *       |_|_|       level=1
