@@ -24,18 +24,18 @@ public class LongestIncresingSubsequence {
     public Subsequence getLongestIncreasingSubsequence(int[] array) {
         // lengths of longest increasing subsequences ending at s[i]
         int[] s = new int[array.length];
+        int[] prev = new int[array.length];
         for (int i = 0; i < s.length; i++) {
             s[i] = 1;
+            prev[i] = -1;
         }
         // indexes of previous elements for longest subsequences ending at s[i]
-        int[] prev = new int[array.length];
-        int currentLongest = 0;
+        int currentLongest = 1;
         int longestEndingIndex = 0;
 
         // 1 6 2 9 3 1 4
         for (int i = 1; i < array.length; i++) {
             for (int j = i - 1; j >= 0; j--) {
-
                 if (array[j] < array[i]) {
                     if (s[j] >= s[i]) {
                         s[i] = s[j] + 1;
@@ -53,7 +53,7 @@ public class LongestIncresingSubsequence {
         subsequence.subsequence = new ArrayList<Integer>();
         subsequence.subsequence.add(array[longestEndingIndex]);
         int numOfElements = 1;
-        while (index != prev[index]) {
+        while (prev[index] != -1) {
             subsequence.subsequence.add(array[prev[index]]);
             numOfElements++;
             index = prev[index];
@@ -65,7 +65,8 @@ public class LongestIncresingSubsequence {
 
     public static void main(String[] args) {
         LongestIncresingSubsequence longestIncresingSubsequence = new LongestIncresingSubsequence();
-        Subsequence subsequence = longestIncresingSubsequence.getLongestIncreasingSubsequence(new int[]{1, 6, 2, 9, 3, 1, 4, 8, 5, 5, 5});
+        Subsequence subsequence = longestIncresingSubsequence.getLongestIncreasingSubsequence(
+                new int[]{80, 6, 2, 9, 3, 1, 4, 8, 5, 5, 5, 10, 9});
         System.out.println(subsequence);
     }
 }
