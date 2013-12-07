@@ -18,21 +18,19 @@ public class ChessKing {
     }
 
     public static boolean move(int x, int y, boolean[][] visited, int[][] fromX, int[][] fromY, int level) {
-        boolean solutionFound = false;
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x - 2, y - 1, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x - 2, y + 1, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x - 1, y - 2, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x - 1, y + 2, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x + 1, y - 2, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x + 1, y + 2, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x + 2, y - 1, solutionFound);
-        solutionFound |= tryMove(x, y, visited, fromX, fromY, level + 1, x + 2, y + 1, solutionFound);
+        boolean solutionFound = tryMove(x, y, visited, fromX, fromY, level + 1, x - 2, y - 1)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x - 2, y + 1)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x - 1, y - 2)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x - 1, y + 2)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x + 1, y - 2)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x + 1, y + 2)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x + 2, y - 1)
+                || tryMove(x, y, visited, fromX, fromY, level + 1, x + 2, y + 1);
 
         return solutionFound;
     }
 
-    private static boolean tryMove(int x, int y, boolean[][] visited, int[][] fromX, int[][] fromY, int level, int newX, int newY, boolean solutionFound) {
-        if (solutionFound) return true;
+    private static boolean tryMove(int x, int y, boolean[][] visited, int[][] fromX, int[][] fromY, int level, int newX, int newY) {
         if (newX < 0 || newY < 0 || newX >= DESK_SIZE_X || newY >= DESK_SIZE_Y) return false;
         if (visited[newX][newY]) return false;
 
