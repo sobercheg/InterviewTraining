@@ -1,11 +1,13 @@
 package crackinginterview;
 
+import common.ListNode;
+
 /**
  * Created by Sobercheg on 12/6/13.
  */
 public class DeleteListNode {
 
-    public void deleteNode(Node node) {
+    public void deleteNode(ListNode node) {
         if (node == null) return;
         if (node.next == null) return;
         node.data = node.next.data;

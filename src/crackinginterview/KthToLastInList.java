@@ -1,5 +1,7 @@
 package crackinginterview;
 
+import common.ListNode;
+
 /**
  * Created by Sobercheg on 12/6/13.
  */
@@ -18,9 +20,9 @@ public class KthToLastInList {
         }
     }
 
-    public Node getKthToLastInList(Node head, int k, MutableInt index) {
+    public ListNode getKthToLastInList(ListNode head, int k, MutableInt index) {
         if (head == null) return null;
-        Node node = getKthToLastInList(head.next, k, index);
+        ListNode node = getKthToLastInList(head.next, k, index);
         // but this is wrong!
         index.value++;
         if (index.value == k) {
@@ -32,9 +34,9 @@ public class KthToLastInList {
 
     public static void main(String[] args) {
         KthToLastInList kthToLastInList = new KthToLastInList();
-        Node root = new Node(1, new Node(2, new Node(3, new Node(4, new Node(5, new Node(6, new Node(7)))))));
+        ListNode root = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6, new ListNode(7)))))));
         MutableInt index = new MutableInt(0);
-        Node kthNode = kthToLastInList.getKthToLastInList(root, 3, index);
+        ListNode kthNode = kthToLastInList.getKthToLastInList(root, 3, index);
         System.out.println(kthNode);
         System.out.println(index);
     }

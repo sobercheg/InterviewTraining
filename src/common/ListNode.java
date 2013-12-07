@@ -1,24 +1,24 @@
-package crackinginterview;
+package common;
 
 /**
  * Created by Sobercheg on 12/7/13.
  */
-class Node {
-    int data;
-    Node next;
+public class ListNode {
+    public int data;
+    public ListNode next;
 
-    Node(int data, Node next) {
+    public ListNode(int data, ListNode next) {
         this.data = data;
         this.next = next;
     }
 
-    Node(int data) {
+    public ListNode(int data) {
         this.data = data;
     }
 
     @Override
     public String toString() {
-        return "Node{" +
+        return "ListNode{" +
                 "value=" + data +
                 '}';
     }
