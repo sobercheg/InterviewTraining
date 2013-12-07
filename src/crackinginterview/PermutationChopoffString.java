@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Sobercheg on 11/10/13.
  */
-public class ChopoffStringPermutation {
+public class PermutationChopoffString {
 
     public List<String> permut(String str, int len) {
 
@@ -30,7 +30,7 @@ public class ChopoffStringPermutation {
     }
 
     public static void main(String[] args) {
-        ChopoffStringPermutation permutation = new ChopoffStringPermutation();
+        PermutationChopoffString permutation = new PermutationChopoffString();
         System.out.println(permutation.permut("abcd", 4));
     }
 }

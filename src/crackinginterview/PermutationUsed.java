@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by Sobercheg on 11/10/13.
  */
-public class UsedPermutation {
+public class PermutationUsed {
 
     public void permut(char[] in, char[] out, boolean[] used, int level, List<String> perms) {
 
@@ -32,7 +32,7 @@ public class UsedPermutation {
     }
 
     public static void main(String[] args) {
-        UsedPermutation permutation = new UsedPermutation();
+        PermutationUsed permutation = new PermutationUsed();
         System.out.println(permutation.permut("abcd"));
     }
 }

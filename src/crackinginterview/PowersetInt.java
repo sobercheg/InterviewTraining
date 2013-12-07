@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Sobercheg on 11/10/13.
  */
-public class IntPowerset {
+public class PowersetInt {
 
     public List<List<String>> powerset(List<String> set) {
         int num = 1 << set.size();
@@ -28,7 +28,7 @@ public class IntPowerset {
     }
 
     public static void main(String[] args) {
-        IntPowerset powerset = new IntPowerset();
+        PowersetInt powerset = new PowersetInt();
         System.out.println(powerset.powerset(Arrays.asList("a", "b", "c", "d")));
     }
 }

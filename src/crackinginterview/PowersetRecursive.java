@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Sobercheg on 11/10/13.
  */
-public class RecursivePowerset {
+public class PowersetRecursive {
 
     public List<List<String>> powerset(List<String> set, int index) {
         if (index == -1) {
@@ -30,7 +30,7 @@ public class RecursivePowerset {
     }
 
     public static void main(String[] args) {
-        RecursivePowerset powerset = new RecursivePowerset();
+        PowersetRecursive powerset = new PowersetRecursive();
         List<String> set = Arrays.asList(new String[]{"a", "b", "c"});
         System.out.println(powerset.powerset(set, set.size() - 1));
     }
