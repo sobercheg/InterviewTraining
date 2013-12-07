@@ -1,4 +1,4 @@
-package crackinginterview;
+package crackinginterview.chap3stackqueues;
 
 import java.util.Stack;
 

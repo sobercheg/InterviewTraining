@@ -1,4 +1,4 @@
-package crackinginterview;
+package crackinginterview.chap9recursion;
 
 import java.util.ArrayList;
 import java.util.Arrays;

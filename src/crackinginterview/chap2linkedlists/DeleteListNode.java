@@ -1,4 +1,4 @@
-package crackinginterview;
+package crackinginterview.chap2linkedlists;
 
 import common.ListNode;
 

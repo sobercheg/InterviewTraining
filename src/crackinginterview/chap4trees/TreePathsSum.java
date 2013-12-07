@@ -1,4 +1,4 @@
-package crackinginterview;
+package crackinginterview.chap4trees;
 
 import common.TreeNode;
 
