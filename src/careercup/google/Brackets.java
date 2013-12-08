@@ -1,4 +1,4 @@
-package careercup;
+package careercup.google;
 
 /**
  * Created by Sobercheg on 11/17/13.

@@ -8,7 +8,7 @@ import common.ListNode;
 public class KthToLastInList {
 
     static class MutableInt {
-        int value;
+        int value = 0;
 
         MutableInt(int value) {
             this.value = value;
@@ -24,7 +24,7 @@ public class KthToLastInList {
         if (head == null) return null;
         ListNode node = getKthToLastInList(head.next, k, index);
         // but this is wrong!
-        index.value++;
+        index.value = index.value + 1;
         if (index.value == k) {
             return head;
         }
