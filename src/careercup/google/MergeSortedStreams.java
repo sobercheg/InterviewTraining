@@ -77,14 +77,13 @@ class StreamHeap<T extends Comparable<T>> {
     }
 
     private void siftDown(int i) {
-        T value = elements[i].peek();
-        T minValue = value;
+        T minValue = elements[i].peek();
         int newIndex = i;
-        if (left(i) < size && minValue.compareTo(elements[left(i)].peek()) > 0) {
+        if (left(i) < size && minValue.compareTo(getPeek(left(i))) > 0) {
             newIndex = left(i);
         }
 
-        if (right(i) < size && minValue.compareTo(elements[right(i)].peek()) > 0) {
+        if (right(i) < size && minValue.compareTo(getPeek(right(i))) > 0) {
             newIndex = right(i);
         }
 
@@ -128,7 +127,6 @@ class StreamHeap<T extends Comparable<T>> {
             swap(index, parent(index));
             siftUp(parent(index));
         }
-
     }
 }
 
