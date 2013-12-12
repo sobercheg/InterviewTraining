@@ -49,6 +49,11 @@ class IntegerStream implements Stream<Integer> {
     public boolean hasNext() {
         return iterator.hasNext();
     }
+
+    @Override
+    public String toString() {
+        return "" + currentValue;
+    }
 }
 
 class StreamHeap<T extends Comparable<T>> {
@@ -77,13 +82,12 @@ class StreamHeap<T extends Comparable<T>> {
     }
 
     private void siftDown(int i) {
-        T minValue = elements[i].peek();
         int newIndex = i;
-        if (left(i) < size && minValue.compareTo(getPeek(left(i))) > 0) {
+        if (left(i) < size && getPeek(i).compareTo(getPeek(left(i))) > 0) {
             newIndex = left(i);
         }
 
-        if (right(i) < size && minValue.compareTo(getPeek(right(i))) > 0) {
+        if (right(i) < size && getPeek(newIndex).compareTo(getPeek(right(i))) > 0) {
             newIndex = right(i);
         }
 
@@ -155,7 +159,8 @@ public class MergeSortedStreams<T extends Comparable<T>> {
         IntegerStream stream1 = new IntegerStream(Arrays.asList(1, 5, 10, 50));
         IntegerStream stream2 = new IntegerStream(Arrays.asList(3, 500));
         IntegerStream stream3 = new IntegerStream(Arrays.asList(2, 75, 200, 300));
-        mergeSortedStreams.mergeStreams(Arrays.asList(stream1, stream2, stream3), new Receiver<Integer>() {
+        IntegerStream stream4 = new IntegerStream(Arrays.asList(20));
+        mergeSortedStreams.mergeStreams(Arrays.asList(stream1, stream2, stream3, stream4), new Receiver<Integer>() {
             @Override
             public void receive(Integer object) {
                 System.out.println(object);
