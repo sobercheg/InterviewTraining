@@ -11,7 +11,7 @@ package careercup.linkedin;
  */
 public class SearchInRotatedArray {
 
-    public int findElement(int[] array, int value) {
+    public static int findElement(int[] array, int value) {
         int low = 0;
         int high = array.length - 1;
 
@@ -41,19 +41,52 @@ public class SearchInRotatedArray {
         return -1;
     }
 
+    /**
+     * One of solutions from http://www.careercup.com/question?id=15489754
+     */
+    public static int findElementInRotatedSorted(int[] a, int start, int end, int key) {
+        if (end < start) {
+            return -1;
+        }
+
+        int middle = (start + end) / 2;
+        if (a[middle] == key) {
+            return middle;
+        }
+
+        if (a[start] <= a[middle]) {
+            if (key < a[middle] && key >= a[start]) {
+                return findElementInRotatedSorted(a, start, middle - 1, key);
+            } else {
+                return findElementInRotatedSorted(a, middle + 1, end, key);
+            }
+        } else {
+            if (a[middle] < key && key <= a[end]) {
+                return findElementInRotatedSorted(a, middle + 1, end, key);
+            } else {
+                return findElementInRotatedSorted(a, start, middle - 1, key);
+            }
+        }
+    }
+
+    public static int findElement2(int[] array, int key) {
+        return findElementInRotatedSorted(array, 0, array.length - 1, key);
+    }
+
     public static void main(String[] args) {
-        SearchInRotatedArray searchInRotatedArray = new SearchInRotatedArray();
-        System.out.println(searchInRotatedArray.findElement(new int[]{1, 2, 3, 4, 5, 6, 7}, 6));
-        System.out.println(searchInRotatedArray.findElement(new int[]{1, 2, 3, 4, 5, 6, 7}, 5));
-        System.out.println(searchInRotatedArray.findElement(new int[]{1, 2, 3, 4, 5, 6, 7}, 1));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{1, 2, 3, 4, 5, 6, 7}, 6));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{1, 2, 3, 4, 5, 6, 7}, 5));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{1, 2, 3, 4, 5, 6, 7}, 1));
 
-        System.out.println(searchInRotatedArray.findElement(new int[]{6, 7, 1, 2, 3, 4, 5}, 6));
-        System.out.println(searchInRotatedArray.findElement(new int[]{6, 7, 1, 2, 3, 4, 5}, 5));
-        System.out.println(searchInRotatedArray.findElement(new int[]{6, 7, 1, 2, 3, 4, 5}, 1));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{6, 7, 1, 2, 3, 4, 5}, 6));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{6, 7, 1, 2, 3, 4, 5}, 5));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{6, 7, 1, 2, 3, 4, 5}, 1));
 
-        System.out.println(searchInRotatedArray.findElement(new int[]{3, 4, 5, 6, 7, 1, 2}, 6));
-        System.out.println(searchInRotatedArray.findElement(new int[]{3, 4, 5, 6, 7, 1, 2}, 5));
-        System.out.println(searchInRotatedArray.findElement(new int[]{3, 4, 5, 6, 7, 1, 2}, 1));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{3, 4, 5, 6, 7, 1, 2}, 6));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{3, 4, 5, 6, 7, 1, 2}, 5));
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{3, 4, 5, 6, 7, 1, 2}, 1));
+
+        System.out.println(SearchInRotatedArray.findElement2(new int[]{3, 4, 5, 6, 7, 1, 2}, 10));
 
     }
 }

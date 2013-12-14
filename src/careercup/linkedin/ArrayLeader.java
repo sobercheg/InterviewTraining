@@ -57,5 +57,6 @@ public class ArrayLeader {
 
     public static void main(String[] args) {
         System.out.println(new ArrayLeader().arrLeader(new int[]{2, 2, 1, 10, 2, 6, 6, 6, 2, 2, 2, 2}));
+        System.out.println(new ArrayLeader().arrLeader(new int[]{2, 2, 1, 10, 2, 6, 4, 6, 5, 2, 2, 2}));
     }
 }
