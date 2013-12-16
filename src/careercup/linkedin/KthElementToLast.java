@@ -1,5 +1,8 @@
 package careercup.linkedin;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by Sobercheg on 12/15/13.
  * <p/>
@@ -39,7 +42,11 @@ class List<T> {
     }
 }
 
-public class KthElementToLast<T> {
+public interface KthElementToLast<T> {
+    public T getKthElementToLast(List<T> list, int k);
+}
+
+class KthElementToLastPointers<T> implements KthElementToLast<T> {
     public T getKthElementToLast(List<T> list, int k) {
         if (list == null || list.getRoot() == null) throw new IllegalArgumentException("List is null");
         if (k < 0) throw new IllegalArgumentException(String.format("k is negative [%s]", k));
@@ -59,9 +66,28 @@ public class KthElementToLast<T> {
 
         return slowPointer.data;
     }
+}
 
+class KthElementToLastQueue<T> implements KthElementToLast<T> {
+    public T getKthElementToLast(List<T> list, int k) {
+        if (list == null || list.getRoot() == null) throw new IllegalArgumentException("List is null");
+        if (k < 0) throw new IllegalArgumentException(String.format("k is negative [%s]", k));
+        Queue<T> queue = new LinkedList<T>();
+        ListNode<T> node = list.getRoot();
+        while (node != null) {
+            queue.offer(node.data);
+            if (queue.size() > k + 1) {
+                queue.poll();
+            }
+            node = node.next;
+        }
+        return queue.poll();
+    }
+}
+
+class KthElementToLastTest {
     public static void main(String[] args) {
-        KthElementToLast<Integer> kthElementToLast = new KthElementToLast<Integer>();
+        KthElementToLast<Integer> kthElementToLast = new KthElementToLastQueue<Integer>();
         testNullListShouldFail(kthElementToLast);
         testNegativeKShouldFail(kthElementToLast);
         testListShorterThanKShouldFail(kthElementToLast);
