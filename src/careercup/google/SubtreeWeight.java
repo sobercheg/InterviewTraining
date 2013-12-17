@@ -39,13 +39,11 @@ class Node {
     int id;
     int parent;
     int weight;
-    int subtreeWeight;
 
     Node(int id, int parent, int weight) {
         this.id = id;
         this.parent = parent;
         this.weight = weight;
-        this.subtreeWeight = -1;
     }
 
     @Override
@@ -54,7 +52,6 @@ class Node {
                 "id=" + id +
                 ", parent=" + parent +
                 ", weight=" + weight +
-                ", subtreeWeight=" + subtreeWeight +
                 '}';
     }
 }
@@ -78,7 +75,6 @@ public class SubtreeWeight {
 
     private int calculateSubtreeWeight(Node node, Map<Integer, List<Node>> childrenMap) {
         if (node == null) return 0;
-        if (node.subtreeWeight > -1) return node.subtreeWeight;
         int subtreeWeight = node.weight;
 
         if (childrenMap.containsKey(node.id)) {
@@ -86,9 +82,8 @@ public class SubtreeWeight {
                 subtreeWeight += calculateSubtreeWeight(child, childrenMap);
             }
         }
-        node.subtreeWeight = subtreeWeight;
-        System.out.println(node);
-        return node.subtreeWeight;
+        System.out.println(String.format("Node %s subtree weight=%d", node, subtreeWeight));
+        return subtreeWeight;
     }
 
     public static void main(String[] args) {
