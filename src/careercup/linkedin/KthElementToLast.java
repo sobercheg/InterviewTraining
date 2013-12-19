@@ -23,10 +23,10 @@ class ListNode<T> {
 
 }
 
-class List<T> {
+class MyList<T> {
     ListNode<T> root;
 
-    public List<T> add(T data) {
+    public MyList<T> add(T data) {
         if (root == null) {
             root = new ListNode<T>(data);
         } else {
@@ -43,11 +43,11 @@ class List<T> {
 }
 
 public interface KthElementToLast<T> {
-    public T getKthElementToLast(List<T> list, int k);
+    public T getKthElementToLast(MyList<T> list, int k);
 }
 
 class KthElementToLastPointers<T> implements KthElementToLast<T> {
-    public T getKthElementToLast(List<T> list, int k) {
+    public T getKthElementToLast(MyList<T> list, int k) {
         if (list == null || list.getRoot() == null) throw new IllegalArgumentException("List is null");
         if (k < 0) throw new IllegalArgumentException(String.format("k is negative [%s]", k));
         ListNode<T> fastPointer = list.getRoot();
@@ -69,7 +69,7 @@ class KthElementToLastPointers<T> implements KthElementToLast<T> {
 }
 
 class KthElementToLastQueue<T> implements KthElementToLast<T> {
-    public T getKthElementToLast(List<T> list, int k) {
+    public T getKthElementToLast(MyList<T> list, int k) {
         if (list == null || list.getRoot() == null) throw new IllegalArgumentException("List is null");
         if (k < 0) throw new IllegalArgumentException(String.format("k is negative [%s]", k));
         Queue<T> queue = new LinkedList<T>();
@@ -97,7 +97,7 @@ class KthElementToLastTest {
     }
 
     private static void testKequals0(KthElementToLast<Integer> kthElementToLast) {
-        List<Integer> list = new List<Integer>();
+        MyList<Integer> list = new MyList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -105,7 +105,7 @@ class KthElementToLastTest {
     }
 
     private static void testListLengthMoreThanK(KthElementToLast<Integer> kthElementToLast) {
-        List<Integer> list = new List<Integer>();
+        MyList<Integer> list = new MyList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -113,7 +113,7 @@ class KthElementToLastTest {
     }
 
     private static void testListLengthEqualsK(KthElementToLast<Integer> kthElementToLast) {
-        List<Integer> list = new List<Integer>();
+        MyList<Integer> list = new MyList<Integer>();
         list.add(1);
         list.add(2);
         assertEquals("List length equals K", 2, kthElementToLast.getKthElementToLast(list, 1));
@@ -125,7 +125,7 @@ class KthElementToLastTest {
     }
 
     private static void testListShorterThanKShouldFail(KthElementToLast<Integer> kthElementToLast) {
-        List<Integer> list = new List<Integer>();
+        MyList<Integer> list = new MyList<Integer>();
         list.add(3);
         try {
             kthElementToLast.getKthElementToLast(list, 2);
@@ -136,7 +136,7 @@ class KthElementToLastTest {
     }
 
     private static void testNegativeKShouldFail(KthElementToLast<Integer> kthElementToLast) {
-        List<Integer> list = new List<Integer>();
+        MyList<Integer> list = new MyList<Integer>();
         list.add(3);
         try {
             kthElementToLast.getKthElementToLast(list, -1);

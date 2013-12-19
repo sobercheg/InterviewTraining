@@ -63,7 +63,6 @@ public class BinaryTreeRepresentation {
     }
 
     public static void main(String[] args) {
-
         System.out.println(new BinaryTreeRepresentation().getTreeDepth("(00)"));
         System.out.println(new BinaryTreeRepresentation().getTreeDepth("((00)0)"));
         System.out.println(new BinaryTreeRepresentation().getTreeDepth("((00)(00))"));
