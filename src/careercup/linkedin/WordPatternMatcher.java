@@ -4,10 +4,10 @@ import java.util.*;
 
 /**
  * Created by Sobercheg on 12/18/13.
+ * http://www.careercup.com/question?id=12179920
+ * Given a large document and a short pattern consisting of a few words (eg. W1 W2 W3),
+ * find the shortest string that has all the words in any order (for eg. W2 foo bar dog W1 cat W3 -- is a valid pattern)
  */
-// http://www.careercup.com/question?id=12179920
-// Given a large document and a short pattern consisting of a few words (eg. W1 W2 W3), find the shortest string that has all the words in any order (for eg. W2 foo bar dog W1 cat W3 -- is a valid pattern)
-
 public class WordPatternMatcher {
 
     public String getShortestString(String input, List<String> patterns) {
