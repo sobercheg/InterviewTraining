@@ -44,13 +44,11 @@ public class CircularQueue {
     }
 
     private void advanceHeadPosition() {
-        head--;
-        head = (head + capacity) % capacity;
+        head = (head - 1 + capacity) % capacity;
     }
 
     private void advanceTailPosition() {
-        tail++;
-        tail = (tail % capacity);
+        tail = (tail + 1) % capacity;
     }
 
     public static void main(String[] args) {
