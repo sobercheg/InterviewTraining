@@ -1,8 +1,7 @@
 package leetcode;
 
 /**
- * Created by sobercheg on 12/21/13.
- * http://leetcode.com/2011/05/longest-substring-without-repeating-characters.html
+ * Created by sobercheg on 12/21/13. http://leetcode.com/2011/05/longest-substring-without-repeating-characters.html
  */
 public class SubstringWithoutRepeating {
     // limitation: ASCII chars only
@@ -24,7 +23,20 @@ public class SubstringWithoutRepeating {
                     maxi = i;
                     maxj = j;
                 }
-                while (i <= j) {
+                // somewhat tricky line
+                /*
+                The next question is to ask yourself what happens when you found a repeated character? For example,
+                if the string is “abcdcedf”, what happens when you reach the second appearance of ‘c’?
+
+When you have found a repeated character (let’s say at index j), it means that the current substring (excluding the
+repeated character of course) is a potential maximum, so update the maximum if necessary. It also means that the
+repeated character must have appeared before at an index i, where i is less than j.
+
+Since you know that all substrings that start before or at index i would be less than your current maximum,
+you can safely start to look for the next substring with head which starts exactly at index i+1.
+                 */
+
+                while (input.charAt(i) != input.charAt(j)) {
                     exists[input.charAt(i)] = false;
                     i++;
                 }
@@ -43,5 +55,6 @@ public class SubstringWithoutRepeating {
 
     public static void main(String[] args) {
         System.out.println(SubstringWithoutRepeating.getLongestSubstringWithoutRepeating("abcabcbb"));
+        System.out.println(SubstringWithoutRepeating.getLongestSubstringWithoutRepeating("cabcd"));
     }
 }
