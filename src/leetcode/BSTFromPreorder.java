@@ -6,7 +6,7 @@ import common.TreeNode;
  * Created by sobercheg on 12/23/13.
  * http://leetcode.com/2010/09/saving-binary-search-tree-to-file.html
  */
-public class BSTFromInorder {
+public class BSTFromPreorder {
 
     public static TreeNode buildBSTFromPreorder(int low, int high, int[] inorder, int[] index) {
         if (index[0] >= inorder.length) return null;
