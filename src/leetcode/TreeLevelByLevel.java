@@ -10,7 +10,7 @@ import java.util.Queue;
  */
 public class TreeLevelByLevel {
 
-    public void printTree(TreeNode root) {
+    public static void print(TreeNode root) {
         Queue<TreeNode> q = new LinkedList<TreeNode>();
         q.offer(root);
         TreeNode sentinel = new TreeNode(-1);
@@ -29,6 +29,47 @@ public class TreeLevelByLevel {
         }
     }
 
+    public static void printWithSpaces(TreeNode root) {
+        Queue<TreeNode> q = new LinkedList<TreeNode>();
+        Queue<Integer> indent = new LinkedList<Integer>();
+        int counter1 = 0;
+        int counter2 = 0;
+        q.offer(root);
+        int initialIndent = 80;
+        indent.offer(initialIndent);
+        int prevInd = 0;
+        counter2++;
+        int level = 1;
+
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            int ind = indent.poll();
+            System.out.print(String.format("%" + (ind - prevInd + 2) + "s", "{" + node + "}"));
+            prevInd = ind;
+
+            if (node.left != null) {
+                counter1++;
+                q.offer(node.left);
+                indent.offer(ind - initialIndent / (level + 1) + 4);
+            }
+
+            if (node.right != null) {
+                counter1++;
+                q.offer(node.right);
+                indent.offer(ind + initialIndent / (level + 1) - 4);
+            }
+
+            counter2--;
+            if (counter2 == 0) {
+                System.out.println();
+                counter2 = counter1;
+                counter1 = 0;
+                prevInd = 0;
+                level++;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(5);
         TreeNode left = new TreeNode(3);
@@ -37,7 +78,8 @@ public class TreeLevelByLevel {
         root.right = right;
         root.left = left;
         right.left = rightLeft;
-        TreeLevelByLevel tree = new TreeLevelByLevel();
-        tree.printTree(root);
+        TreeLevelByLevel.print(root);
+        TreeLevelByLevel.printWithSpaces(root);
+
     }
 }
