@@ -13,6 +13,7 @@ public class SolutionTest {
         solutionTest.testTwoSum();
         solutionTest.testEvalRPN();
         solutionTest.testPostorderTraversal();
+        solutionTest.testPreorderTraversal();
     }
 
     public void testTwoSum() {
@@ -26,14 +27,32 @@ public class SolutionTest {
     }
 
     public void testPostorderTraversal() {
-        Solution.TreeNode root = new Solution.TreeNode(1);
-        Solution.TreeNode right = new Solution.TreeNode(2);
-        Solution.TreeNode rightLeft = new Solution.TreeNode(3);
-        right.left = rightLeft;
-        root.right = right;
-        assertEquals(Arrays.asList(3, 2, 1), solution.postorderTraversal(root));
-        assertEquals(Arrays.asList(1), solution.postorderTraversal(new Solution.TreeNode(1)));
         assertEquals(Arrays.asList(), solution.postorderTraversal(null));
+        assertEquals(Arrays.asList(1), solution.postorderTraversal(new Solution.TreeNode(1)));
+
+        Solution.TreeNode root = new Solution.TreeNode(1,
+                null, new Solution.TreeNode(2,
+                new Solution.TreeNode(3), null));
+        assertEquals(Arrays.asList(3, 2, 1), solution.postorderTraversal(root));
+
+    }
+
+    public void testPreorderTraversal() {
+        assertEquals(Arrays.asList(), solution.postorderTraversal(null));
+        assertEquals(Arrays.asList(1), solution.postorderTraversal(new Solution.TreeNode(1)));
+
+        Solution.TreeNode root = new Solution.TreeNode(1,
+                null, new Solution.TreeNode(2,
+                new Solution.TreeNode(3), null));
+        assertEquals(Arrays.asList(1, 2, 3), solution.preorderTraversal(root));
+
+        Solution.TreeNode root2 = new Solution.TreeNode(1,
+                new Solution.TreeNode(2,
+                        new Solution.TreeNode(3,
+                                new Solution.TreeNode(4), new Solution.TreeNode(5)),
+                        new Solution.TreeNode(6)), new Solution.TreeNode(7));
+
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7), solution.preorderTraversal(root2));
 
     }
 

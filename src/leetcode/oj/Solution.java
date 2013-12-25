@@ -75,6 +75,35 @@ public class Solution {
         return stack.pop();
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-preorder-traversal/">Binary Tree Preorder Traversal</a>
+     * Given a binary tree, return the preorder traversal of its nodes' values.
+     * <p/>
+     * Idea: use Stack
+     * Init: push root
+     * Iteration: be careful with the order of pushing element to Stack: right children should be placed first (not left)
+     * so that left children could be popped first (LIFO).
+     */
+    public ArrayList<Integer> preorderTraversal(TreeNode root) {
+        if (root == null) return new ArrayList<Integer>();
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        ArrayList<Integer> preorder = new ArrayList<Integer>();
+        TreeNode current;
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            current = stack.pop();
+            preorder.add(current.val);
+            if (current.right != null) {
+                stack.push(current.right);
+            }
+            if (current.left != null) {
+                stack.push(current.left);
+            }
+        }
+
+        return preorder;
+    }
+
 
     /**
      * <a href="http://oj.leetcode.com/problems/binary-tree-postorder-traversal/">Binary Tree Postorder Traversal</a>
@@ -90,6 +119,9 @@ public class Solution {
      * 4. If has a right child AND it was not visited push it to stack and skip next steps (loop continue)
      * 5. Pop TreeNode from stack and print
      * 6. Add TreeNode to visited
+     * <p/>
+     * Note: obviously, this is not the best solution since it uses O(n) space. I believe there exists an O(1) space
+     * solution.
      */
     public ArrayList<Integer> postorderTraversal(TreeNode root) {
         if (root == null) return new ArrayList<Integer>();
@@ -125,6 +157,17 @@ public class Solution {
 
         TreeNode(int x) {
             val = x;
+        }
+
+        TreeNode(int x, TreeNode left, TreeNode right) {
+            this(x);
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
         }
     }
 
