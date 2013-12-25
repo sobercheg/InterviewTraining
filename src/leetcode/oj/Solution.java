@@ -1,8 +1,6 @@
 package leetcode.oj;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Sobercheg on 12/24/13.
@@ -12,7 +10,6 @@ public class Solution {
 
     /**
      * <a href="http://oj.leetcode.com/problems/two-sum/">Two Sum</a>
-     * <p/>
      * Problem: Given an array of integers, find two numbers such that they add up to a specific target number.
      * <p/>
      * First idea:
@@ -39,8 +36,7 @@ public class Solution {
 
     /**
      * <a href="http://oj.leetcode.com/problems/evaluate-reverse-polish-notation/">Evaluate Reverse Polish Notation</a>
-     * <p/>
-     * Problem: Evaluate the value of an arithmetic expression in Reverse Polish Notation.
+     * Evaluate the value of an arithmetic expression in Reverse Polish Notation.
      * <p/>
      * Solution:
      * <pre>
@@ -50,7 +46,8 @@ public class Solution {
      *  - - pop last two Stack values
      *  - - apply the token operator
      *  - - push the result back to Stack
-     *  At the end Stack should have only one element which is the result. If Stack has 0 or more than 1 element the input expression was wrong.
+     *  At the end Stack should have only one element which is the result.
+     *  If Stack has 0 or more than 1 element the input expression was wrong.
      * </pre>
      * Limitation: only integers are used. So division operations will produce integers.
      */
@@ -77,4 +74,58 @@ public class Solution {
 
         return stack.pop();
     }
+
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-postorder-traversal/">Binary Tree Postorder Traversal</a>
+     * Given a binary tree, return the postorder traversal of its nodes' values.
+     * Note: Recursive solution is trivial, could you do it iteratively?
+     * <p/>
+     * Idea:
+     * For an iterative solution we'll need a stack or two. Postorder means recursive visiting of left child,
+     * right child and then the node element itself. So, the algorithm may look like this:
+     * 1. Init: push the tree root to Stack
+     * 2. Peek (not pop!) TreeNode from stack (if not empty)
+     * 3. If has a left child AND it was not visited push it to stack and skip next steps (loop continue)
+     * 4. If has a right child AND it was not visited push it to stack and skip next steps (loop continue)
+     * 5. Pop TreeNode from stack and print
+     * 6. Add TreeNode to visited
+     */
+    public ArrayList<Integer> postorderTraversal(TreeNode root) {
+        if (root == null) return new ArrayList<Integer>();
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        Set<TreeNode> visited = new HashSet<TreeNode>();
+        ArrayList<Integer> postorder = new ArrayList<Integer>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.peek();
+            if (node.left != null && !visited.contains(node.left)) {
+                stack.push(node.left);
+                continue;
+            }
+            if (node.right != null && !visited.contains(node.right)) {
+                stack.push(node.right);
+                continue;
+            }
+            TreeNode nextNode = stack.poll();
+            postorder.add(nextNode.val);
+            visited.add(nextNode);
+        }
+
+        return postorder;
+    }
+
+    /**
+     * Definition for binary tree
+     */
+    static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+    }
+
 }
