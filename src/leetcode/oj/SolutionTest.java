@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Created by Sobercheg on 12/24/13.
+ * Unit tests for LeetCode OJ solutions.
  */
 public class SolutionTest {
     private final Solution solution = new Solution();
@@ -14,6 +15,7 @@ public class SolutionTest {
         solutionTest.testEvalRPN();
         solutionTest.testPostorderTraversal();
         solutionTest.testPreorderTraversal();
+        solutionTest.testLengthOfLongestSubstring();
     }
 
     public void testTwoSum() {
@@ -28,32 +30,41 @@ public class SolutionTest {
 
     public void testPostorderTraversal() {
         assertEquals(Arrays.asList(), solution.postorderTraversal(null));
-        assertEquals(Arrays.asList(1), solution.postorderTraversal(new Solution.TreeNode(1)));
+        assertEquals(Arrays.asList(1), solution.postorderTraversal(new TreeNode(1)));
 
-        Solution.TreeNode root = new Solution.TreeNode(1,
-                null, new Solution.TreeNode(2,
-                new Solution.TreeNode(3), null));
+        TreeNode root = new TreeNode(1,
+                null, new TreeNode(2,
+                new TreeNode(3), null));
         assertEquals(Arrays.asList(3, 2, 1), solution.postorderTraversal(root));
 
     }
 
     public void testPreorderTraversal() {
         assertEquals(Arrays.asList(), solution.postorderTraversal(null));
-        assertEquals(Arrays.asList(1), solution.postorderTraversal(new Solution.TreeNode(1)));
+        assertEquals(Arrays.asList(1), solution.postorderTraversal(new TreeNode(1)));
 
-        Solution.TreeNode root = new Solution.TreeNode(1,
-                null, new Solution.TreeNode(2,
-                new Solution.TreeNode(3), null));
+        TreeNode root = new TreeNode(1,
+                null, new TreeNode(2,
+                new TreeNode(3), null));
         assertEquals(Arrays.asList(1, 2, 3), solution.preorderTraversal(root));
 
-        Solution.TreeNode root2 = new Solution.TreeNode(1,
-                new Solution.TreeNode(2,
-                        new Solution.TreeNode(3,
-                                new Solution.TreeNode(4), new Solution.TreeNode(5)),
-                        new Solution.TreeNode(6)), new Solution.TreeNode(7));
+        TreeNode root2 = new TreeNode(1,
+                new TreeNode(2,
+                        new TreeNode(3,
+                                new TreeNode(4), new TreeNode(5)),
+                        new TreeNode(6)), new TreeNode(7));
 
         assertEquals(Arrays.asList(1, 2, 3, 4, 5, 6, 7), solution.preorderTraversal(root2));
 
+    }
+
+    public void testLengthOfLongestSubstring() {
+        assertEquals(0, solution.lengthOfLongestSubstring(null));
+        assertEquals(0, solution.lengthOfLongestSubstring(""));
+        assertEquals(3, solution.lengthOfLongestSubstring("abc"));
+        assertEquals(3, solution.lengthOfLongestSubstring("abca"));
+        assertEquals(3, solution.lengthOfLongestSubstring("abcabcbb"));
+        assertEquals(12, solution.lengthOfLongestSubstring("wlrbbmqbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco"));
     }
 
     public static void assertEquals(Object expected, Object actual) {

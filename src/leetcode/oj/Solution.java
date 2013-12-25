@@ -148,27 +148,66 @@ public class Solution {
     }
 
     /**
-     * Definition for binary tree
+     * <a href="http://oj.leetcode.com/problems/longest-substring-without-repeating-characters/">Longest Substring Without Repeating Characters</a>
+     * Given a string, find the length of the longest substring without repeating characters.
+     * For example, the longest substring without repeating letters for "abcabcbb" is "abc", which the length is 3.
+     * For "bbbbb" the longest substring is "b", with the length of 1.
+     * <p/>
+     * Solution: remember character positions in a char->int HashMap.
+     * If the next char IS in the map:
+     * - remove all map entries for chars from startPosition to position of the encountered character
+     * - set startPosition = currentPosition + 1
+     * - update current character position in the map
+     * Else:
+     * - increment currentPosition
+     * - check if currentPosition - startPosition > maxSubstring. If yes, update maxSubstring and remember positions.
      */
-    static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) return 0;
+        int startPosition = 0;
+        int maxSubstring = 0;
+        Map<Character, Integer> positionMap = new HashMap<Character, Integer>();
 
-        TreeNode(int x) {
-            val = x;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (positionMap.containsKey(ch)) {
+                for (int j = startPosition; j < positionMap.get(ch); j++) {
+                    positionMap.remove(s.charAt(j));
+                }
+                startPosition = positionMap.get(ch) + 1;
+            } else {
+                if (i - startPosition > maxSubstring) {
+                    maxSubstring = i - startPosition;
+                }
+            }
+            positionMap.put(ch, i);
+
         }
 
-        TreeNode(int x, TreeNode left, TreeNode right) {
-            this(x);
-            this.left = left;
-            this.right = right;
-        }
+        return maxSubstring + 1;
+    }
+}
 
-        @Override
-        public String toString() {
-            return "" + val;
-        }
+/**
+ * Definition for binary tree
+ */
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int x) {
+        val = x;
     }
 
+    TreeNode(int x, TreeNode left, TreeNode right) {
+        this(x);
+        this.left = left;
+        this.right = right;
+    }
+
+    @Override
+    public String toString() {
+        return "" + val;
+    }
 }
