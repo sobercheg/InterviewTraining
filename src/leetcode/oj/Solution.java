@@ -186,6 +186,55 @@ public class Solution {
 
         return maxSubstring + 1;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/median-of-two-sorted-arrays/">Median of Two Sorted Arrays</a>
+     * There are two sorted arrays A and B of size m and n respectively. Find the median of the two sorted arrays.
+     * The overall run time complexity should be O(log (m+n)).
+     * <p/>
+     * Observations: if we could merge two arrays (O(m+n)) we would just pick the (m+n)/2 element (if m+n is odd).
+     * TODO: the solution is wrong and does not work.
+     */
+    public double findMedianSortedArrays(int A[], int B[]) {
+        int m = A.length;
+        int n = B.length;
+        if (n == 0) return (m % 2 == 0) ? (double) (A[(m - 1) / 2] + A[m / 2]) / 2 : A[m / 2];
+        if (m == 0) return (n % 2 == 0) ? (double) (B[(n - 1) / 2] + B[n / 2]) / 2 : B[n / 2];
+        if (m == 2 && n == 2) return (double) (Math.max(A[0], B[0]) + Math.min(A[1], B[1])) / 2;
+        int jumpA = m / 2;
+        int jumpB = n / 2;
+        int kA = 0;
+        int kB = 0;
+        boolean lastA = false;
+        while (jumpA > 0 && jumpB > 0) {
+            if (kA + kB <= (m + n) / 2) {
+                if (A[kA] < B[kB]) {
+                    kA += jumpA;
+                    jumpA /= 2;
+                    lastA = true;
+                } else {
+                    kB += jumpB;
+                    jumpB /= 2;
+                    lastA = false;
+                }
+            } else {
+                if (A[kA] < B[kB] && kB - jumpB >= 0) {
+                    kB -= jumpB;
+                    jumpB /= 2;
+                    lastA = false;
+                } else if (A[kA] <= B[kB] && kA - jumpA >= 0) {
+                    kA -= jumpA;
+                    jumpA /= 2;
+                    lastA = true;
+                } else {
+                    break;
+                }
+            }
+        }
+        if ((m + n) % 2 == 0 && m == n) return (double) (A[kA] + B[kB]) / 2;
+        if (lastA) return A[kA];
+        return B[kB];
+    }
 }
 
 /**

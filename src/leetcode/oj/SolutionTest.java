@@ -16,6 +16,7 @@ public class SolutionTest {
         solutionTest.testPostorderTraversal();
         solutionTest.testPreorderTraversal();
         solutionTest.testLengthOfLongestSubstring();
+        solutionTest.testFindMedianSortedArrays();
     }
 
     public void testTwoSum() {
@@ -65,6 +66,19 @@ public class SolutionTest {
         assertEquals(3, solution.lengthOfLongestSubstring("abca"));
         assertEquals(3, solution.lengthOfLongestSubstring("abcabcbb"));
         assertEquals(12, solution.lengthOfLongestSubstring("wlrbbmqbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco"));
+    }
+
+    public void testFindMedianSortedArrays() {
+        assertEquals(60.0, solution.findMedianSortedArrays(new int[]{1, 2, 100, 101}, new int[]{50, 60, 70}));
+        assertEquals(26.0, solution.findMedianSortedArrays(new int[]{1, 2}, new int[]{50, 60}));
+        assertEquals(3.0, solution.findMedianSortedArrays(new int[]{1, 3, 5}, new int[]{2, 4}));
+        assertEquals(3.0, solution.findMedianSortedArrays(new int[]{1, 3, 5}, new int[]{2, 4}));
+        assertEquals(1.0, solution.findMedianSortedArrays(new int[]{1}, new int[]{}));
+        assertEquals(2.5, solution.findMedianSortedArrays(new int[]{2, 3}, new int[]{}));
+        assertEquals(1.5, solution.findMedianSortedArrays(new int[]{1, 2}, new int[]{1, 2}));
+        assertEquals(1.0, solution.findMedianSortedArrays(new int[]{1, 1}, new int[]{1, 2}));
+        assertEquals(7.0, solution.findMedianSortedArrays(new int[]{8, 9}, new int[]{1, 2, 3, 4, 5, 6, 7, 10}));
+        assertEquals(2.0, solution.findMedianSortedArrays(new int[]{1, 2, 2}, new int[]{1, 2, 3}));
     }
 
     public static void assertEquals(Object expected, Object actual) {
