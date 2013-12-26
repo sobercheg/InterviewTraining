@@ -249,19 +249,23 @@ public class Solution {
         ListNode currentNode = result;
         int carryover = 0;
         boolean isFirst = true;
+        ListNode l1c = l1;
+        ListNode l2c = l2;
         while (true) {
-            if (l1 == null && l2 == null) {
+            if (l1c == null && l2c == null) {
                 break;
             }
             int sum = 0;
-            if (l1 != null) {
-                sum = carryover + l1.val;
-                l1 = l1.next;
+            if (l1c != null) {
+                sum = l1c.val;
+                l1c = l1c.next;
             }
-            if (l2 != null) {
-                sum += l2.val;
-                l2 = l2.next;
+            if (l2c != null) {
+                sum += l2c.val;
+                l2c = l2c.next;
             }
+
+            sum += carryover;
             if (sum >= 10) {
                 carryover = 1;
                 sum = sum - 10;

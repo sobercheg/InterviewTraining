@@ -90,6 +90,16 @@ public class SolutionTest {
         assertEquals(0, sum.next.val);
         assertEquals(8, sum.next.next.val);
         assertEquals(null, sum.next.next.next);
+
+        val1 = new ListNode(1);
+        val2 = new ListNode(9, new ListNode(9));
+        sum = solution.addTwoNumbers(val1, val2);
+        assertEquals(0, sum.val);
+        assertEquals(0, sum.next.val);
+        assertEquals(1, sum.next.next.val);
+        assertEquals(null, sum.next.next.next);
+
+
     }
 
     public static void assertEquals(Object expected, Object actual) {
