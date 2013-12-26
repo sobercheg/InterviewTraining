@@ -298,6 +298,11 @@ public class Solution {
      * Init: A[i,i] = true, A[i,i+1] = (Si == Si+1)
      */
     public String longestPalindrome(String s) {
+//        return longestPalindromeDP(s);
+        return longestPalindromeExpansion(s);
+    }
+
+    private String longestPalindromeDP(String s) {
         int n = s.length();
         if (n == 0 || n == 1) return s;
         boolean A[][] = new boolean[n][n];
@@ -328,6 +333,39 @@ public class Solution {
             }
         }
         return longest;
+    }
+
+    private String longestPalindromeExpansion(String s) {
+        int n = s.length();
+        if (n == 0 || n == 1) return s;
+        int from = 0;
+        int to = 0;
+        int maxLength = -1;
+
+        for (int i = 0; i < n; i++) {
+            // expand around a char (aBa)
+            for (int expansion = 1; expansion < n; expansion++) {
+                if (i - expansion < 0 || i + expansion >= n) break;
+                if (s.charAt(i - expansion) != s.charAt(i + expansion)) break;
+                if ((expansion * 2 + 1) > maxLength) {
+                    maxLength = expansion * 2 + 1;
+                    from = i - expansion;
+                    to = i + expansion;
+                }
+            }
+            // expand around two chars (aBBa)
+            for (int expansion = 0; expansion < n - 1; expansion++) {
+                if (i - expansion < 0 || i + expansion + 1 >= n) break;
+                if (s.charAt(i - expansion) != s.charAt(i + expansion + 1)) break;
+                if ((expansion + 1) * 2 >= maxLength) {
+                    maxLength = (expansion + 1) * 2;
+                    from = i - expansion;
+                    to = i + expansion + 1;
+                }
+            }
+        }
+
+        return s.substring(from, to + 1);
     }
 }
 
