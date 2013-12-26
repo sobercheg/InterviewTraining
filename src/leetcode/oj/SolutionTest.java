@@ -16,7 +16,8 @@ public class SolutionTest {
         solutionTest.testPostorderTraversal();
         solutionTest.testPreorderTraversal();
         solutionTest.testLengthOfLongestSubstring();
-        solutionTest.testFindMedianSortedArrays();
+//        solutionTest.testFindMedianSortedArrays();
+        solutionTest.testAddTwoNumbers();
     }
 
     public void testTwoSum() {
@@ -79,6 +80,16 @@ public class SolutionTest {
         assertEquals(1.0, solution.findMedianSortedArrays(new int[]{1, 1}, new int[]{1, 2}));
         assertEquals(7.0, solution.findMedianSortedArrays(new int[]{8, 9}, new int[]{1, 2, 3, 4, 5, 6, 7, 10}));
         assertEquals(2.0, solution.findMedianSortedArrays(new int[]{1, 2, 2}, new int[]{1, 2, 3}));
+    }
+
+    private void testAddTwoNumbers() {
+        ListNode val1 = new ListNode(2, new ListNode(4, new ListNode(3)));
+        ListNode val2 = new ListNode(5, new ListNode(6, new ListNode(4)));
+        ListNode sum = solution.addTwoNumbers(val1, val2);
+        assertEquals(7, sum.val);
+        assertEquals(0, sum.next.val);
+        assertEquals(8, sum.next.next.val);
+        assertEquals(null, sum.next.next.next);
     }
 
     public static void assertEquals(Object expected, Object actual) {
