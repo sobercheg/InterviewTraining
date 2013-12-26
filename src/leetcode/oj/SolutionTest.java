@@ -18,6 +18,7 @@ public class SolutionTest {
         solutionTest.testLengthOfLongestSubstring();
 //        solutionTest.testFindMedianSortedArrays();
         solutionTest.testAddTwoNumbers();
+        solutionTest.testLongestPalindrome();
     }
 
     public void testTwoSum() {
@@ -69,6 +70,7 @@ public class SolutionTest {
         assertEquals(12, solution.lengthOfLongestSubstring("wlrbbmqbhcdarzowkkyhiddqscdxrjmowfrxsjybldbefsarcbynecdyggxxpklorellnmpapqfwkhopkmco"));
     }
 
+    // TODO: fix solution
     public void testFindMedianSortedArrays() {
         assertEquals(60.0, solution.findMedianSortedArrays(new int[]{1, 2, 100, 101}, new int[]{50, 60, 70}));
         assertEquals(26.0, solution.findMedianSortedArrays(new int[]{1, 2}, new int[]{50, 60}));
@@ -82,7 +84,7 @@ public class SolutionTest {
         assertEquals(2.0, solution.findMedianSortedArrays(new int[]{1, 2, 2}, new int[]{1, 2, 3}));
     }
 
-    private void testAddTwoNumbers() {
+    public void testAddTwoNumbers() {
         ListNode val1 = new ListNode(2, new ListNode(4, new ListNode(3)));
         ListNode val2 = new ListNode(5, new ListNode(6, new ListNode(4)));
         ListNode sum = solution.addTwoNumbers(val1, val2);
@@ -100,6 +102,13 @@ public class SolutionTest {
         assertEquals(null, sum.next.next.next);
 
 
+    }
+
+    public void testLongestPalindrome() {
+        assertEquals("aba", solution.longestPalindrome("cabaq"));
+        assertEquals("abba", solution.longestPalindrome("abba"));
+        assertEquals("d", solution.longestPalindrome("abcd"));
+        assertEquals("bb", solution.longestPalindrome("bb"));
     }
 
     public static void assertEquals(Object expected, Object actual) {
