@@ -367,6 +367,58 @@ public class Solution {
 
         return s.substring(from, to + 1);
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/zigzag-conversion/">ZigZag Conversion</a>
+     * The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+     * (you may want to display this pattern in a fixed font for better legibility):
+     * P   A   H   N
+     * A P L S I I G
+     * Y   I   R
+     * And then read line by line: "PAHNAPLSIIGYIR"
+     * <p/>
+     * Write the code that will take a string and make this conversion given a number of rows.
+     * <p/>
+     * 0      10      20       30       40      50
+     * 1    9 11    19 21    29 31    39 41    49
+     * 2   8  12   18  22   28  32   38  42   48
+     * 3  7   13  17   23  27   33  37   43  47
+     * 4 6    14 16    24 26    34 36    44 46
+     * 5      15       25       35       45
+     * <p/>
+     * 0   4   8
+     * 1 3 5 7 9
+     * 2   6   10
+     * <p/>
+     * Solution: just look at the examples and implement what you see.
+     */
+    public String convert(String s, int nRows) {
+        int n = nRows;
+        if (n <= 1) return s;
+        int l = s.length();
+        if (l <= n) return s;
+        StringBuilder out = new StringBuilder();
+
+        for (int row = 0; row < n; row++) {
+            for (int i = 0; i <= l / ((n - 1) * 2) + 1; i++) {
+                int at = i * (n - 1) * 2;
+                if (row == 0 && at < l) {
+                    out.append(s.charAt(at));
+                } else if (row == n - 1 && at + n - 1 < l) {
+                    out.append(s.charAt(at + n - 1));
+                } else if (row > 0 && row < n - 1) {
+                    if (at - row >= 0 && at - row < l) {
+                        out.append(s.charAt(at - row));
+                    }
+                    if (at + row < l && at + row >= 0) {
+                        out.append(s.charAt(at + row));
+                    }
+                }
+            }
+        }
+
+        return out.toString();
+    }
 }
 
 /**

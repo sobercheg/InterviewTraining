@@ -19,6 +19,7 @@ public class SolutionTest {
 //        solutionTest.testFindMedianSortedArrays();
         solutionTest.testAddTwoNumbers();
         solutionTest.testLongestPalindrome();
+        solutionTest.testZigzagConvert();
     }
 
     public void testTwoSum() {
@@ -111,6 +112,14 @@ public class SolutionTest {
         assertEquals("bb", solution.longestPalindrome("bb"));
         assertEquals("aba", solution.longestPalindrome("abaa"));
         assertEquals("aaabaaa", solution.longestPalindrome("aaabaaaa"));
+    }
+
+    public void testZigzagConvert() {
+        assertEquals("0481357926", solution.convert("0123456789", 3));
+        assertEquals("PAHNAPLSIIGYIR", solution.convert("PAYPALISHIRING", 3));
+        assertEquals("AB", solution.convert("AB", 3));
+        assertEquals("ABC", solution.convert("ACB", 2));
+        assertEquals("ABCED", solution.convert("ABCDE", 4));
     }
 
     public static void assertEquals(Object expected, Object actual) {
