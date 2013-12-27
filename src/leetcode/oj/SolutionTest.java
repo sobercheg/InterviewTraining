@@ -21,6 +21,7 @@ public class SolutionTest {
         solutionTest.testLongestPalindrome();
         solutionTest.testZigzagConvert();
         solutionTest.testReverse();
+        solutionTest.testAtoi();
     }
 
     public void testTwoSum() {
@@ -109,7 +110,8 @@ public class SolutionTest {
     public void testLongestPalindrome() {
         assertEquals("aba", solution.longestPalindrome("cabaq"));
         assertEquals("abba", solution.longestPalindrome("abba"));
-//        assertEquals("d", solution.longestPalindrome("abcd"));
+//      unspecified behavior
+//      assertEquals("d", solution.longestPalindrome("abcd"));
         assertEquals("bb", solution.longestPalindrome("bb"));
         assertEquals("aba", solution.longestPalindrome("abaa"));
         assertEquals("aaabaaa", solution.longestPalindrome("aaabaaaa"));
@@ -127,6 +129,24 @@ public class SolutionTest {
         assertEquals(123, solution.reverse(321));
         assertEquals(-321, solution.reverse(-123));
         assertEquals(1, solution.reverse(1));
+    }
+
+    public void testAtoi() {
+        assertEquals(123, solution.atoi("123"));
+        assertEquals(123, solution.atoi("  123"));
+        assertEquals(1, solution.atoi("  1 2 3 "));
+        assertEquals(123, solution.atoi("123www"));
+        assertEquals(0, solution.atoi(" - 123www"));
+        assertEquals(0, solution.atoi(" - 123.5"));
+        assertEquals(0, solution.atoi(".5"));
+        assertEquals(0, solution.atoi("w"));
+        assertEquals(0, solution.atoi("w5"));
+        assertEquals(0, solution.atoi("--1"));
+        assertEquals(1, solution.atoi("+1"));
+        assertEquals(0, solution.atoi("++1"));
+        assertEquals(0, solution.atoi(" +0 123"));
+        assertEquals(2147483647, solution.atoi("2147483648"));
+        assertEquals(2147483647, solution.atoi(" 10522545459"));
     }
 
     public static void assertEquals(Object expected, Object actual) {

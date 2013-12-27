@@ -441,6 +441,82 @@ public class Solution {
 
         return x < 0 ? -reversed : reversed;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/string-to-integer-atoi/">String to Integer (atoi)</a>
+     * Implement atoi to convert a string to an integer.
+     * <p/>
+     * Hint: Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+     * <p/>
+     * Notes: It is intended for this problem to be specified vaguely (ie, no given input specs). You are responsible to gather all the input requirements up front.
+     * <p/>
+     * My initial requirements:
+     * 1. Whitespaces in front are allowed: "    -42" -> -42
+     * 2. Trailing non-digits are allowed: "44www" -> 44
+     * 3. Leading non-digits (except whitespaces) are NOT allowed: "ww34" -> 0
+     * 4. Whitespaces in the middle are NOT allowed: " 4 3" -> 0
+     * 5. Fractional digits are ignored: "45.943" -> 45
+     * 6. Only one negative sign is allowed.
+     * 7. If there is an overflow return Integer.MAX_VALUE for positive or Integer.MIN_VALUE for negative numbers
+     */
+    public int atoi(String str) {
+        boolean isNegative = false;
+        boolean isPositive = false;
+        boolean isBeginning = true;
+        int num = 0;
+
+        for (char ch : str.toCharArray()) {
+
+            // R1. Ignore leading whitespaces
+            // R4. Whitespaces in the middle are NOT allowed
+            if (ch == ' ' && isBeginning) continue;
+
+            // R6. Only one negative sign is allowed
+            if (isNegative && ch == '-') {
+                break;
+            }
+            if (isPositive && ch == '+') {
+                break;
+            }
+
+            if (ch == '-') {
+                isBeginning = false;
+                isNegative = true;
+                continue;
+            }
+
+            if (ch == '+') {
+                isBeginning = false;
+                isPositive = true;
+                continue;
+            }
+
+            if (ch >= '0' && ch <= '9') {
+                isBeginning = false;
+                int newNum = num * 10 + (ch - '0');
+
+                // R7. Preventing overflow
+                if (!isNegative && (newNum) / 10 != num) {
+                    return Integer.MAX_VALUE;
+                }
+                if (isNegative && (newNum) / 10 != num) {
+                    return Integer.MIN_VALUE;
+                }
+                num = newNum;
+                continue;
+            }
+
+            // R2. Ignore trailing non-digits
+            // R5. Fractional digits are ignored
+            // R3. Leadning non-digits are NOT allowed
+            if (ch < '0' || ch > '9') {
+                break;
+            }
+        }
+
+        return isNegative ? -num : num;
+    }
+
 }
 
 /**
