@@ -517,6 +517,32 @@ public class Solution {
         return isNegative ? -num : num;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/palindrome-number/">http://oj.leetcode.com/problems/palindrome-number/</a>
+     * Determine whether an integer is a palindrome. Do this without extra space.
+     */
+    public boolean isPalindrome(int x) {
+        if (x < 0) return false;
+        if (x < 10) return true;
+
+        int copy = x;
+        int len = 0;
+        while (copy > 0) {
+            len++;
+            copy /= 10;
+        }
+
+        while (len > 1) {
+            int pow = (int) (Math.pow(10, len - 1));
+            if (x % 10 != (x / pow)) return false;
+            x = x - ((x / pow) * pow);
+            x = x / 10;
+            len -= 2;
+        }
+
+        return true;
+    }
+
 }
 
 /**

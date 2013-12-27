@@ -22,6 +22,7 @@ public class SolutionTest {
         solutionTest.testZigzagConvert();
         solutionTest.testReverse();
         solutionTest.testAtoi();
+        solutionTest.testIsPalindrome();
     }
 
     public void testTwoSum() {
@@ -147,6 +148,16 @@ public class SolutionTest {
         assertEquals(0, solution.atoi(" +0 123"));
         assertEquals(2147483647, solution.atoi("2147483648"));
         assertEquals(2147483647, solution.atoi(" 10522545459"));
+    }
+
+    public void testIsPalindrome() {
+        assertEquals(true, solution.isPalindrome(1));
+        assertEquals(true, solution.isPalindrome(11));
+        assertEquals(true, solution.isPalindrome(121));
+        assertEquals(true, solution.isPalindrome(1221));
+        assertEquals(false, solution.isPalindrome(1223));
+        assertEquals(false, solution.isPalindrome(122322));
+        assertEquals(true, solution.isPalindrome(9898989));
     }
 
     public static void assertEquals(Object expected, Object actual) {
