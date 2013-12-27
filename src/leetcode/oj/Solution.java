@@ -543,6 +543,105 @@ public class Solution {
         return true;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/regular-expression-matching/">Regular Expression Matching</a>
+     * Implement regular expression matching with support for '.' and '*'.
+     * <p/>
+     * '.' Matches any single character.
+     * '*' Matches zero or more of the preceding element.
+     * <p/>
+     * The matching should cover the entire input string (not partial).
+     * <p/>
+     * The function prototype should be:
+     * bool isMatch(const char *s, const char *p)
+     * <p/>
+     * Some examples:
+     * isMatch("aa","a") → false
+     * isMatch("aa","aa") → true
+     * isMatch("aaa","aa") → false
+     * isMatch("aa", "a*") → true
+     * isMatch("aa", ".*") → true
+     * isMatch("ab", ".*") → true
+     * isMatch("aab", "c*a*b") → true
+     */
+    public boolean isMatch(String s, String p) {
+        log("----- Start matching [%s] by [%s] -----", s, p);
+        // compress pattern: a*a*a* -> a*
+        StringBuilder compressedPattern = new StringBuilder();
+        char prev = '!';
+        int i = 0;
+        while (i < p.length()) {
+            if (i + 1 < p.length() && p.charAt(i + 1) == '*') {
+                if (p.charAt(i) == prev) {
+                    i += 2;
+                } else {
+                    prev = p.charAt(i);
+                    compressedPattern.append(prev);
+                    i++;
+                }
+            } else {
+                compressedPattern.append(p.charAt(i));
+                if (p.charAt(i) != '*') prev = '!';
+                i++;
+            }
+        }
+        log("Compressed pattern: " + compressedPattern.toString());
+        return isMatch(s, compressedPattern.toString(), 0, 0, 0);
+    }
+
+    private boolean isMatch(String s, String p, int sfrom, int pfrom, int level) {
+        log("L[%d]: matching [%s] by [%s]", level, s.substring(sfrom), p.substring(pfrom));
+        // base cases
+        if (sfrom >= s.length()) {
+            if (pfrom >= p.length()) return true; // [] vs []
+
+            if (pfrom + 1 < p.length() && p.charAt(pfrom + 1) == '*')
+                return isMatch(s, p, sfrom, pfrom + 2, level + 1); // [] vs [a*...] -> [] vs [...]
+
+            if (pfrom == p.length() - 2 && p.charAt(p.length() - 1) == '*')
+                return true; // match [] against [a*]
+
+            return false; // [] vs [a], [] vs [aa*]
+        }
+
+
+        if (sfrom < s.length() && pfrom >= p.length()) {
+            return false; // all pattern chars are exhausted but the string is not matched ([abc] vs [])
+        }
+
+        boolean result = false;
+
+        if (s.charAt(sfrom) == p.charAt(pfrom) || p.charAt(pfrom) == '.') {
+            // aa:a* or aa:.*
+            log("L[%d]: First symbol matches (equals or .)", level);
+            if (pfrom + 1 < p.length() && p.charAt(pfrom + 1) == '*') {
+                log("L[%d]: Next pattern symbol is *, so try matching [%s] against [%s] or [%s], or [%s] against [%s]", level, s.substring(sfrom + 1), p.substring(pfrom), p.substring(pfrom + 2), s.substring(sfrom), p.substring(pfrom + 2));
+                result = isMatch(s, p, sfrom + 1, pfrom, level + 1) // try to match next input char with the same regex (a* or .*)
+                        || isMatch(s, p, sfrom, pfrom + 2, level + 1) // or skip this regex part (a* or .*) and try to match same string
+                        || isMatch(s, p, sfrom + 1, pfrom + 2, level + 1); // or go further, skip this regex part (a* or .*)
+                log("L[%d]: Result of matching [%s] against [%s] or [%s], or [%s] against [%s] is [%s]", level, s.substring(sfrom + 1), p.substring(pfrom), p.substring(pfrom + 2), s.substring(sfrom), p.substring(pfrom + 2), result);
+
+            } else {
+                log("L[%d]: Trying regular char-char or char-. match [%s] [%s]", level, s.substring(sfrom + 1), p.substring(pfrom + 1));
+                result = isMatch(s, p, sfrom + 1, pfrom + 1, level + 1); // regular char-char or char-. match
+                log("L[%d]: Result of regular char-char or char-. match [%s] [%s] is [%s]", level, s.substring(sfrom + 1), p.substring(pfrom + 1), result);
+
+            }
+        } else if (s.charAt(sfrom) != p.charAt(pfrom) && pfrom + 1 < p.length() && p.charAt(pfrom + 1) == '*') {
+            // aa:b*
+            log("L[%d]: skipping non-matching star piece: [%s] against [%s]", level, s.substring(sfrom), p.substring(pfrom));
+            result = isMatch(s, p, sfrom, pfrom + 2, level + 1); // skip this b* regex
+            log("L[%d]: Result of skipping non-matching star piece: [%s] against [%s] is [%s]", level, s.substring(sfrom), p.substring(pfrom), result);
+
+        }
+        log("L[%d]: Returning result for [%s] against [%s] as [%s]", level, s.substring(sfrom), p.substring(pfrom), result);
+        return result;
+    }
+
+    private void log(String msg, Object... args) {
+        // System.out.println(String.format(msg, args));
+    }
+
 }
 
 /**

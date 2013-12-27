@@ -23,6 +23,7 @@ public class SolutionTest {
         solutionTest.testReverse();
         solutionTest.testAtoi();
         solutionTest.testIsPalindrome();
+        solutionTest.testIsMatch();
     }
 
     public void testTwoSum() {
@@ -158,6 +159,26 @@ public class SolutionTest {
         assertEquals(false, solution.isPalindrome(1223));
         assertEquals(false, solution.isPalindrome(122322));
         assertEquals(true, solution.isPalindrome(9898989));
+    }
+
+    public void testIsMatch() {
+        assertEquals(false, solution.isMatch("bbab", "b*a*"));
+        assertEquals(true, solution.isMatch("", "a*"));
+        assertEquals(false, solution.isMatch("aa", "a"));
+        assertEquals(true, solution.isMatch("a", "a*a"));
+        assertEquals(true, solution.isMatch("bac", "c*.*b*aa*.a*"));
+        assertEquals(true, solution.isMatch("bbbba", ".*a*a"));
+        assertEquals(true, solution.isMatch("aa", "aa"));
+        assertEquals(false, solution.isMatch("aaa", "aa"));
+        assertEquals(true, solution.isMatch("aa", "a*"));
+        assertEquals(true, solution.isMatch("aa", ".*"));
+        assertEquals(true, solution.isMatch("ab", ".*"));
+        assertEquals(true, solution.isMatch("aab", "c*a*b"));
+        assertEquals(true, solution.isMatch("aab", "a.b"));
+        assertEquals(false, solution.isMatch("aacacbcbabbaaaccb", "a*b.c*c*aa*c*b*c*c"));
+        assertEquals(true, solution.isMatch("baccbbcbcacacbbc", "c*.*b*c*ba*b*b*.a*"));
+        assertEquals(false, solution.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c"));
+        assertEquals(true, solution.isMatch("cbaacacaaccbaabcb", "c*b*b*.*ac*.*bc*a*"));
     }
 
     public static void assertEquals(Object expected, Object actual) {
