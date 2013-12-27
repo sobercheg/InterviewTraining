@@ -20,6 +20,7 @@ public class SolutionTest {
         solutionTest.testAddTwoNumbers();
         solutionTest.testLongestPalindrome();
         solutionTest.testZigzagConvert();
+        solutionTest.testReverse();
     }
 
     public void testTwoSum() {
@@ -120,6 +121,12 @@ public class SolutionTest {
         assertEquals("AB", solution.convert("AB", 3));
         assertEquals("ABC", solution.convert("ACB", 2));
         assertEquals("ABCED", solution.convert("ABCDE", 4));
+    }
+
+    public void testReverse() {
+        assertEquals(123, solution.reverse(321));
+        assertEquals(-321, solution.reverse(-123));
+        assertEquals(1, solution.reverse(1));
     }
 
     public static void assertEquals(Object expected, Object actual) {

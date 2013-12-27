@@ -419,6 +419,28 @@ public class Solution {
 
         return out.toString();
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/reverse-integer/">Reverse Integer</a>
+     * Reverse digits of an integer.
+     * <p/>
+     * Example1: x = 123, return 321
+     * Example2: x = -123, return -321
+     * <p/>
+     * Solution: keep dividing the number by 10 and append num%10 to the result left side as result = result * 10 + right
+     */
+    public int reverse(int x) {
+        int num = x < 0 ? -x : x;
+        int reversed = 0;
+
+        while (num > 0) {
+            int right = num % 10;
+            num /= 10;
+            reversed = reversed * 10 + right;
+        }
+
+        return x < 0 ? -reversed : reversed;
+    }
 }
 
 /**
