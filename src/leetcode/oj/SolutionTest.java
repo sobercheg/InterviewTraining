@@ -29,6 +29,7 @@ public class SolutionTest {
         solutionTest.testRomanToInt();
         solutionTest.testLongestCommonPrefix();
         solutionTest.testThreeSum();
+        solutionTest.testThreeSumClosest();
     }
 
     public void testTwoSum() {
@@ -211,10 +212,16 @@ public class SolutionTest {
     }
 
     public void testThreeSum() {
-        assertEquals(Arrays.asList(Arrays.asList(-1, -1, 2), Arrays.asList(-1, 0, 1)), solution.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
+        assertEquals(Arrays.asList(Arrays.asList(-1, 0, 1), Arrays.asList(-1, -1, 2)), solution.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
         assertEquals(Arrays.asList(Arrays.asList(0, 0, 0)), solution.threeSum(new int[]{0, 0, 0}));
         assertEquals(Arrays.asList(Arrays.asList(-1, 0, 1)), solution.threeSum(new int[]{1, -1, -1, 0}));
-        assertEquals(Arrays.asList(Arrays.asList(-2, 0, 2), Arrays.asList(-2, 1, 1)), solution.threeSum(new int[]{-2, 0, 1, 1, 2}));
+        assertEquals(Arrays.asList(Arrays.asList(-2, 1, 1), Arrays.asList(-2, 0, 2)), solution.threeSum(new int[]{-2, 0, 1, 1, 2}));
+    }
+
+    public void testThreeSumClosest() {
+        assertEquals(2, solution.threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
+        assertEquals(3, solution.threeSumClosest(new int[]{1, 1, 1, 1}, 3));
+        assertEquals(1, solution.threeSumClosest(new int[]{1, 1, -1, -1, 3}, 1));
     }
 
     public static void assertEquals(Object expected, Object actual) {

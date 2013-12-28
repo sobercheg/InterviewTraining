@@ -789,7 +789,7 @@ public class Solution {
         Arrays.sort(num);
         if (num.length < 3) return new ArrayList<ArrayList<Integer>>(sums);
         int n = num.length;
-        for (int k = n - 1; k >= 2; k--) {
+        for (int k = 2; k < n; k++) {
             // prevent duplicates
             if (k < n - 1 && num[k] == num[k + 1]) continue;
             int a = 0;
@@ -801,7 +801,7 @@ public class Solution {
                     continue;
                 }
                 // prevent duplicates
-                if (b > k - 1 && num[b] == num[b + 1]) {
+                if (b < k - 1 && num[b] == num[b + 1]) {
                     b--;
                     continue;
                 }
@@ -819,6 +819,58 @@ public class Solution {
 
         return sums;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/3sum-closest/">3Sum Closest</a>
+     * Given an array S of n integers, find three integers in S such that the sum is closest to a given number, target.
+     * Return the sum of the three integers. You may assume that each input would have exactly one solution.
+     * <p/>
+     * For example, given array S = {-1 2 1 -4}, and target = 1.
+     * <p/>
+     * The sum that is closest to the target is 2. (-1 + 2 + 1 = 2).
+     * <p/>
+     * Idea: the problem seems similar to the 3sum problem. We need to keep only one 3set and the closest sum to target so far.
+     */
+    public int threeSumClosest(int[] num, int target) {
+        if (num.length == 0) return 0;
+        if (num.length == 1) return num[0];
+        if (num.length == 2) return num[0] + num[1];
+        if (num.length == 3) return num[0] + num[1] + num[2];
+
+        Arrays.sort(num);
+        int n = num.length;
+        int bestDiff = Integer.MAX_VALUE;
+        int bestSum = Integer.MAX_VALUE;
+        for (int k = 2; k < n; k++) {
+            // skip duplicates
+            if (k < n - 1 && num[k] == num[k + 1]) continue;
+            for (int a = 0, b = k - 1; a < b; ) {
+                if (a > 0 && num[a] == num[a - 1]) {
+                    a++;
+                    continue;
+                }
+                if (b < k - 1 && num[b] == num[b + 1]) {
+                    b--;
+                    continue;
+                }
+                int sum = num[a] + num[k] + num[b];
+                if (Math.abs(sum - target) < bestDiff) {
+                    bestSum = sum;
+                    bestDiff = Math.abs(sum - target);
+                }
+
+                if (sum < target) {
+                    a++;
+                } else {
+                    b--;
+                }
+            }
+
+        }
+
+        return bestSum;
+    }
+
 }
 
 /**
