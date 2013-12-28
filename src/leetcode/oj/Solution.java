@@ -748,6 +748,22 @@ public class Solution {
         return num;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/longest-common-prefix/">Longest Common Prefix</a>
+     * Write a function to find the longest common prefix string amongst an array of strings.
+     */
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        int rightMost = strs[0].length() - 1;
+        int pos = 0;
+        for (; pos <= rightMost; pos++) {
+            for (String str : strs) {
+                if (str.length() < pos + 1 || str.charAt(pos) != strs[0].charAt(pos))
+                    return strs[0].substring(0, pos);
+            }
+        }
+        return strs[0];
+    }
 }
 
 /**

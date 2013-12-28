@@ -27,6 +27,7 @@ public class SolutionTest {
         solutionTest.testMaxArea();
         solutionTest.testIntToRoman();
         solutionTest.testRomanToInt();
+        solutionTest.testLongestCommonPrefix();
     }
 
     public void testTwoSum() {
@@ -199,6 +200,13 @@ public class SolutionTest {
 
     public void testRomanToInt() {
         assertEquals(1954, solution.romanToInt("MCMLIV"));
+    }
+
+    public void testLongestCommonPrefix() {
+        assertEquals("a", solution.longestCommonPrefix(new String[]{"aa", "a"}));
+        assertEquals("ab", solution.longestCommonPrefix(new String[]{"abc", "abde"}));
+        assertEquals("ab", solution.longestCommonPrefix(new String[]{"ab", "abde"}));
+        assertEquals("", solution.longestCommonPrefix(new String[]{"ab", "bbde"}));
     }
 
     public static void assertEquals(Object expected, Object actual) {
