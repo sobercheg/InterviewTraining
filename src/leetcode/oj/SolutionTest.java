@@ -1,5 +1,6 @@
 package leetcode.oj;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -30,6 +31,7 @@ public class SolutionTest {
         solutionTest.testLongestCommonPrefix();
         solutionTest.testThreeSum();
         solutionTest.testThreeSumClosest();
+        solutionTest.testLetterCombinations();
     }
 
     public void testTwoSum() {
@@ -222,6 +224,11 @@ public class SolutionTest {
         assertEquals(2, solution.threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
         assertEquals(3, solution.threeSumClosest(new int[]{1, 1, 1, 1}, 3));
         assertEquals(1, solution.threeSumClosest(new int[]{1, 1, -1, -1, 3}, 1));
+    }
+
+    public void testLetterCombinations() {
+        assertEquals(Arrays.asList("ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"), solution.letterCombinations("23"));
+        assertEquals(Arrays.asList(""), solution.letterCombinations(""));
     }
 
     public static void assertEquals(Object expected, Object actual) {

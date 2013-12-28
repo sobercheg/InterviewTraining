@@ -871,6 +871,59 @@ public class Solution {
         return bestSum;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/">Letter Combinations of a Phone Number</a>
+     * Given a digit string, return all possible letter combinations that the number could represent.
+     * <p/>
+     * A mapping of digit to letters (just like on the telephone buttons) is given below.
+     * <p/>
+     * Input: Digit string "23"
+     * Output: ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"].
+     * <p/>
+     * Solution: Think of letters as digits of a 3 or 4 based numerical system. "Increment" the number until overflow
+     */
+    public ArrayList<String> letterCombinations(String digits) {
+        if (digits == null || digits.isEmpty()) return new ArrayList<String>(Arrays.asList(""));
+        // map of digit to letters
+        Map<Character, String> digitMap = new HashMap<Character, String>();
+        digitMap.put('1', "1");
+        digitMap.put('2', "abc");
+        digitMap.put('3', "def");
+        digitMap.put('4', "ghi");
+        digitMap.put('5', "jkl");
+        digitMap.put('6', "mno");
+        digitMap.put('7', "pqrs");
+        digitMap.put('8', "tuv");
+        digitMap.put('9', "wxyz");
+
+        int[] counters = new int[digits.length()];
+        boolean overflow = false;
+        ArrayList<String> combinations = new ArrayList<String>();
+        // keep incrementing counters while there is no overflow
+        int n = digits.length() - 1;
+        while (!overflow) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < counters.length; i++) {
+                String chars = digitMap.get(digits.charAt(i));
+                sb.append(chars.charAt(counters[i]));
+            }
+            combinations.add(sb.toString());
+            int position = n;
+            counters[position]++;
+            while (counters[position] >= digitMap.get(digits.charAt(position)).length()) {
+
+                counters[position] = 0;
+                position--;
+                if (position < 0) {
+                    overflow = true;
+                    break;
+                }
+                counters[position]++;
+            }
+
+        }
+        return combinations;
+    }
 }
 
 /**
