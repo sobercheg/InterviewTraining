@@ -700,6 +700,54 @@ public class Solution {
 
         return maxVolume;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/integer-to-roman/">Integer to Roman</a>
+     * Given an integer, convert it to a roman numeral.
+     * <p/>
+     * Input is guaranteed to be within the range from 1 to 3999.
+     */
+    public String intToRoman(int num) {
+        int[] nums = new int[]{1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romans = new String[]{"M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"};
+        StringBuilder sb = new StringBuilder();
+        while (num > 0) {
+            int i = 0;
+            // find the largest
+            while (nums[i] > num) {
+                i++;
+            }
+            sb.append(romans[i]);
+            num -= nums[i];
+        }
+        return sb.toString();
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/roman-to-integer/">Roman to Integer</a>
+     * Given a roman numeral, convert it to an integer.
+     * <p/>
+     * Input is guaranteed to be within the range from 1 to 3999.
+     */
+    public int romanToInt(String s) {
+        // the order matters here: we want to match CM before M, CD before D and so on
+        String[] romans = new String[]{"CM", "M", "CD", "D", "XC", "C", "XL", "L", "IX", "X", "IV", "V", "I"};
+        int[] nums = new int[]{900, 1000, 400, 500, 90, 100, 40, 50, 9, 10, 4, 5, 1};
+        int num = 0;
+        int offset = 0;
+        while (offset < s.length()) {
+            for (int i = 0; i < romans.length; i++) {
+                if (s.startsWith(romans[i], offset)) {
+                    num += nums[i];
+                    offset += romans[i].length();
+                    break;
+                }
+            }
+        }
+
+        return num;
+    }
+
 }
 
 /**

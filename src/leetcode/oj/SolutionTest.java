@@ -25,6 +25,8 @@ public class SolutionTest {
         solutionTest.testIsPalindrome();
         solutionTest.testIsMatch();
         solutionTest.testMaxArea();
+        solutionTest.testIntToRoman();
+        solutionTest.testRomanToInt();
     }
 
     public void testTwoSum() {
@@ -189,6 +191,14 @@ public class SolutionTest {
         assertEquals(4, solution.maxArea(new int[]{2, 1, 2}));
         assertEquals(2, solution.maxArea(new int[]{1, 2, 1}));
         assertEquals(4, solution.maxArea(new int[]{1, 2, 4, 3}));
+    }
+
+    public void testIntToRoman() {
+        assertEquals("MCMLIV", solution.intToRoman(1954));
+    }
+
+    public void testRomanToInt() {
+        assertEquals(1954, solution.romanToInt("MCMLIV"));
     }
 
     public static void assertEquals(Object expected, Object actual) {
