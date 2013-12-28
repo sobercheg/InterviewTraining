@@ -28,6 +28,7 @@ public class SolutionTest {
         solutionTest.testIntToRoman();
         solutionTest.testRomanToInt();
         solutionTest.testLongestCommonPrefix();
+        solutionTest.testThreeSum();
     }
 
     public void testTwoSum() {
@@ -207,6 +208,13 @@ public class SolutionTest {
         assertEquals("ab", solution.longestCommonPrefix(new String[]{"abc", "abde"}));
         assertEquals("ab", solution.longestCommonPrefix(new String[]{"ab", "abde"}));
         assertEquals("", solution.longestCommonPrefix(new String[]{"ab", "bbde"}));
+    }
+
+    public void testThreeSum() {
+        assertEquals(Arrays.asList(Arrays.asList(-1, -1, 2), Arrays.asList(-1, 0, 1)), solution.threeSum(new int[]{-1, 0, 1, 2, -1, -4}));
+        assertEquals(Arrays.asList(Arrays.asList(0, 0, 0)), solution.threeSum(new int[]{0, 0, 0}));
+        assertEquals(Arrays.asList(Arrays.asList(-1, 0, 1)), solution.threeSum(new int[]{1, -1, -1, 0}));
+        assertEquals(Arrays.asList(Arrays.asList(-2, 0, 2), Arrays.asList(-2, 1, 1)), solution.threeSum(new int[]{-2, 0, 1, 1, 2}));
     }
 
     public static void assertEquals(Object expected, Object actual) {

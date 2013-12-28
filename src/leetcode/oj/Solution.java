@@ -764,6 +764,61 @@ public class Solution {
         }
         return strs[0];
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/3sum/">3Sum</a>
+     * Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0?
+     * Find all unique triplets in the array which gives the sum of zero.
+     * <p/>
+     * Note:
+     * <p/>
+     * Elements in a triplet (a,b,c) must be in non-descending order. (ie, a ≤ b ≤ c)
+     * The solution set must not contain duplicate triplets.
+     * <p/>
+     * For example, given array S = {-1 0 1 2 -1 -4},
+     * <p/>
+     * A solution set is:
+     * (-1, 0, 1)
+     * (-1, -1, 2)
+     * <p/>
+     * Solution: the idea is to extend the k=a+b (two sum) problem on a sorted list: for every k find a and b by moving
+     * left and right pointers toward each other until a+b+k=0.
+     */
+    public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
+        ArrayList<ArrayList<Integer>> sums = new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(num);
+        if (num.length < 3) return new ArrayList<ArrayList<Integer>>(sums);
+        int n = num.length;
+        for (int k = n - 1; k >= 2; k--) {
+            // prevent duplicates
+            if (k < n - 1 && num[k] == num[k + 1]) continue;
+            int a = 0;
+            int b = k - 1;
+            while (a < b) {
+                // prevent duplicates
+                if (a > 0 && num[a] == num[a - 1]) {
+                    a++;
+                    continue;
+                }
+                // prevent duplicates
+                if (b > k - 1 && num[b] == num[b + 1]) {
+                    b--;
+                    continue;
+                }
+                int sum = num[a] + num[k] + num[b];
+                if (sum > 0) b--;
+                else if (sum < 0) a++;
+                else {
+                    sums.add(new ArrayList<Integer>(Arrays.asList(num[a], num[b], num[k])));
+                    a++;
+                    b--;
+                    //break;
+                }
+            }
+        }
+
+        return sums;
+    }
 }
 
 /**
