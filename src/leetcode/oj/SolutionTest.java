@@ -24,6 +24,7 @@ public class SolutionTest {
         solutionTest.testAtoi();
         solutionTest.testIsPalindrome();
         solutionTest.testIsMatch();
+        solutionTest.testMaxArea();
     }
 
     public void testTwoSum() {
@@ -179,6 +180,15 @@ public class SolutionTest {
         assertEquals(true, solution.isMatch("baccbbcbcacacbbc", "c*.*b*c*ba*b*b*.a*"));
         assertEquals(false, solution.isMatch("aaaaaaaaaaaaab", "a*a*a*a*a*a*a*a*a*a*c"));
         assertEquals(true, solution.isMatch("cbaacacaaccbaabcb", "c*b*b*.*ac*.*bc*a*"));
+    }
+
+    public void testMaxArea() {
+        assertEquals(2, solution.maxArea(new int[]{1, 2, 3}));
+        assertEquals(2, solution.maxArea(new int[]{3, 2, 1}));
+        assertEquals(0, solution.maxArea(new int[]{1}));
+        assertEquals(4, solution.maxArea(new int[]{2, 1, 2}));
+        assertEquals(2, solution.maxArea(new int[]{1, 2, 1}));
+        assertEquals(4, solution.maxArea(new int[]{1, 2, 4, 3}));
     }
 
     public static void assertEquals(Object expected, Object actual) {

@@ -601,7 +601,7 @@ public class Solution {
             if (pfrom == p.length() - 2 && p.charAt(p.length() - 1) == '*')
                 return true; // match [] against [a*]
 
-            return false; // [] vs [a], [] vs [aa*]
+            return false; // [] vs [a], [] vs [aa*] (all other cases)
         }
 
 
@@ -642,6 +642,64 @@ public class Solution {
         // System.out.println(String.format(msg, args));
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/container-with-most-water/">Container With Most Water</a>
+     * Given n non-negative integers a1, a2, ..., an, where each represents a point at coordinate (i, ai). n vertical
+     * lines are drawn such that the two endpoints of line i is at (i, ai) and (i, 0).
+     * Find two lines, which together with x-axis forms a container, such that the container contains the most water.
+     * <p/>
+     * Note: You may not slant the container.
+     * <p/>
+     * Solution: let's do three passes:
+     * 1. From left to right raising the watermark as line height becomes higher
+     * <p/>
+     * 2. From right to left lowering the watermark to the current line height
+     * <p/>
+     * 3. Calculate maxArea during Pass 3
+     */
+    public int maxArea(int[] height) {
+        if (height.length < 2) return 0;
+
+        int[] watermark = new int[height.length];
+
+        // Pass 1
+        int currentWatermark = height[0];
+        for (int i = 0; i < height.length; i++) {
+            if (height[i] > currentWatermark) {
+                currentWatermark = height[i];
+            }
+            watermark[i] = currentWatermark;
+        }
+
+        // Pass 2
+        currentWatermark = height[height.length - 1];
+        for (int i = height.length - 1; i > 0; i--) {
+
+            if (height[i] > currentWatermark) {
+                currentWatermark = height[i];
+            }
+            watermark[i - 1] = Math.min(currentWatermark, watermark[i - 1]);
+        }
+
+        // Pass 3
+        int i = 0;
+        int j = watermark.length - 2;
+        int maxVolume = (j - i + 1) * Math.min(watermark[0], watermark[watermark.length - 2]);
+
+        int prevWatermark;
+        while (i < j) {
+            prevWatermark = Math.min(watermark[i], watermark[j]);
+            while (watermark[i] <= prevWatermark && i < j) i++;
+            while (watermark[j] <= prevWatermark && i < j) j--;
+
+            int currentMax = (j - i + 1) * Math.min(watermark[i], watermark[j]);
+            if (currentMax > maxVolume) {
+                maxVolume = currentMax;
+            }
+        }
+
+        return maxVolume;
+    }
 }
 
 /**
