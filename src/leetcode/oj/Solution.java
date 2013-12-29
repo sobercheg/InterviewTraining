@@ -1109,8 +1109,39 @@ public class Solution {
         return head;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/valid-parentheses/">Valid Parentheses</a>
+     * Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+     * <p/>
+     * The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+     */
+    public boolean isValid(String s) {
+        Map<Character, Character> par = new HashMap<Character, Character>();
+        par.put('(', ')');
+        par.put('{', '}');
+        par.put('[', ']');
 
-    /************************** Data structures ****************************/
+        LinkedList<Character> stack = new LinkedList<Character>();
+
+        for (char ch : s.toCharArray()) {
+            // opening paren: add the corresponding closing paren to the stack
+            if (par.containsKey(ch)) {
+                stack.push(par.get(ch));
+            }
+            // should be a closing paren: make sure the top stack element is exactly this paren.
+            else if (!stack.isEmpty() && stack.peek() == ch) {
+                stack.pop();
+            }
+            // invalid paren or character
+            else return false;
+        }
+
+        // there missing closing parens if the stack is not empty
+        return stack.isEmpty();
+    }
+
+/************************** Data structures ****************************/
+
     /**
      * Definition for binary tree
      */

@@ -37,6 +37,7 @@ public class SolutionTest {
         solutionTest.testKSum();
         solutionTest.testLetterCombinations();
         solutionTest.testRemoveNthFromEnd();
+        solutionTest.testIsValid();
     }
 
     public void testTwoSum() {
@@ -272,7 +273,15 @@ public class SolutionTest {
         assertEquals(3, removed.next.next.val);
         assertEquals(5, removed.next.next.next.val);
         assertEquals(null, removed.next.next.next.next);
+    }
 
+    public void testIsValid() {
+        assertEquals(false, solution.isValid("["));
+        assertEquals(false, solution.isValid("]"));
+        assertEquals(false, solution.isValid("()]"));
+        assertEquals(false, solution.isValid("[()"));
+        assertEquals(true, solution.isValid("()"));
+        assertEquals(true, solution.isValid("({})[]"));
     }
 
     /**
