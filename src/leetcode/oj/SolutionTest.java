@@ -1,10 +1,9 @@
 package leetcode.oj;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
-import static leetcode.oj.Solution.ListNode;
-import static leetcode.oj.Solution.TreeNode;
-import static leetcode.oj.Solution.Point;
+import static leetcode.oj.Solution.*;
 
 /**
  * Created by Sobercheg on 12/24/13.
@@ -44,6 +43,7 @@ public class SolutionTest {
         solutionTest.testMaxProfitI();
         solutionTest.testMaxProfitII();
         solutionTest.testMaxProfitIII();
+        solutionTest.testMergeKLists();
     }
 
     public void testTwoSum() {
@@ -317,6 +317,25 @@ public class SolutionTest {
         assertEquals(0, solution.maxProfitIII(new int[]{10, 9}));
         assertEquals(1, solution.maxProfitIII(new int[]{1, 2}));
         assertEquals(7, solution.maxProfitIII(new int[]{6, 1, 3, 2, 4, 7}));
+    }
+
+    public void testMergeKLists() {
+        // just one element
+        ListNode merged = solution.mergeKLists(new ArrayList<ListNode>(Arrays.asList(new ListNode(1))));
+        assertEquals(1, merged.val);
+        assertEquals(null, merged.next);
+
+        ListNode list1 = new ListNode(1, new ListNode(4, new ListNode(5)));
+        ListNode list2 = new ListNode(1, new ListNode(3, new ListNode(8)));
+        merged = solution.mergeKLists(new ArrayList<ListNode>(Arrays.asList(list1, list2)));
+        assertEquals(1, merged.val);
+        assertEquals(1, merged.next.val);
+        assertEquals(3, merged.next.next.val);
+        assertEquals(4, merged.next.next.next.val);
+        assertEquals(5, merged.next.next.next.next.val);
+        assertEquals(8, merged.next.next.next.next.next.val);
+        assertEquals(null, merged.next.next.next.next.next.next);
+
     }
 
     /**

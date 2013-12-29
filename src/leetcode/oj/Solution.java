@@ -1305,6 +1305,68 @@ public class Solution {
         return maxProfit;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/merge-k-sorted-lists/">Merge k Sorted Lists</a>
+     * Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+     * <p/>
+     * Solution: use a TreeMap for storing list heads sorted by their value. Get first map entry, advance the corresponding
+     * list position (if available) and put ths value-list pair to the map.
+     */
+    public ListNode mergeKLists(ArrayList<ListNode> lists) {
+        if (lists == null || lists.isEmpty()) return null;
+
+        class MinNode implements Comparable<MinNode> {
+            final int value;
+            final ListNode list;
+
+            MinNode(int value, ListNode list) {
+                this.value = value;
+                this.list = list;
+            }
+
+            @Override
+            public int compareTo(MinNode o) {
+                // comparing hashcode is somewhat a hack to allow multiple entries with the same value in a TreeSet
+                return value == o.value ? Integer.compare(this.hashCode(), o.hashCode()) : Integer.compare(value, o.value);
+            }
+        }
+
+        TreeSet<MinNode> minNodes = new TreeSet<MinNode>();
+
+        // initial population
+        for (ListNode list : lists) {
+            if (list == null) continue;
+            minNodes.add(new MinNode(list.val, list));
+        }
+        ListNode sortedHead = null;
+        ListNode sortedNext = null;
+
+        while (!minNodes.isEmpty()) {
+            MinNode minNode = minNodes.first();
+            minNodes.remove(minNode);
+            ListNode smallestHead = minNode.list;
+            // init sorted list head if necessary
+            if (sortedHead == null) {
+                sortedHead = new ListNode(minNode.value);
+                sortedNext = sortedHead;
+            } else {
+                // create new sorted list node
+                ListNode newNode = new ListNode(minNode.value);
+                sortedNext.next = newNode;
+                sortedNext = newNode;
+            }
+
+            // advance list pointer if possible
+            if (smallestHead.next != null) {
+                smallestHead = smallestHead.next;
+
+                // and push
+                minNodes.add(new MinNode(smallestHead.val, smallestHead));
+            }
+        }
+        return sortedHead;
+    }
+
     /************************** Data structures ****************************/
 
     /**
