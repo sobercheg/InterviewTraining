@@ -1,10 +1,9 @@
 package leetcode.oj;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import static leetcode.oj.Solution.TreeNode;
 import static leetcode.oj.Solution.ListNode;
+import static leetcode.oj.Solution.TreeNode;
 
 /**
  * Created by Sobercheg on 12/24/13.
@@ -37,6 +36,7 @@ public class SolutionTest {
         solutionTest.testFourSum();
         solutionTest.testKSum();
         solutionTest.testLetterCombinations();
+        solutionTest.testRemoveNthFromEnd();
     }
 
     public void testTwoSum() {
@@ -252,6 +252,32 @@ public class SolutionTest {
         assertEquals(Arrays.asList(""), solution.letterCombinations(""));
     }
 
+    private void testRemoveNthFromEnd() {
+        // remove head
+        ListNode head = new ListNode(1, new ListNode(2));
+        ListNode removed = solution.removeNthFromEnd(head, 2);
+        assertEquals(2, removed.val);
+        assertEquals(null, removed.next);
+
+        // one element, n = 1
+        head = new ListNode(1);
+        removed = solution.removeNthFromEnd(head, 1);
+        assertEquals(null, removed);
+
+        // normal list
+        head = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        removed = solution.removeNthFromEnd(head, 2);
+        assertEquals(1, removed.val);
+        assertEquals(2, removed.next.val);
+        assertEquals(3, removed.next.next.val);
+        assertEquals(5, removed.next.next.next.val);
+        assertEquals(null, removed.next.next.next.next);
+
+    }
+
+    /**
+     * *************************** Helper test methods ***********************
+     */
     public static void assertEquals(Object expected, Object actual) {
         if (checkNulls(expected, actual)) return;
         if (!expected.equals(actual))

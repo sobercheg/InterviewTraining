@@ -1,7 +1,5 @@
 package leetcode.oj;
 
-import other.NChooseK;
-
 import java.util.*;
 
 /**
@@ -888,8 +886,6 @@ public class Solution {
      * (-1,  0, 0, 1)
      * (-2, -1, 1, 2)
      * (-2,  0, 0, 2)
-     * </p>
-     * Solution: http://stackoverflow.com/questions/14732277/quadratic-algorithm-for-4-sum
      */
     public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
         if (num.length < 4) return new ArrayList<ArrayList<Integer>>();
@@ -1074,6 +1070,46 @@ public class Solution {
         return combinations;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/remove-nth-node-from-end-of-list/">Remove Nth Node From End of List</a>
+     * Given a linked list, remove the nth node from the end of list and return its head.
+     * <p/>
+     * For example,
+     * <p/>
+     * Given linked list: 1->2->3->4->5, and n = 2.
+     * <p/>
+     * After removing the second node from the end, the linked list becomes 1->2->3->5.
+     * <p/>
+     * Note:
+     * Given n will always be valid.
+     * Try to do this in one pass.
+     * <p/>
+     * Solution: use two pointers: one starts immediately, another after n moves. As soon as the first pointer reaches
+     * the end of the list (node.next == null) the second will point to the element right before the element to delete.
+     * Now just rewire a couple of pointers.
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fastPointer = head;
+        ListNode slowPointer = head;
+        for (int i = 0; i < n; i++)
+            fastPointer = fastPointer.next;
+
+        // need to remove the first element, head.
+        if (fastPointer == null) {
+            return head.next;
+        }
+
+        while (fastPointer.next != null) {
+            fastPointer = fastPointer.next;
+            slowPointer = slowPointer.next;
+        }
+
+        ListNode toDelete = slowPointer.next;
+        slowPointer.next = toDelete.next;
+        return head;
+    }
+
+
     /************************** Data structures ****************************/
     /**
      * Definition for binary tree
@@ -1111,6 +1147,11 @@ public class Solution {
         ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
         }
     }
 
