@@ -1140,6 +1140,37 @@ public class Solution {
         return stack.isEmpty();
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/generate-parentheses/">Generate Parentheses</a>
+     * Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+     * <p/>
+     * For example, given n = 3, a solution set is:
+     * <p/>
+     * "((()))", "(()())", "(())()", "()(())", "()()()"
+     */
+    public ArrayList<String> generateParenthesis(int n) {
+        char[] parens = new char[n * 2];
+        return new ArrayList<String>(generateParenthesis(parens, n, 0, 0, 0));
+    }
+
+    private List<String> generateParenthesis(char[] parens, int n, int opened, int closed, int len) {
+        if (len == n * 2) {
+            return Arrays.asList(new String(parens));
+        }
+
+        List<String> allParens = new ArrayList<String>();
+        if (opened < n) {
+            parens[len] = '(';
+            allParens.addAll(generateParenthesis(parens, n, opened + 1, closed, len + 1));
+        }
+        if (closed < opened) {
+            parens[len] = ')';
+            allParens.addAll(generateParenthesis(parens, n, opened, closed + 1, len + 1));
+        }
+
+        return allParens;
+    }
+
 /************************** Data structures ****************************/
 
     /**

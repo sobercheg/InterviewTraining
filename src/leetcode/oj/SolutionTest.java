@@ -38,6 +38,7 @@ public class SolutionTest {
         solutionTest.testLetterCombinations();
         solutionTest.testRemoveNthFromEnd();
         solutionTest.testIsValid();
+        solutionTest.testGenerateParenthesis();
     }
 
     public void testTwoSum() {
@@ -282,6 +283,13 @@ public class SolutionTest {
         assertEquals(false, solution.isValid("[()"));
         assertEquals(true, solution.isValid("()"));
         assertEquals(true, solution.isValid("({})[]"));
+    }
+
+    public void testGenerateParenthesis() {
+        assertEquals(Arrays.asList(""), solution.generateParenthesis(0));
+        assertEquals(Arrays.asList("()"), solution.generateParenthesis(1));
+        assertEquals(Arrays.asList("(())", "()()"), solution.generateParenthesis(2));
+        assertEquals(Arrays.asList("((()))", "(()())", "(())()", "()(())", "()()()"), solution.generateParenthesis(3));
     }
 
     /**
