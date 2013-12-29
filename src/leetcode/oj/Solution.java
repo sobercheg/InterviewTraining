@@ -1220,7 +1220,7 @@ public class Solution {
      * If you were only permitted to complete at most one transaction (ie, buy one and sell one share of the stock),
      * design an algorithm to find the maximum profit.
      */
-    public int maxProfit(int[] prices) {
+    public int maxProfitI(int[] prices) {
         int buy = 0;
         int maxDiff = 0;
 
@@ -1234,6 +1234,25 @@ public class Solution {
 
         }
         return maxDiff;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/">Best Time to Buy and Sell Stock II</a>
+     * Say you have an array for which the ith element is the price of a given stock on day i.
+     * <p/>
+     * Design an algorithm to find the maximum profit. You may complete as many transactions as you like
+     * (ie, buy one and sell one share of the stock multiple times).
+     * However, you may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+     * <p/>
+     * Solution: just track when the price curve changes direction: sell on previous day, buy on this day
+     */
+    public int maxProfitII(int[] prices) {
+        int profit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i - 1] > prices[i]) continue;
+            profit += prices[i] - prices[i - 1];
+        }
+        return profit;
     }
 
 /************************** Data structures ****************************/
