@@ -41,6 +41,7 @@ public class SolutionTest {
         solutionTest.testIsValid();
         solutionTest.testGenerateParenthesis();
         solutionTest.testMaxPoints();
+        solutionTest.testMaxProfit();
     }
 
     public void testTwoSum() {
@@ -301,6 +302,9 @@ public class SolutionTest {
         assertEquals(3, solution.maxPoints(new Point[]{new Point(1, 1), new Point(1, 1), new Point(1, 1)}));
     }
 
+    public void testMaxProfit() {
+        assertEquals(6, solution.maxProfit(new int[]{2, 1, 3, 2, 7, 0, 1}));
+    }
 
     /**
      * *************************** Helper test methods ***********************
