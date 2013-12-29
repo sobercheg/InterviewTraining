@@ -1315,53 +1315,37 @@ public class Solution {
     public ListNode mergeKLists(ArrayList<ListNode> lists) {
         if (lists == null || lists.isEmpty()) return null;
 
-        class MinNode implements Comparable<MinNode> {
-            final int value;
-            final ListNode list;
-
-            MinNode(int value, ListNode list) {
-                this.value = value;
-                this.list = list;
-            }
-
+        PriorityQueue<ListNode> heap = new PriorityQueue<ListNode>(lists.size(), new Comparator<ListNode>() {
             @Override
-            public int compareTo(MinNode o) {
-                // comparing hashcode is somewhat a hack to allow multiple entries with the same value in a TreeSet
-                return value == o.value ? Integer.compare(this.hashCode(), o.hashCode()) : Integer.compare(value, o.value);
+            public int compare(ListNode o1, ListNode o2) {
+                return Integer.compare(o1.val, o2.val);
             }
-        }
-
-        TreeSet<MinNode> minNodes = new TreeSet<MinNode>();
+        });
 
         // initial population
         for (ListNode list : lists) {
             if (list == null) continue;
-            minNodes.add(new MinNode(list.val, list));
+            heap.add(list);
         }
         ListNode sortedHead = null;
         ListNode sortedNext = null;
 
-        while (!minNodes.isEmpty()) {
-            MinNode minNode = minNodes.first();
-            minNodes.remove(minNode);
-            ListNode smallestHead = minNode.list;
+        while (!heap.isEmpty()) {
+            ListNode smallestHead = heap.poll();
             // init sorted list head if necessary
             if (sortedHead == null) {
-                sortedHead = new ListNode(minNode.value);
+                sortedHead = new ListNode(smallestHead.val);
                 sortedNext = sortedHead;
             } else {
                 // create new sorted list node
-                ListNode newNode = new ListNode(minNode.value);
+                ListNode newNode = new ListNode(smallestHead.val);
                 sortedNext.next = newNode;
                 sortedNext = newNode;
             }
 
-            // advance list pointer if possible
+            // push next pointer if possible
             if (smallestHead.next != null) {
-                smallestHead = smallestHead.next;
-
-                // and push
-                minNodes.add(new MinNode(smallestHead.val, smallestHead));
+                heap.offer(smallestHead.next);
             }
         }
         return sortedHead;
