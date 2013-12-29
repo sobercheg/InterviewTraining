@@ -43,6 +43,7 @@ public class SolutionTest {
         solutionTest.testMaxPoints();
         solutionTest.testMaxProfitI();
         solutionTest.testMaxProfitII();
+        solutionTest.testMaxProfitIII();
     }
 
     public void testTwoSum() {
@@ -308,7 +309,14 @@ public class SolutionTest {
     }
 
     public void testMaxProfitII() {
-        assertEquals(1, solution.maxProfitI(new int[]{1, 2}));
+        assertEquals(1, solution.maxProfitII(new int[]{1, 2}));
+    }
+
+    public void testMaxProfitIII() {
+        assertEquals(7, solution.maxProfitIII(new int[]{2, 1, 3, 2, 7, 0, 1}));
+        assertEquals(0, solution.maxProfitIII(new int[]{10, 9}));
+        assertEquals(1, solution.maxProfitIII(new int[]{1, 2}));
+        assertEquals(7, solution.maxProfitIII(new int[]{6, 1, 3, 2, 4, 7}));
     }
 
     /**

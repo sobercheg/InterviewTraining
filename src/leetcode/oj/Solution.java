@@ -1255,7 +1255,57 @@ public class Solution {
         return profit;
     }
 
-/************************** Data structures ****************************/
+    /**
+     * <a href="http://oj.leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/">Best Time to Buy and Sell Stock III</a>
+     * Say you have an array for which the ith element is the price of a given stock on day i.
+     * <p/>
+     * Design an algorithm to find the maximum profit. You may complete at most two transactions.
+     * <p/>
+     * Note:
+     * You may not engage in multiple transactions at the same time (ie, you must sell the stock before you buy again).
+     * <p/>
+     * Solution: divide prices into two regions around 0, 1, ..., n-1 and calculate the sum of maxProfits of each
+     * region (keep the best profit).
+     * Hint: we need to reuse n-1 solutions to calculate n solutions to avoid Time Limit Exceeded errors, so it is
+     * infeasible to reuse maxProfitI(). For the right part we should go from the rightmost price to left. In this case
+     * we need to maintain the highest sell prices rather than lowest buy price.
+     */
+    public int maxProfitIII(int[] prices) {
+        int maxProfit = 0;
+        int n = prices.length;
+        int prevLeftBuy = 0;
+        int[] leftMax = new int[n];
+        int prevRightSell = n - 1;
+        int[] rightMax = new int[n];
+
+        for (int i = 1; i < n; i++) {
+            if (prices[i] - prices[prevLeftBuy] > leftMax[i - 1]) {
+                leftMax[i] = prices[i] - prices[prevLeftBuy];
+            } else leftMax[i] = leftMax[i - 1];
+            if (prices[i] < prices[prevLeftBuy]) {
+                prevLeftBuy = i;
+            }
+
+            // right region: [n-2, n-1], [n-3,n-1], ... [0, n-1]
+            int r = n - i - 1;
+            if (prices[prevRightSell] - prices[r] > rightMax[r + 1]) {
+                rightMax[r] = prices[prevRightSell] - prices[r];
+            } else rightMax[r] = rightMax[r + 1];
+            if (prices[r] > prices[prevRightSell]) {
+                prevRightSell = r;
+            }
+        }
+
+        for (int i = 0; i < leftMax.length; i++) {
+            if (leftMax[i] + rightMax[i] > maxProfit) {
+                maxProfit = leftMax[i] + rightMax[i];
+            }
+        }
+
+        return maxProfit;
+    }
+
+    /************************** Data structures ****************************/
 
     /**
      * Definition for binary tree
