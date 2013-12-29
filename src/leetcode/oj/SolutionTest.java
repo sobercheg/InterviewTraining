@@ -3,6 +3,9 @@ package leetcode.oj;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static leetcode.oj.Solution.TreeNode;
+import static leetcode.oj.Solution.ListNode;
+
 /**
  * Created by Sobercheg on 12/24/13.
  * Unit tests for LeetCode OJ solutions.
@@ -31,6 +34,8 @@ public class SolutionTest {
         solutionTest.testLongestCommonPrefix();
         solutionTest.testThreeSum();
         solutionTest.testThreeSumClosest();
+        solutionTest.testFourSum();
+        solutionTest.testKSum();
         solutionTest.testLetterCombinations();
     }
 
@@ -224,6 +229,22 @@ public class SolutionTest {
         assertEquals(2, solution.threeSumClosest(new int[]{-1, 2, 1, -4}, 1));
         assertEquals(3, solution.threeSumClosest(new int[]{1, 1, 1, 1}, 3));
         assertEquals(1, solution.threeSumClosest(new int[]{1, 1, -1, -1, 3}, 1));
+    }
+
+    public void testFourSum() {
+        testKSum();
+    }
+
+    public void testKSum() {
+        assertEquals(Arrays.asList(Arrays.asList(-1, 0, 1), Arrays.asList(-1, -1, 2)), solution.kSum(new int[]{-1, 0, 1, 2, -1, -4}, 0, 3));
+        assertEquals(Arrays.asList(Arrays.asList(0, 0, 0)), solution.kSum(new int[]{0, 0, 0}, 0, 3));
+        assertEquals(Arrays.asList(Arrays.asList(-1, 0, 1)), solution.kSum(new int[]{1, -1, -1, 0}, 0, 3));
+        assertEquals(Arrays.asList(Arrays.asList(-2, 1, 1), Arrays.asList(-2, 0, 2)), solution.kSum(new int[]{-2, 0, 1, 1, 2}, 0, 3));
+        assertEquals(Arrays.asList(Arrays.asList(-1, 0, 0, 1), Arrays.asList(-2, -1, 1, 2), Arrays.asList(-2, 0, 0, 2)),
+                solution.fourSum(new int[]{1, 0, -1, 0, -2, 2}, 0));
+        assertEquals(Arrays.asList(Arrays.asList(-3, -1, 0, 4)), solution.kSum(new int[]{-3, -1, 0, 2, 4, 5}, 0, 4));
+        assertEquals(Arrays.asList(Arrays.asList(-4, 0, 1, 2), Arrays.asList(-1, -1, 0, 1)), solution.kSum(new int[]{-1, 0, 1, 2, -1, -4}, -1, 4));
+
     }
 
     public void testLetterCombinations() {

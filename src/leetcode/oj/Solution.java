@@ -1,5 +1,7 @@
 package leetcode.oj;
 
+import other.NChooseK;
+
 import java.util.*;
 
 /**
@@ -787,7 +789,7 @@ public class Solution {
     public ArrayList<ArrayList<Integer>> threeSum(int[] num) {
         ArrayList<ArrayList<Integer>> sums = new ArrayList<ArrayList<Integer>>();
         Arrays.sort(num);
-        if (num.length < 3) return new ArrayList<ArrayList<Integer>>(sums);
+        if (num.length < 3) return sums;
         int n = num.length;
         for (int k = 2; k < n; k++) {
             // prevent duplicates
@@ -812,7 +814,6 @@ public class Solution {
                     sums.add(new ArrayList<Integer>(Arrays.asList(num[a], num[b], num[k])));
                     a++;
                     b--;
-                    //break;
                 }
             }
         }
@@ -872,6 +873,154 @@ public class Solution {
     }
 
     /**
+     * <a href="http://oj.leetcode.com/problems/4sum/">4Sum</a>
+     * Given an array S of n integers, are there elements a, b, c, and d in S such that a + b + c + d = target?
+     * Find all unique quadruplets in the array which gives the sum of target.
+     * <p/>
+     * Note:
+     * <p/>
+     * Elements in a quadruplet (a,b,c,d) must be in non-descending order. (ie, a ≤ b ≤ c ≤ d)
+     * The solution set must not contain duplicate quadruplets.
+     * <p/>
+     * For example, given array S = {1 0 -1 0 -2 2}, and target = 0.
+     * <p/>
+     * A solution set is:
+     * (-1,  0, 0, 1)
+     * (-2, -1, 1, 2)
+     * (-2,  0, 0, 2)
+     * </p>
+     * Solution: http://stackoverflow.com/questions/14732277/quadratic-algorithm-for-4-sum
+     */
+    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
+        if (num.length < 4) return new ArrayList<ArrayList<Integer>>();
+        List<ArrayList<Integer>> kSums = kSum(num, target, 4);
+        return new ArrayList<ArrayList<Integer>>(kSums);
+    }
+
+    /**
+     * <a href="http://cs.stackexchange.com/questions/2973/generalised-3sum-k-sum-problem">k-SUM problem</a>
+     * <p/>
+     * For even k: Compute a sorted list S of all sums of k/2 input elements.
+     * Check whether S contains both some number x and its negation −x. The algorithm runs in O(nk/2logn) time.
+     * <p/>
+     * For odd k: Compute the sorted list S of all sums of (k−1)/2 input elements.
+     * For each input element a, check whether S contains both x and a−x, for some number x.
+     * (The second step is essentially the O(n2)-time algorithm for 3SUM.) The algorithm runs in O(n(k+1)/2) time.
+     */
+    public List<ArrayList<Integer>> kSum(int[] num, int target, int k) {
+        if (num.length < k) return new ArrayList<ArrayList<Integer>>();
+        // Step 1. Compute all sums of k/2 input elements
+        // Probably this step brings most complexity and running time
+        // Probably the algo can be redesigned to use n choose k rather than n choose k/2. It'll greatly simplify
+        // the code avoiding combination steps
+        List<List<Integer>> nChooseKIndices = choose(num.length, k / 2);
+        Map<Integer, List<List<Integer>>> sumToCombinations = new HashMap<Integer, List<List<Integer>>>();
+        for (List<Integer> indices : nChooseKIndices) {
+            int sum = 0;
+            for (int index : indices) {
+                sum += num[index];
+            }
+            if (!sumToCombinations.containsKey(sum)) {
+                sumToCombinations.put(sum, new ArrayList<List<Integer>>());
+            }
+            sumToCombinations.get(sum).add(indices);
+        }
+
+        Set<ArrayList<Integer>> kSums = new HashSet<ArrayList<Integer>>();
+
+        // Step 2. Check whether S contains both some number x and its sibling target−x
+        if (k % 2 == 0) {
+            for (int sum : sumToCombinations.keySet()) {
+                int antiSum = target - sum;
+                if (sumToCombinations.containsKey(antiSum)) {
+                    List<List<Integer>> finalCombos = new ArrayList<List<Integer>>();
+                    for (int i = 0; i < sumToCombinations.get(sum).size(); i++) {
+                        for (int j = sum == antiSum ? i + 1 : 0; j < sumToCombinations.get(antiSum).size(); j++) {
+                            List<Integer> finalCombo = new ArrayList<Integer>();
+                            finalCombo.addAll(sumToCombinations.get(sum).get(i));
+                            finalCombo.addAll(sumToCombinations.get(antiSum).get(j));
+                            if (new HashSet<Integer>(finalCombo).size() < finalCombo.size()) continue;
+                            finalCombos.add(finalCombo);
+                        }
+                    }
+
+                    for (List<Integer> indices : finalCombos) {
+                        ArrayList<Integer> finalValues = new ArrayList<Integer>();
+                        for (int index : indices) {
+                            finalValues.add(num[index]);
+                        }
+                        Collections.sort(finalValues);
+                        kSums.add(finalValues);
+                    }
+//                    break;
+                }
+            }
+
+        } else {
+            //  For each input element z, check whether S contains both x and target+z−x, for some number x.
+            for (int z = 0; z < num.length; z++) {
+                for (int sum : sumToCombinations.keySet()) {
+                    int antiSum = target - sum - num[z];
+                    if (sumToCombinations.containsKey(antiSum)) {
+                        List<List<Integer>> finalCombos = new ArrayList<List<Integer>>();
+                        for (int i = 0; i < sumToCombinations.get(sum).size(); i++) {
+                            for (int j = (sum == antiSum) ? i + 1 : 0; j < sumToCombinations.get(antiSum).size(); j++) {
+                                List<Integer> finalCombo = new ArrayList<Integer>();
+                                finalCombo.addAll(sumToCombinations.get(sum).get(i));
+                                finalCombo.addAll(sumToCombinations.get(antiSum).get(j));
+                                if (finalCombo.contains(z)) continue;
+                                if (new HashSet<Integer>(finalCombo).size() < finalCombo.size()) continue;
+                                finalCombo.add(z);
+                                finalCombos.add(finalCombo);
+                            }
+                        }
+
+                        for (List<Integer> indices : finalCombos) {
+                            ArrayList<Integer> finalValues = new ArrayList<Integer>();
+                            for (int index : indices) {
+                                finalValues.add(num[index]);
+                            }
+                            Collections.sort(finalValues);
+                            kSums.add(finalValues);
+                        }
+//                        break;
+                    }
+                }
+            }
+
+        }
+
+        return new ArrayList<ArrayList<Integer>>(kSums);
+    }
+
+    private static List<List<Integer>> choose(int n, int k) {
+        List<List<Integer>> combos = new ArrayList<List<Integer>>();
+        boolean[] visited = new boolean[n];
+        choose(combos, n, visited, 0, k);
+        return combos;
+    }
+
+    private static void choose(List<List<Integer>> combinations, int n, boolean[] visited, int from, int limit) {
+        // base case: all indices are visited
+        if (limit == 0) {
+            List<Integer> combo = new ArrayList<Integer>();
+            for (int i = 0; i < visited.length; i++) {
+                if (visited[i]) combo.add(i);
+            }
+            combinations.add(combo);
+            return;
+        }
+
+        for (int i = from; i < n; i++) {
+            if (visited[i]) continue;
+            visited[i] = true;
+            choose(combinations, n, visited, i, limit - 1);
+            visited[i] = false;
+        }
+    }
+
+
+    /**
      * <a href="http://oj.leetcode.com/problems/letter-combinations-of-a-phone-number/">Letter Combinations of a Phone Number</a>
      * Given a digit string, return all possible letter combinations that the number could represent.
      * <p/>
@@ -924,43 +1073,46 @@ public class Solution {
         }
         return combinations;
     }
+
+    /************************** Data structures ****************************/
+    /**
+     * Definition for binary tree
+     */
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+
+        TreeNode(int x, TreeNode left, TreeNode right) {
+            this(x);
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
+        }
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
 }
 
-/**
- * Definition for binary tree
- */
-class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
-
-    TreeNode(int x) {
-        val = x;
-    }
-
-    TreeNode(int x, TreeNode left, TreeNode right) {
-        this(x);
-        this.left = left;
-        this.right = right;
-    }
-
-    @Override
-    public String toString() {
-        return "" + val;
-    }
-}
-
-class ListNode {
-    int val;
-    ListNode next;
-
-    ListNode(int x) {
-        val = x;
-        next = null;
-    }
-
-    ListNode(int val, ListNode next) {
-        this.val = val;
-        this.next = next;
-    }
-}
