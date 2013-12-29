@@ -1171,6 +1171,48 @@ public class Solution {
         return allParens;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/max-points-on-a-line/">Max Points on a Line</a>
+     * Given n points on a 2D plane, find the maximum number of points that lie on the same straight line.
+     * <p/>
+     * Solution: calculate all slopes for all points, put Points with the same slope to a hashmap.
+     * Note: process equal points separately
+     */
+    public int maxPoints(Point[] points) {
+        if (points.length < 3) return points.length;
+
+        long precision = 1000000;
+        Map<Long, Integer> slopeToNumOfPointsMap;
+        int maxPoints;
+        int totalMaxPoints = 2;
+        long slope;
+        for (Point point1 : points) {
+            slopeToNumOfPointsMap = new HashMap<Long, Integer>();
+            int equal = 0;
+            maxPoints = 1;
+            for (Point point2 : points) {
+                if (point1 == point2) continue;
+                if (point1.x == point2.x && point1.y == point2.y) {
+                    equal++;
+                    continue;
+                } else if (point1.x == point2.x)
+                    slope = Long.MAX_VALUE;
+                else slope = (long) (precision * ((double) (point1.y - point2.y) / (point1.x - point2.x)));
+                if (!slopeToNumOfPointsMap.containsKey(slope)) {
+                    slopeToNumOfPointsMap.put(slope, 1);
+                }
+                int numOfPoints = slopeToNumOfPointsMap.get(slope) + 1;
+                slopeToNumOfPointsMap.put(slope, numOfPoints);
+                if (numOfPoints > maxPoints) maxPoints = numOfPoints;
+            }
+            if (maxPoints + equal > totalMaxPoints) {
+                totalMaxPoints = maxPoints + equal;
+            }
+        }
+
+        return totalMaxPoints;
+    }
+
 /************************** Data structures ****************************/
 
     /**
@@ -1214,6 +1256,24 @@ public class Solution {
         @Override
         public String toString() {
             return "" + val;
+        }
+    }
+
+    /**
+     * Definition for a point.
+     */
+    public static class Point {
+        int x;
+        int y;
+
+        Point() {
+            x = 0;
+            y = 0;
+        }
+
+        Point(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
     }
 

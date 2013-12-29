@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.Solution.TreeNode;
+import static leetcode.oj.Solution.Point;
 
 /**
  * Created by Sobercheg on 12/24/13.
@@ -39,6 +40,7 @@ public class SolutionTest {
         solutionTest.testRemoveNthFromEnd();
         solutionTest.testIsValid();
         solutionTest.testGenerateParenthesis();
+        solutionTest.testMaxPoints();
     }
 
     public void testTwoSum() {
@@ -291,6 +293,14 @@ public class SolutionTest {
         assertEquals(Arrays.asList("(())", "()()"), solution.generateParenthesis(2));
         assertEquals(Arrays.asList("((()))", "(()())", "(())()", "()(())", "()()()"), solution.generateParenthesis(3));
     }
+
+    public void testMaxPoints() {
+        assertEquals(3, solution.maxPoints(new Point[]{new Point(0, 0), new Point(0, 4), new Point(2, 3), new Point(4, 2)}));
+        assertEquals(4, solution.maxPoints(new Point[]{new Point(0, 0), new Point(0, 0), new Point(2, 2), new Point(2, 2)}));
+        assertEquals(3, solution.maxPoints(new Point[]{new Point(0, 0), new Point(1, 1), new Point(0, 0)}));
+        assertEquals(3, solution.maxPoints(new Point[]{new Point(1, 1), new Point(1, 1), new Point(1, 1)}));
+    }
+
 
     /**
      * *************************** Helper test methods ***********************
