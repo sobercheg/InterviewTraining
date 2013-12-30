@@ -44,6 +44,7 @@ public class SolutionTest {
         solutionTest.testMaxProfitII();
         solutionTest.testMaxProfitIII();
         solutionTest.testMergeKLists();
+        solutionTest.testSwapPairs();
     }
 
     public void testTwoSum() {
@@ -336,6 +337,31 @@ public class SolutionTest {
         assertEquals(8, merged.next.next.next.next.next.val);
         assertEquals(null, merged.next.next.next.next.next.next);
 
+    }
+
+    public void testSwapPairs() {
+        // even number of nodes
+        ListNode swapped = solution.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4)))));
+        assertEquals(2, swapped.val);
+        assertEquals(1, swapped.next.val);
+        assertEquals(4, swapped.next.next.val);
+        assertEquals(3, swapped.next.next.next.val);
+        assertEquals(null, swapped.next.next.next.next);
+
+        // odd number of nodes
+        swapped = solution.swapPairs(new ListNode(1, new ListNode(2, new ListNode(3))));
+        assertEquals(2, swapped.val);
+        assertEquals(1, swapped.next.val);
+        assertEquals(3, swapped.next.next.val);
+        assertEquals(null, swapped.next.next.next);
+
+        // one node
+        swapped = solution.swapPairs(new ListNode(1));
+        assertEquals(1, swapped.val);
+
+        // no nodes
+        swapped = solution.swapPairs(null);
+        assertEquals(null, swapped);
     }
 
     /**

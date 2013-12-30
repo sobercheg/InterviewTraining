@@ -1351,6 +1351,34 @@ public class Solution {
         return sortedHead;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/swap-nodes-in-pairs/">Swap Nodes in Pairs</a>
+     * Given a linked list, swap every two adjacent nodes and return its head.
+     * <p/>
+     * For example,
+     * Given 1->2->3->4, you should return the list as 2->1->4->3.
+     * <p/>
+     * Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        ListNode current = head;
+        ListNode prev = null;
+        ListNode newHead = null;
+        while (current != null && current.next != null) {
+            ListNode left = current;
+            ListNode right = current.next;
+            ListNode next = current.next.next;
+            if (prev != null) prev.next = right;
+            right.next = left;
+            left.next = next;
+            current = next;
+            prev = left;
+            if (newHead == null) newHead = right;
+        }
+        return newHead;
+    }
     /************************** Data structures ****************************/
 
     /**
