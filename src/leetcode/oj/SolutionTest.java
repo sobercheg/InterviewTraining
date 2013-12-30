@@ -47,6 +47,7 @@ public class SolutionTest {
         solutionTest.testSwapPairs();
         solutionTest.testReverseKGroup();
         solutionTest.testRemoveDuplicates();
+        solutionTest.testRemoveElement();
     }
 
     public void testTwoSum() {
@@ -452,6 +453,12 @@ public class SolutionTest {
         assertEquals(1, solution.removeDuplicates(new int[]{1, 1}));
         assertEquals(2, solution.removeDuplicates(new int[]{1, 1, 2}));
         assertEquals(2, solution.removeDuplicates(new int[]{1, 1, 2, 2}));
+    }
+
+    public void testRemoveElement() {
+        assertEquals(1, solution.removeElement(new int[]{2}, 1));
+        assertEquals(0, solution.removeElement(new int[]{1}, 1));
+        assertEquals(3, solution.removeElement(new int[]{1, 3, 4, 5, 4}, 4));
     }
 
     /**
