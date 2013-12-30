@@ -1379,6 +1379,101 @@ public class Solution {
         }
         return newHead;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/reverse-nodes-in-k-group/">Reverse Nodes in k-Group</a>
+     * Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
+     * <p/>
+     * If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+     * <p/>
+     * You may not alter the values in the nodes, only nodes itself may be changed.
+     * <p/>
+     * Only constant memory is allowed.
+     * <p/>
+     * For example,
+     * Given this linked list: 1->2->3->4->5
+     * <p/>
+     * For k = 2, you should return: 2->1->4->3->5
+     * <p/>
+     * For k = 3, you should return: 3->2->1->4->5
+     */
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null || head.next == null) return head;
+        if (k < 2) return head;
+        ListNode newHead = null;
+        ListNode start, end; // group K start and end nodes
+        ListNode leftStart = null, leftEnd; // group K nodes before start and end
+        ListNode nextGroupStart = head;
+        ListNode prevGroupEnd = null;
+
+        while (true) {
+            // find leftEnd and end nodes (where a group K ends)
+            start = end = nextGroupStart;
+            if (prevGroupEnd != null) leftStart = prevGroupEnd;
+            int layer = k;
+            // init end, leftEnd
+            int toEnd = layer - 1;
+            boolean reachedEnd = false;
+            while (toEnd > 0) {
+                // reached the end of the list, no need to reverse the last incomplete group
+                if (end == null) {
+                    reachedEnd = true;
+                    break;
+                }
+                end = end.next;
+                toEnd--;
+            }
+
+            if (reachedEnd || end == null) break;
+
+            nextGroupStart = end.next;
+
+            boolean firstLayer = true;
+            while (layer > 1) {
+                toEnd = layer - 1;
+                reachedEnd = false;
+                leftEnd = start;
+                while (toEnd > 1) {
+                    // reached the end of the list, no need to reverse the last incomplete group
+                    if (end == null) {
+                        reachedEnd = true;
+                        break;
+                    }
+                    leftEnd = leftEnd.next;
+                    toEnd--;
+                }
+
+                if (reachedEnd || end == null) break;
+
+                // swap start and end nodes
+                ListNode nextStart = start.next;
+                if (leftStart != null) leftStart.next = end;
+                leftEnd.next = start;
+                ListNode startNext = start.next;
+                start.next = end.next;
+                end.next = startNext;
+                if (firstLayer) {
+                    prevGroupEnd = start;
+                    firstLayer = false;
+                }
+                if (newHead == null) {
+                    newHead = end;
+                }
+
+                start = nextStart;
+                leftStart = end;
+                end = leftEnd;
+
+                layer -= 2;
+            }
+
+        }
+        // newHead is null when k > list size
+        return newHead != null ? newHead : head;
+
+    }
+
+
     /************************** Data structures ****************************/
 
     /**

@@ -45,6 +45,7 @@ public class SolutionTest {
         solutionTest.testMaxProfitIII();
         solutionTest.testMergeKLists();
         solutionTest.testSwapPairs();
+        solutionTest.testReverseKGroup();
     }
 
     public void testTwoSum() {
@@ -363,6 +364,87 @@ public class SolutionTest {
         swapped = solution.swapPairs(null);
         assertEquals(null, swapped);
     }
+
+    public void testReverseKGroup() {
+        // k=1
+        ListNode reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 1);
+        assertEquals(1, reversed.val);
+        assertEquals(2, reversed.next.val);
+        assertEquals(3, reversed.next.next.val);
+        assertEquals(4, reversed.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next);
+
+        // k=2, 2 groups
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 2);
+        assertEquals(2, reversed.val);
+        assertEquals(1, reversed.next.val);
+        assertEquals(4, reversed.next.next.val);
+        assertEquals(3, reversed.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next);
+
+        // k=2, 2 groups, no trailing nodes
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6)))))), 2);
+        assertEquals(2, reversed.val);
+        assertEquals(1, reversed.next.val);
+        assertEquals(4, reversed.next.next.val);
+        assertEquals(3, reversed.next.next.next.val);
+        assertEquals(6, reversed.next.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next.next);
+
+
+        // k=3, 1 group
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 3);
+        assertEquals(3, reversed.val);
+        assertEquals(2, reversed.next.val);
+        assertEquals(1, reversed.next.next.val);
+        assertEquals(4, reversed.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next);
+
+        // k=4, 1 group
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6)))))), 4);
+        assertEquals(4, reversed.val);
+        assertEquals(3, reversed.next.val);
+        assertEquals(2, reversed.next.next.val);
+        assertEquals(1, reversed.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.val);
+        assertEquals(6, reversed.next.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next.next);
+
+        // k=4, 2 groups
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6, new ListNode(7, new ListNode(8, new ListNode(9))))))))), 4);
+        assertEquals(4, reversed.val);
+        assertEquals(3, reversed.next.val);
+        assertEquals(2, reversed.next.next.val);
+        assertEquals(1, reversed.next.next.next.val);
+        assertEquals(8, reversed.next.next.next.next.val);
+        assertEquals(7, reversed.next.next.next.next.next.val);
+        assertEquals(6, reversed.next.next.next.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.next.next.next.val);
+        assertEquals(9, reversed.next.next.next.next.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next.next.next.next.next);
+
+        // k=30, 0 groups
+        reversed = solution.reverseKGroup(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5))))), 30);
+        assertEquals(1, reversed.val);
+        assertEquals(2, reversed.next.val);
+        assertEquals(3, reversed.next.next.val);
+        assertEquals(4, reversed.next.next.next.val);
+        assertEquals(5, reversed.next.next.next.next.val);
+        assertEquals(null, reversed.next.next.next.next.next);
+
+        // one node
+        reversed = solution.reverseKGroup(new ListNode(1), 1);
+        assertEquals(1, reversed.val);
+
+        // no nodes
+        reversed = solution.swapPairs(null);
+        assertEquals(null, reversed);
+    }
+
 
     /**
      * *************************** Helper test methods ***********************
