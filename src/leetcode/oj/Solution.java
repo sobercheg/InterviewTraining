@@ -1473,6 +1473,30 @@ public class Solution {
 
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/remove-duplicates-from-sorted-array/">Remove Duplicates from Sorted Array</a>
+     * Given a sorted array, remove the duplicates in place such that each element appear only once and return the new length.
+     * <p/>
+     * Do not allocate extra space for another array, you must do this in place with constant memory.
+     * <p/>
+     * For example,
+     * Given input array A = [1,1,2],
+     * <p/>
+     * Your function should return length = 2, and A is now [1,2].
+     */
+    public int removeDuplicates(int[] A) {
+        if (A == null) return 0;
+        if (A.length < 2) return A.length;
+        int insert = 1;
+        int read = 1;
+        while (read < A.length) {
+            if (A[read] == A[read - 1]) read++;
+            else {
+                A[insert++] = A[read++];
+            }
+        }
+        return insert;
+    }
 
     /************************** Data structures ****************************/
 

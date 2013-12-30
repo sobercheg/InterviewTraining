@@ -46,6 +46,7 @@ public class SolutionTest {
         solutionTest.testMergeKLists();
         solutionTest.testSwapPairs();
         solutionTest.testReverseKGroup();
+        solutionTest.testRemoveDuplicates();
     }
 
     public void testTwoSum() {
@@ -445,6 +446,13 @@ public class SolutionTest {
         assertEquals(null, reversed);
     }
 
+    public void testRemoveDuplicates() {
+        assertEquals(1, solution.removeDuplicates(new int[]{2}));
+        assertEquals(2, solution.removeDuplicates(new int[]{1, 2}));
+        assertEquals(1, solution.removeDuplicates(new int[]{1, 1}));
+        assertEquals(2, solution.removeDuplicates(new int[]{1, 1, 2}));
+        assertEquals(2, solution.removeDuplicates(new int[]{1, 1, 2, 2}));
+    }
 
     /**
      * *************************** Helper test methods ***********************
