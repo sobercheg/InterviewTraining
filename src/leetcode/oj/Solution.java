@@ -1514,6 +1514,47 @@ public class Solution {
         return insert;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/insertion-sort-list/">Insertion Sort List</a>
+     * Sort a linked list using insertion sort.
+     */
+    public ListNode insertionSortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+
+        int sorted = 0;
+
+        ListNode newHead = head;
+        ListNode read = head.next;
+        ListNode prevRead = head;
+        while (read != null) {
+            // find appropriate position in the sorted area
+            ListNode insert = newHead;
+            ListNode prevInsert = null;
+            int sortedIndex = 0;
+            while (insert.val < read.val && sortedIndex <= sorted) {
+                prevInsert = insert;
+                insert = insert.next;
+                sortedIndex++;
+            }
+            if (insert != read) {
+                // insert the read node between prevInsert and insert nodes
+                prevRead.next = read.next;
+                if (prevInsert != null) prevInsert.next = read;
+                else newHead = read;
+
+                read.next = insert;
+                read = prevRead.next;
+
+            } else {
+                prevRead = read;
+                read = read.next;
+            }
+            sorted++;
+        }
+
+        return newHead;
+    }
+
     /************************** Data structures ****************************/
 
     /**

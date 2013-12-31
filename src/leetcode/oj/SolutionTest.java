@@ -48,6 +48,7 @@ public class SolutionTest {
         solutionTest.testReverseKGroup();
         solutionTest.testRemoveDuplicates();
         solutionTest.testRemoveElement();
+        solutionTest.testInsertionSortList();
     }
 
     public void testTwoSum() {
@@ -460,6 +461,21 @@ public class SolutionTest {
         assertEquals(0, solution.removeElement(new int[]{1}, 1));
         assertEquals(3, solution.removeElement(new int[]{1, 3, 4, 5, 4}, 4));
     }
+
+    public void testInsertionSortList() {
+        ListNode sorted = solution.insertionSortList(new ListNode(3, new ListNode(1, new ListNode(7, new ListNode(5, new ListNode(0))))));
+        assertEquals(0, sorted.val);
+        assertEquals(1, sorted.next.val);
+        assertEquals(3, sorted.next.next.val);
+        assertEquals(5, sorted.next.next.next.val);
+        assertEquals(7, sorted.next.next.next.next.val);
+        assertEquals(null, sorted.next.next.next.next.next);
+
+        sorted = solution.insertionSortList(new ListNode(1));
+        assertEquals(1, sorted.val);
+        assertEquals(null, sorted.next);
+    }
+
 
     /**
      * *************************** Helper test methods ***********************
