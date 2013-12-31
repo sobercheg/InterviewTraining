@@ -49,6 +49,7 @@ public class SolutionTest {
         solutionTest.testRemoveDuplicates();
         solutionTest.testRemoveElement();
         solutionTest.testInsertionSortList();
+        solutionTest.testStrStr();
     }
 
     public void testTwoSum() {
@@ -476,6 +477,13 @@ public class SolutionTest {
         assertEquals(null, sorted.next);
     }
 
+    public void testStrStr() {
+        assertEquals("needle somewhere", solution.strStr("haystack need has a needle somewhere", "needle"));
+        assertEquals("needle somewhere", solution.strStr("needle somewhere", ""));
+        assertEquals("aaaaaaaaaaaaaaaba", solution.strStr("aaaaaaaaaaaaaaaaaaaaaaaba", "aaaaaaaaaaaaaaab"));
+        assertEquals(null, solution.strStr("mississippi", "issipi"));
+        assertEquals("a", solution.strStr("a", "a"));
+    }
 
     /**
      * *************************** Helper test methods ***********************

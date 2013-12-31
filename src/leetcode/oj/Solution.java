@@ -1555,6 +1555,65 @@ public class Solution {
         return newHead;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/implement-strstr/">Implement strStr()</a>
+     * Implement strStr().
+     * <p/>
+     * Returns a pointer to the first occurrence of needle in haystack, or null if needle is not part of haystack.
+     * <p/>
+     * Solutions: brute-force, Boyer-Moore, Rabin-Karp (no KMP, sorry).
+     */
+    public String strStr(String haystack, String needle) {
+//        return strStrBruteforce(haystack, needle);
+        return strStrBoyerMoore(haystack, needle);
+    }
+
+    private String strStrBruteforce(String haystack, String needle) {
+        if (needle == null || needle.isEmpty()) return haystack;
+        if (haystack.length() < needle.length()) return null;
+
+        for (int i = 0; i < haystack.length() - needle.length() + 1; i++) {
+            int j;
+            for (j = 0; j < needle.length(); j++) {
+                if (haystack.charAt(i + j) != needle.charAt(j)) break;
+            }
+            if (j == needle.length()) return haystack.substring(i);
+
+        }
+        return null;
+    }
+
+    public String strStrBoyerMoore(String haystack, String needle) {
+        if (needle == null || needle.isEmpty()) return haystack;
+        if (haystack.length() < needle.length()) return null;
+
+        int R = 256;
+        int[] right = new int[R];
+        for (int i = 0; i < R; i++) {
+            right[i] = -1;
+        }
+        for (int c = 0; c < needle.length(); c++) {
+            right[needle.charAt(c)] = c;
+        }
+
+        int skip;
+        int M = needle.length();
+        for (int i = 0; i <= haystack.length() - M; i += skip) {
+            skip = 0;
+            for (int j = M - 1; j >= 0; j--) {
+                if (haystack.charAt(i + j) != needle.charAt(j)) {
+                    skip = j - right[haystack.charAt(i + j)];
+                    if (skip < 1) skip = 1;
+                    break;
+                }
+            }
+            if (skip == 0) return haystack.substring(i);
+        }
+
+        return null;
+    }
+
+
     /************************** Data structures ****************************/
 
     /**
