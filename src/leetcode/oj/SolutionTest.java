@@ -50,6 +50,7 @@ public class SolutionTest {
         solutionTest.testRemoveElement();
         solutionTest.testInsertionSortList();
         solutionTest.testStrStr();
+        solutionTest.testDivide();
     }
 
     public void testTwoSum() {
@@ -483,6 +484,20 @@ public class SolutionTest {
         assertEquals("aaaaaaaaaaaaaaaba", solution.strStr("aaaaaaaaaaaaaaaaaaaaaaaba", "aaaaaaaaaaaaaaab"));
         assertEquals(null, solution.strStr("mississippi", "issipi"));
         assertEquals("a", solution.strStr("a", "a"));
+    }
+
+    public void testDivide() {
+        assertEquals(5, solution.divide(29, 5));
+        assertEquals(5, solution.divide(25, 5));
+        assertEquals(4, solution.divide(24, 5));
+        assertEquals(24, solution.divide(24, 1));
+        assertEquals(0, solution.divide(0, 1));
+        assertEquals(-1, solution.divide(1, -1));
+        assertEquals(-1, solution.divide(-1, 1));
+        assertEquals(1, solution.divide(-1, -1));
+        assertEquals(0, solution.divide(-1006986286, -2145851451));
+        assertEquals(0, solution.divide(-1010369383, -2147483648));
+        assertEquals(-1073741824, solution.divide(-2147483648, 2));
     }
 
     /**

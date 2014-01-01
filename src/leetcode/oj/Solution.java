@@ -1613,6 +1613,66 @@ public class Solution {
         return null;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/divide-two-integers/">Divide Two Integers</a>
+     * Divide two integers without using multiplication, division and mod operator.
+     */
+    public int divide(int dividend, int divisor) {
+        boolean isNegative = (dividend < 0 && divisor > 0 || dividend > 0 && divisor < 0);
+        if (dividend == 0) return 0;
+        if (divisor == 1) return dividend;
+        if (divisor == dividend) return 1;
+
+        int result = divideLongBinary(Math.abs((long) dividend), Math.abs((long) divisor));
+
+        return isNegative ? -result : result;
+    }
+
+    // trivial ineffective implementation
+    private int divideSubtract(long dividend, long divisor) {
+        long toDividend = 0;
+        long result = 0;
+        if (divisor == Integer.MIN_VALUE) return (dividend > 0) ? -1 : 1;
+
+        while (toDividend <= dividend) {
+            toDividend += divisor;
+            result++;
+        }
+        return (int) result - 1;
+    }
+
+    /**
+     * <a href="http://stackoverflow.com/a/5387432/959852">Division Without using /</a>
+     * The typical way is to shift and subtract. This is basically pretty similar to long division as we learned it in school.
+     * The big difference is that in decimal division you need to estimate the next digit of the result.
+     * In binary, that's trivial. The next digit is always either 0 or 1. If the (left-shifted) divisor is less than
+     * or equal to the current dividend value, you subtract it, and the current bit of the result is a 1. If it's greater,
+     * then the current bit of the result is a 0.
+     */
+    private int divideLongBinary(long dividend, long divisor) {
+
+        long answer = 0;
+        long current = 1;
+        long denom = divisor;
+
+        while (denom <= dividend) {
+            denom <<= 1;
+            current <<= 1;
+        }
+        denom >>= 1;
+        current >>= 1;
+
+        while (current != 0) {
+            if (dividend >= denom) {
+                dividend -= denom;
+                answer |= current;
+            }
+            current >>= 1;
+            denom >>= 1;
+        }
+        return (int) answer;
+
+    }
 
     /************************** Data structures ****************************/
 
