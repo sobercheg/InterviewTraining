@@ -1674,7 +1674,92 @@ public class Solution {
 
     }
 
-    /************************** Data structures ****************************/
+    /**
+     * <a href="http://oj.leetcode.com/problems/substring-with-concatenation-of-all-words/">Substring with Concatenation of All Words</a>
+     * You are given a string, S, and a list of words, L, that are all of the same length.
+     * Find all starting indices of substring(s) in S that is a concatenation of each word in L exactly once and without any intervening characters.
+     * <p/>
+     * For example, given:
+     * S: "barfoothefoobarman"
+     * L: ["foo", "bar"]
+     * <p/>
+     * You should return the indices: [0,9].
+     * (order does not matter).
+     */
+    public ArrayList<Integer> findSubstring(String S, String[] L) {
+        return findSubstringHashmap(S, L);
+    }
+
+    private ArrayList<Integer> findSubstringHashmap(String S, String[] L) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        int wordLen = L[0].length();
+
+        // init maps
+        Map<String, List<Integer>> wordToStringIndexMap = new HashMap<String, List<Integer>>();
+        Map<String, Integer> wordToCounterMap = new HashMap<String, Integer>();
+        for (String word : L) {
+            wordToStringIndexMap.put(word, new ArrayList<Integer>());
+            if (wordToCounterMap.get(word) == null) {
+                wordToCounterMap.put(word, 1);
+            } else
+                wordToCounterMap.put(word, wordToCounterMap.get(word) + 1);
+        }
+
+        // populate index map
+        for (int i = 0; i < S.length(); i++) {
+            for (String word : wordToCounterMap.keySet()) {
+                if (S.startsWith(word, i)) {
+                    wordToStringIndexMap.get(word).add(i);
+                }
+            }
+        }
+
+        for (int k = 0; k < wordLen; k++) {
+            Map<String, Integer> currentWordToCounterMap = new HashMap<String, Integer>();
+
+            int left;
+            int right;
+            for (right = k; right < S.length(); right += wordLen) {
+                left = right - wordLen * L.length;
+                if (right + wordLen > S.length()) break;
+
+                if (currentWordToCounterMap.equals(wordToCounterMap)) {
+                    result.add(left);
+                }
+
+                if (left >= 0) {
+                    String leftToken = S.substring(left, left + wordLen);
+                    if (wordToCounterMap.containsKey(leftToken)) {
+                        decrement(currentWordToCounterMap, leftToken);
+                    }
+                }
+
+                String token = S.substring(right, right + wordLen);
+                if (!wordToCounterMap.containsKey(token)) continue;
+
+                increment(currentWordToCounterMap, token);
+            }
+            if (currentWordToCounterMap.equals(wordToCounterMap)) {
+                result.add(right - wordLen * L.length);
+            }
+        }
+
+        return result;
+    }
+
+    private void increment(Map<String, Integer> map, String key) {
+        if (!map.containsKey(key)) {
+            map.put(key, 1);
+        } else {
+            map.put(key, map.get(key) + 1);
+        }
+    }
+
+    private void decrement(Map<String, Integer> map, String key) {
+        map.put(key, map.get(key) - 1);
+    }
+
+/************************** Data structures ****************************/
 
     /**
      * Definition for binary tree
@@ -1739,4 +1824,6 @@ public class Solution {
     }
 
 }
+
+
 
