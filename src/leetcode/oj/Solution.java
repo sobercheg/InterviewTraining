@@ -1759,6 +1759,146 @@ public class Solution {
         map.put(key, map.get(key) - 1);
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/next-permutation/">Next Permutation</a>
+     * Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
+     * <p/>
+     * If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+     * <p/>
+     * The replacement must be in-place, do not allocate extra memory.
+     * <p/>
+     * Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
+     * 1,2,3 → 1,3,2
+     * 3,2,1 → 1,2,3
+     * 1,1,5 → 1,5,1
+     * <a href="http://en.wikipedia.org/wiki/Permutation#Generation_in_lexicographic_order">Solution</a>
+     */
+    public void nextPermutation(int[] num) {
+        int n = num.length;
+        // 1. Find the largest index k such that a[k] < a[k + 1].
+        // If no such index exists, the permutation is the last permutation.
+        int k = -1;
+        for (int i = n - 2; i >= 0; i--) {
+            if (num[i] < num[i + 1]) {
+                k = i;
+                break;
+            }
+        }
+
+        if (k == -1) {
+            for (int i = 0, j = n - 1; i < j; i++, j--) {
+                int tmp = num[i];
+                num[i] = num[j];
+                num[j] = tmp;
+            }
+            return;
+        }
+
+        // 2. Find the largest index l such that a[k] < a[l].
+        int l = 0;
+        for (int i = 0; i < n; i++) {
+            if (num[k] < num[i]) {
+                l = i;
+            }
+        }
+
+        // 3. Swap the value of a[k] with that of a[l].
+        int tmp = num[k];
+        num[k] = num[l];
+        num[l] = tmp;
+
+        // 4. Reverse the sequence from a[k + 1] up to and including the final element a[n].
+        for (int i = k + 1, j = n - 1; i < j; i++, j--) {
+            tmp = num[i];
+            num[i] = num[j];
+            num[j] = tmp;
+        }
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/longest-valid-parentheses/">Longest Valid Parentheses</a>
+     * Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed)
+     * parentheses substring.
+     * <p/>
+     * For "(()", the longest valid parentheses substring is "()", which has length = 2.
+     * <p/>
+     * Another example is ")()())", where the longest valid parentheses substring is "()()", which has length = 4.
+     * <p/>
+     * <a href="http://zhihengli.blogspot.com/2013/08/leetcode-longest-valid-parentheses.html">Solution</a>
+     */
+    public int longestValidParentheses(String s) {
+        int longest = 0;
+        int lastClosing = -1;
+        LinkedList<Integer> stack = new LinkedList<Integer>();
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '(') {
+                stack.push(i);
+            } else {
+                if (stack.isEmpty()) {
+                    lastClosing = i;
+                } else {
+                    stack.pop();
+                    if (stack.isEmpty()) {
+                        longest = Math.max(longest, i - lastClosing);
+                    } else {
+                        longest = Math.max(longest, i - stack.peek());
+                    }
+                }
+            }
+
+        }
+        return longest;
+    }
+
+    private int longestValidParenthesisExpansion(String s) {
+        int n = s.length();
+        int[] A = new int[n + 1];
+        int longest = 0;
+
+        int start;
+        int j;
+        for (int i = 0; i < n / 2; i++) {
+            // find
+            j = 0;
+            start = 0;
+            while (j < n) {
+                if (A[j] != 0) {
+                    j += A[j];
+                } else if (s.charAt(j) == '(' && j + 1 + A[j + 1] < s.length() && s.charAt(j + 1 + A[j + 1]) == ')') {
+                    A[j] = A[j + 1] + 2;
+                    j += A[j];
+                } else {
+                    if (j - start > longest) {
+                        longest = j - start;
+                    }
+                    j++;
+                    start = j;
+                }
+            }
+            if (j - start > longest) {
+                longest = j - start;
+            }
+
+            // merge
+            j = 0;
+            while (j < n) {
+                start = j;
+                while (j < n && A[j] != 0) {
+                    j += A[j];
+                }
+                A[start] = j - start;
+                if (A[start] > longest) {
+                    longest = A[start];
+                }
+                j++;
+            }
+
+        }
+
+        return longest;
+    }
+
+
 /************************** Data structures ****************************/
 
     /**
