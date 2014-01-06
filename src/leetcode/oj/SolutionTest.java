@@ -57,6 +57,7 @@ public class SolutionTest {
         solutionTest.testSearch();
         solutionTest.testSearchRange();
         solutionTest.testSearchInsert();
+        solutionTest.testIsValidSudoku();
     }
 
     public void testTwoSum() {
@@ -581,6 +582,24 @@ public class SolutionTest {
         assertEquals(4, solution.searchInsert(new int[]{1, 3, 5, 6}, 7));
         assertEquals(0, solution.searchInsert(new int[]{1, 3, 5, 6}, 0));
         assertEquals(2, solution.searchInsert(new int[]{1, 4, 6, 7, 8, 9}, 6));
+    }
+
+    public void testIsValidSudoku() {
+        char[][] board = new char[][]{
+                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+        };
+        assertEquals(true, solution.isValidSudoku(board));
+
+        board[0][0] = '9';
+        assertEquals(false, solution.isValidSudoku(board));
     }
 
     /**

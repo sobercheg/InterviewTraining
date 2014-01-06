@@ -2046,6 +2046,58 @@ public class Solution {
         return position;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/valid-sudoku/">Valid Sudoku</a>
+     * Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+     * <p/>
+     * The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+     */
+    public boolean isValidSudoku(char[][] board) {
+        // check 3x3 cells
+        boolean[] table;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                table = new boolean[9];
+                for (int k = 0; k < 9; k++) {
+                    int x = j * 3 + k % 3;
+                    int y = i * 3 + k / 3;
+                    char num = board[x][y];
+                    if (num == '.') continue;
+                    if (table[num - '1'])
+                        return false;
+                    table[num - '1'] = true;
+                }
+            }
+        }
+
+        // check rows
+        for (int i = 0; i < 9; i++) {
+            table = new boolean[9];
+            for (int k = 0; k < 9; k++) {
+                char num = board[i][k];
+                if (num == '.') continue;
+                if (table[num - '1'])
+                    return false;
+                table[num - '1'] = true;
+            }
+        }
+
+        // check columns
+        for (int i = 0; i < 9; i++) {
+            table = new boolean[9];
+            for (int k = 0; k < 9; k++) {
+                char num = board[k][i];
+                if (num == '.') continue;
+                if (table[num - '1'])
+                    return false;
+                table[num - '1'] = true;
+            }
+        }
+
+        return true;
+    }
+
+
 /************************** Data structures ****************************/
 
     /**
