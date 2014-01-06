@@ -55,6 +55,7 @@ public class SolutionTest {
         solutionTest.testNextPermutation();
         solutionTest.testLongestValidParentheses();
         solutionTest.testSearch();
+        solutionTest.testSearchRange();
     }
 
     public void testTwoSum() {
@@ -560,6 +561,13 @@ public class SolutionTest {
         assertEquals(5, solution.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 1));
         assertEquals(0, solution.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 4));
         assertEquals(-1, solution.search(new int[]{4, 5, 6, 7, 0, 1, 2}, 8));
+    }
+
+    public void testSearchRange() {
+        assertEquals(new int[]{3, 4}, solution.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8));
+        assertEquals(new int[]{-1, -1}, solution.searchRange(new int[]{1}, 0));
+        assertEquals(new int[]{-1, -1}, solution.searchRange(new int[]{1, 1}, 0));
+        assertEquals(new int[]{0, 1}, solution.searchRange(new int[]{2, 2}, 2));
     }
 
     /**

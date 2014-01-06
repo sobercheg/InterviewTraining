@@ -1931,6 +1931,80 @@ public class Solution {
         return -1;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/search-for-a-range/">Search for a Range</a>
+     * Given a sorted array of integers, find the starting and ending position of a given target value.
+     * <p/>
+     * Your algorithm's runtime complexity must be in the order of O(log n).
+     * <p/>
+     * If the target is not found in the array, return [-1, -1].
+     * <p/>
+     * For example,
+     * Given [5, 7, 7, 8, 8, 10] and target value 8,
+     * return [3, 4].
+     * <p/>
+     * Idea: do a binary search for the target value. If not found return [-1, -1]. Otherwise do two more binary searches for
+     * the value range boundaries
+     */
+    public int[] searchRange(int[] A, int target) {
+
+        int l = 0;
+        int r = A.length - 1;
+        if (l == r) {
+            if (A[0] == target) return new int[]{0, 0};
+            else return new int[]{-1, -1};
+        }
+        // Step 1. Find target
+        int targetIndex = -1;
+
+        while (l <= r) {
+            int mid = (l + r) / 2;
+            if (A[mid] == target) {
+                targetIndex = mid;
+                break;
+            }
+            if (target < A[mid]) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }
+        }
+        if (targetIndex == -1) return new int[]{-1, -1};
+
+        // Step 2.1. Find left boundary
+        l = 0;
+        r = targetIndex;
+        int left = -1;
+        while (l <= r) {
+            if (l == r || A[l] == target) {
+                left = l;
+                break;
+            }
+            int mid = (l + r) / 2;
+            if (A[mid] != target)
+                l = mid + 1;
+            else r = mid;
+        }
+
+        // Step 2.2. Find right boundary
+        l = targetIndex;
+        r = A.length - 1;
+        int right = -1;
+        while (l <= r) {
+            if (l == r || A[r] == target) {
+                right = r;
+                break;
+            }
+            int mid = (l + r + 1) / 2;
+            if (A[mid] != target)
+                r = mid - 1;
+            else l = mid;
+        }
+
+        return new int[]{left, right};
+
+    }
+
 /************************** Data structures ****************************/
 
     /**
