@@ -60,6 +60,7 @@ public class SolutionTest {
         solutionTest.testIsValidSudoku();
         solutionTest.testSolveSudoku();
         solutionTest.testCountAndSay();
+        solutionTest.testLRUCache();
     }
 
     public void testTwoSum() {
@@ -640,6 +641,37 @@ public class SolutionTest {
         assertEquals("21", solution.countAndSay(3));
         assertEquals("1211", solution.countAndSay(4));
         assertEquals("111221", solution.countAndSay(5));
+    }
+
+    public void testLRUCache() {
+        LRUCache cache = new LRUCache(1);
+        assertEquals(-1, cache.get(1));
+        cache.set(1, 100);
+        assertEquals(100, cache.get(1));
+        cache.set(1, 200);
+        assertEquals(200, cache.get(1));
+        cache.set(2, 300);
+        assertEquals(-1, cache.get(1));
+        assertEquals(300, cache.get(2));
+
+        cache = new LRUCache(2);
+        cache.set(2, 1);
+        cache.set(1, 1);
+        assertEquals(1, cache.get(2));
+        cache.set(4, 1);
+        assertEquals(-1, cache.get(1));
+        assertEquals(1, cache.get(2));
+
+        cache = new LRUCache(3);
+        cache.set(1, 1);
+        cache.set(2, 2);
+        cache.set(3, 3);
+        cache.set(2, 4);
+        cache.set(4, 5);
+        assertEquals(5, cache.get(4));
+        assertEquals(4, cache.get(2));
+        assertEquals(3, cache.get(3));
+        assertEquals(-1, cache.get(1));
     }
 
     /**

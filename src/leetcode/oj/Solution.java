@@ -2189,15 +2189,12 @@ public class Solution {
             rowNotAvail[y][num] = true;
             colNotAvail[x][num] = true;
         }
-        char[][] solvedBoard = new char[9][9];
-        solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, 0, solvedBoard);
-        System.arraycopy(solvedBoard, 0, board, 0, board.length);
+        solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, 0);
 
     }
 
-    private boolean solveSudoku(char[][] board, boolean[][] cellNotAvail, boolean[][] rowNotAvail, boolean[][] colNotAvail, int cell, char[][] solvedBoard) {
+    private boolean solveSudoku(char[][] board, boolean[][] cellNotAvail, boolean[][] rowNotAvail, boolean[][] colNotAvail, int cell) {
         if (cell == 9 * 9) {
-            System.arraycopy(board, 0, solvedBoard, 0, board.length);
             return true;
         }
 
@@ -2208,7 +2205,7 @@ public class Solution {
         int cellNum = cellY * 3 + cellX;
 
         if (board[y][x] != '.') {
-            return solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1, solvedBoard);
+            return solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1);
         }
 
         for (char num = 0; num < 9; num++) {
@@ -2220,7 +2217,7 @@ public class Solution {
                 colNotAvail[x][num] = true;
                 board[y][x] = (char) ('1' + num);
 
-                isCellValid = solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1, solvedBoard);
+                isCellValid = solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1);
 
                 if (!isCellValid) {
                     board[y][x] = '.';
@@ -2276,7 +2273,133 @@ public class Solution {
         return sb.toString();
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/lru-cache/">LRU Cache</a>
+     * Design and implement a data structure for Least Recently Used (LRU) cache.
+     * It should support the following operations: get and set.
+     * </p>
+     * get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
+     * <p/>
+     * set(key, value) - Set or insert the value if the key is not already present.
+     * When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
+     * <p/>
+     * Idea: use two data structures:
+     * 1. HashMap for storing key to value mapping
+     * 2. Linked list for storing cached keys. Keep head and tail pointers.
+     */
+    public static class LRUCache {
+        private final int capacity;
+        private final Map<Integer, Integer> map;
+        private final Map<Integer, Node> keyToNodeMap;
+        private int size;
+        private Node head;
+        private Node tail;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            this.map = new HashMap<Integer, Integer>(capacity);
+            this.keyToNodeMap = new HashMap<Integer, Node>();
+            this.head = null;
+            this.tail = null;
+            size = 0;
+        }
+
+        public int get(int key) {
+            // Case 1: there is not such key in the map. Do nothing
+            if (!map.containsKey(key))
+                return -1;
+
+            // Case 2: there is such key in the map. Move the key in the list to the head
+
+            /*Node keyNode = head;
+            while (keyNode.data != key) {
+                keyNode = keyNode.next;
+            }*/
+            Node keyNode = keyToNodeMap.get(key);
+            if (keyNode == null) return -1;
+
+            if (head != tail && keyNode.prev != null) {
+                keyNode.prev.next = keyNode.next;
+                if (keyNode.next != null)
+                    keyNode.next.prev = keyNode.prev;
+                if (head != null)
+                    head.prev = keyNode;
+                keyNode.next = head;
+                if (tail == keyNode) {
+                    tail = keyNode.prev;
+                }
+                keyNode.prev = null;
+                head = keyNode;
+                keyToNodeMap.put(key, head);
+            }
+
+            return map.get(key);
+        }
+
+        public void set(int key, int value) {
+            // case 1: the map contains key: renew value, move the key node to the head
+            if (map.containsKey(key)) {
+                /*Node keyNode = head;
+                while (keyNode.data != key) {
+                    keyNode = keyNode.next;
+                }*/
+                Node keyNode = keyToNodeMap.get(key);
+                if (tail == head) { // there is exactly one element
+                    head.data = key;
+                } else { // more than 1 element
+                    if (keyNode.prev == null) { // this is the head
+                        keyNode.data = key;
+                    } else { // the key element is somewhere in the middle
+                        keyNode.prev.next = keyNode.next;
+                        if (keyNode.next != null) {
+                            keyNode.next.prev = keyNode.prev;
+                        }
+                        if (tail == keyNode) {
+                            tail = keyNode.prev;
+                        }
+
+                        head.prev = keyNode;
+                        keyNode.next = head;
+                        head = keyNode;
+                        head.prev = null;
+                        keyToNodeMap.put(key, head);
+                    }
+                }
+                map.put(key, value);
+            } else { // this is a brand new element
+                if (size == capacity) { // reached capacity
+                    map.remove(tail.data);
+                    keyToNodeMap.remove(tail.data);
+                    tail = tail.prev;
+                    if (tail != null) tail.next = null;
+                    size--;
+                }
+                Node newNode = new Node(key, null, head);
+                if (head != null) head.prev = newNode;
+                if (tail == null) {
+                    tail = newNode;
+                }
+                head = newNode;
+                size++;
+                map.put(key, value);
+                keyToNodeMap.put(key, head);
+            }
+        }
+
+        class Node {
+            int data;
+            Node prev;
+            Node next;
+
+            Node(int data) {
+                this.data = data;
+            }
+
+            Node(int data, Node prev, Node next) {
+                this.data = data;
+                this.prev = prev;
+                this.next = next;
+            }
+        }
+    }
 }
-
-
-
