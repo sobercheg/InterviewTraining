@@ -58,6 +58,7 @@ public class SolutionTest {
         solutionTest.testSearchRange();
         solutionTest.testSearchInsert();
         solutionTest.testIsValidSudoku();
+        solutionTest.testSolveSudoku();
     }
 
     public void testTwoSum() {
@@ -602,6 +603,36 @@ public class SolutionTest {
         assertEquals(false, solution.isValidSudoku(board));
     }
 
+    public void testSolveSudoku() {
+        char[][] board = new char[][]{
+                {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'},
+        };
+
+        char[][] solved = new char[][]{
+                {'5', '3', '4', '6', '7', '8', '9', '1', '2'},
+                {'6', '7', '2', '1', '9', '5', '3', '4', '8'},
+                {'1', '9', '8', '3', '4', '2', '5', '6', '7'},
+                {'8', '5', '9', '7', '6', '1', '4', '2', '3'},
+                {'4', '2', '6', '8', '5', '3', '7', '9', '1'},
+                {'7', '1', '3', '9', '2', '4', '8', '5', '6'},
+                {'9', '6', '1', '5', '3', '7', '2', '8', '4'},
+                {'2', '8', '7', '4', '1', '9', '6', '3', '5'},
+                {'3', '4', '5', '2', '8', '6', '1', '7', '9'},
+        };
+
+        solution.solveSudoku(board);
+        assertArrayEquals(solved, board);
+
+    }
+
     /**
      * *************************** Helper test methods ***********************
      */
@@ -614,6 +645,13 @@ public class SolutionTest {
     public static void assertEquals(int[] expected, int[] actual) {
         if (checkNulls(expected, actual)) return;
         if (!Arrays.equals(expected, actual))
+            throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
+                    Arrays.toString(expected), Arrays.toString(actual)));
+    }
+
+    public static void assertArrayEquals(char[][] expected, char[][] actual) {
+        if (checkNulls(expected, actual)) return;
+        if (!Arrays.deepEquals(expected, actual))
             throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
                     Arrays.toString(expected), Arrays.toString(actual)));
     }

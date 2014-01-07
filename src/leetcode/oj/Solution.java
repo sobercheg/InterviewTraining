@@ -2097,6 +2097,78 @@ public class Solution {
         return true;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/sudoku-solver/">Sudoku Solver</a>
+     * Write a program to solve a Sudoku puzzle by filling the empty cells.
+     * <p/>
+     * Empty cells are indicated by the character '.'.
+     * <p/>
+     * You may assume that there will be only one unique solution.
+     */
+    public void solveSudoku(char[][] board) {
+        boolean[][] cellNotAvail = new boolean[9][9];
+        boolean[][] rowNotAvail = new boolean[9][9];
+        boolean[][] colNotAvail = new boolean[9][9];
+        for (int cell = 0; cell < 9 * 9; cell++) {
+            int x = cell % 9;
+            int y = cell / 9;
+            int cellX = x / 3;
+            int cellY = y / 3;
+            int cellNum = cellY * 3 + cellX;
+
+            if (board[y][x] == '.') continue;
+            int num = board[y][x] - '1';
+            cellNotAvail[cellNum][num] = true;
+            rowNotAvail[y][num] = true;
+            colNotAvail[x][num] = true;
+        }
+        char[][] solvedBoard = new char[9][9];
+        solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, 0, solvedBoard);
+        System.arraycopy(solvedBoard, 0, board, 0, board.length);
+
+    }
+
+    private boolean solveSudoku(char[][] board, boolean[][] cellNotAvail, boolean[][] rowNotAvail, boolean[][] colNotAvail, int cell, char[][] solvedBoard) {
+        if (cell == 9 * 9) {
+            System.arraycopy(board, 0, solvedBoard, 0, board.length);
+            return true;
+        }
+
+        int x = cell % 9;
+        int y = cell / 9;
+        int cellX = x / 3;
+        int cellY = y / 3;
+        int cellNum = cellY * 3 + cellX;
+
+        if (board[y][x] != '.') {
+            return solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1, solvedBoard);
+        }
+
+        for (char num = 0; num < 9; num++) {
+            boolean isAvailable = !cellNotAvail[cellNum][num] && !rowNotAvail[y][num] && !colNotAvail[x][num];
+            boolean isCellValid;
+            if (isAvailable) {
+                cellNotAvail[cellNum][num] = true;
+                rowNotAvail[y][num] = true;
+                colNotAvail[x][num] = true;
+                board[y][x] = (char) ('1' + num);
+
+                isCellValid = solveSudoku(board, cellNotAvail, rowNotAvail, colNotAvail, cell + 1, solvedBoard);
+
+                if (!isCellValid) {
+                    board[y][x] = '.';
+                }
+                cellNotAvail[cellNum][num] = false;
+                rowNotAvail[y][num] = false;
+                colNotAvail[x][num] = false;
+
+                if (isCellValid) return true;
+
+            }
+        }
+        return false;
+    }
+
 
 /************************** Data structures ****************************/
 
