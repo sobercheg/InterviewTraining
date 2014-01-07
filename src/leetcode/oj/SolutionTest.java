@@ -59,6 +59,7 @@ public class SolutionTest {
         solutionTest.testSearchInsert();
         solutionTest.testIsValidSudoku();
         solutionTest.testSolveSudoku();
+        solutionTest.testCountAndSay();
     }
 
     public void testTwoSum() {
@@ -631,6 +632,14 @@ public class SolutionTest {
         solution.solveSudoku(board);
         assertArrayEquals(solved, board);
 
+    }
+
+    public void testCountAndSay() {
+        assertEquals("1", solution.countAndSay(1));
+        assertEquals("11", solution.countAndSay(2));
+        assertEquals("21", solution.countAndSay(3));
+        assertEquals("1211", solution.countAndSay(4));
+        assertEquals("111221", solution.countAndSay(5));
     }
 
     /**

@@ -8,6 +8,73 @@ import java.util.*;
  */
 public class Solution {
 
+    /************************** Data structures ****************************/
+
+    /**
+     * Definition for binary tree
+     */
+    public static class TreeNode {
+        int val;
+        TreeNode left;
+        TreeNode right;
+
+        TreeNode(int x) {
+            val = x;
+        }
+
+        TreeNode(int x, TreeNode left, TreeNode right) {
+            this(x);
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
+        }
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+
+        ListNode(int x) {
+            val = x;
+            next = null;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
+        }
+    }
+
+    /**
+     * Definition for a point.
+     */
+    public static class Point {
+        int x;
+        int y;
+
+        Point() {
+            x = 0;
+            y = 0;
+        }
+
+        Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    /************************** Solutions ****************************/
+
+
     /**
      * <a href="http://oj.leetcode.com/problems/two-sum/">Two Sum</a>
      * Problem: Given an array of integers, find two numbers such that they add up to a specific target number.
@@ -2169,69 +2236,44 @@ public class Solution {
         return false;
     }
 
-
-/************************** Data structures ****************************/
-
     /**
-     * Definition for binary tree
+     * <a href="http://oj.leetcode.com/problems/count-and-say/">Count and Say</a>
+     * The count-and-say sequence is the sequence of integers beginning as follows:
+     * 1, 11, 21, 1211, 111221, ...
+     * <p/>
+     * 1 is read off as "one 1" or 11.
+     * 11 is read off as "two 1s" or 21.
+     * 21 is read off as "one 2, then one 1" or 1211.
+     * <p/>
+     * Given an integer n, generate the nth sequence.
+     * <p/>
+     * Note: The sequence of integers will be represented as a string.
+     * <p/>
+     * Solution: no magic. Count from 1 to n
      */
-    public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
-
-        TreeNode(int x) {
-            val = x;
+    public String countAndSay(int n) {
+        StringBuilder sb = new StringBuilder("1");
+        while (n > 1) {
+            StringBuilder newItem = new StringBuilder();
+            char ch = sb.charAt(0);
+            int count = 0;
+            int index = 0;
+            while (index < sb.length()) {
+                while (index < sb.length() && sb.charAt(index) == ch) {
+                    count++;
+                    index++;
+                }
+                newItem.append(count);
+                newItem.append(ch);
+                count = 0;
+                if (index < sb.length())
+                    ch = sb.charAt(index);
+            }
+            n--;
+            sb = newItem;
         }
 
-        TreeNode(int x, TreeNode left, TreeNode right) {
-            this(x);
-            this.left = left;
-            this.right = right;
-        }
-
-        @Override
-        public String toString() {
-            return "" + val;
-        }
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-
-        ListNode(int x) {
-            val = x;
-            next = null;
-        }
-
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "" + val;
-        }
-    }
-
-    /**
-     * Definition for a point.
-     */
-    public static class Point {
-        int x;
-        int y;
-
-        Point() {
-            x = 0;
-            y = 0;
-        }
-
-        Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
+        return sb.toString();
     }
 
 }
