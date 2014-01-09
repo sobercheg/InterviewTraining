@@ -2391,10 +2391,6 @@ public class Solution {
             Node prev;
             Node next;
 
-            Node(int data) {
-                this.data = data;
-            }
-
             Node(int data, Node prev, Node next) {
                 this.data = data;
                 this.prev = prev;
@@ -2402,4 +2398,170 @@ public class Solution {
             }
         }
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/sort-list/">Sort List</a>
+     * Sort a linked list in O(n log n) time using constant space complexity.
+     */
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) return head;
+        int chunkLength = 1;
+        ListNode prevFrom1 = null;
+        ListNode from1;
+        ListNode prevFrom2 = head;
+        ListNode from2;
+        ListNode newHead = head;
+        boolean isMergeNecessary = true;
+
+        ListNode currentNode;
+        while (true) { // chunk size loop: 2, 4, 8, 16...
+            boolean isFirstChunk = true;
+            currentNode = newHead;
+            ListNode[] mergedHeadTail = new ListNode[2];
+
+            while (currentNode != null) { // list loop
+                int elementsInChunk = 0;
+
+                from1 = currentNode;
+                while (elementsInChunk < chunkLength) { // 1st chunk
+                    prevFrom2 = currentNode;
+                    currentNode = currentNode.next;
+                    if (currentNode == null) {
+                        if (isFirstChunk)
+                            isMergeNecessary = false;
+                        break;
+                    }
+                    elementsInChunk++;
+                }
+
+                if (!isMergeNecessary) return newHead;
+
+                from2 = currentNode;
+
+                ///
+                if (from2 == null) break;
+
+                ListNode prevTail = mergedHeadTail[1];
+                merge(prevFrom1, from1, prevFrom2, from2, chunkLength, mergedHeadTail);
+
+                prevFrom1 = mergedHeadTail[1];
+                currentNode = prevFrom1.next;
+                if (prevTail != null) {
+                    prevTail.next = mergedHeadTail[0];
+                }
+
+                if (isFirstChunk) {
+                    newHead = mergedHeadTail[0];
+                }
+
+                isFirstChunk = false;
+            }
+
+            chunkLength *= 2;
+        }
+    }
+
+    private void merge(ListNode prevFrom1, ListNode from1, ListNode prevFrom2, ListNode from2, int numOfNodes, ListNode[] headTail) {
+
+        int counter1 = 0;
+        int counter2 = 0;
+
+        ListNode mergedHead;
+        ListNode mergedTail = from1;
+        ListNode currentNode1 = from1;
+        ListNode currentNode2 = from2;
+        ListNode mergedCurrent;
+
+        if (currentNode2 == null || currentNode1.val <= currentNode2.val) {
+            mergedHead = from1;
+            currentNode1 = currentNode1.next;
+            counter1++;
+        } else {
+            mergedHead = from2;
+            currentNode2 = currentNode2.next;
+            counter2++;
+        }
+        mergedCurrent = mergedHead;
+
+        while (true) {
+            // reached the end of the first chunk. Copy the rest of the second chunk
+            if (counter1 == numOfNodes) {
+                while (counter2 < numOfNodes && currentNode2 != null) {
+                    mergedCurrent.next = currentNode2;
+                    mergedCurrent = mergedCurrent.next;
+                    currentNode2 = currentNode2.next;
+                    mergedTail = mergedCurrent;
+                    counter2++;
+                }
+                break;
+            }
+
+            // reached the end of the second chunk. Copy the rest of the first chunk
+            else if (counter2 == numOfNodes) {
+                while (counter1 < numOfNodes && currentNode1 != null) {
+                    mergedCurrent.next = currentNode1;
+                    mergedCurrent = mergedCurrent.next;
+                    currentNode1 = currentNode1.next;
+                    mergedTail = mergedCurrent;
+                    counter1++;
+                }
+                break;
+            }
+
+            // need to advance one counter
+            else {
+                if (currentNode2 == null || currentNode1.val <= currentNode2.val) {
+                    counter1++;
+                    mergedCurrent.next = currentNode1;
+                    mergedCurrent = mergedCurrent.next;
+                    currentNode1 = currentNode1.next;
+                    mergedTail = mergedCurrent;
+                } else {
+                    counter2++;
+                    mergedCurrent.next = currentNode2;
+                    mergedCurrent = mergedCurrent.next;
+                    currentNode2 = currentNode2.next;
+                    mergedTail = mergedCurrent;
+                }
+
+            }
+
+        }
+        mergedTail.next = currentNode2;
+        headTail[0] = mergedHead;
+        headTail[1] = mergedTail;
+    }
+
+
+    public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
+        ArrayList<ArrayList<Integer>> allCombos = new ArrayList<ArrayList<Integer>>();
+        combinationSum(candidates, target, target, 0, new ArrayList<Integer>(), allCombos, true);
+        return allCombos;
+    }
+
+    public ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target) {
+        ArrayList<ArrayList<Integer>> allCombos = new ArrayList<ArrayList<Integer>>();
+        combinationSum(candidates, target, target, -1, new ArrayList<Integer>(), allCombos, false);
+        return allCombos;
+    }
+
+    private void combinationSum(int[] candidates, int target, int left, int level, ArrayList<Integer> numbers, ArrayList<ArrayList<Integer>> combinations, boolean reuseCandidates) {
+        if (left == 0) {
+            ArrayList<Integer> goodCombo = new ArrayList<Integer>(numbers);
+            Collections.sort(goodCombo);
+            if (!combinations.contains(goodCombo))
+                combinations.add(goodCombo);
+            return;
+        }
+        if (left < 0) {
+            return;
+        }
+
+        for (int i = level + (reuseCandidates ? 0 : 1); i < candidates.length; i++) {
+            numbers.add(candidates[i]);
+            combinationSum(candidates, target, left - candidates[i], i, numbers, combinations, reuseCandidates);
+            numbers.remove((Integer) candidates[i]);
+        }
+    }
+
 }

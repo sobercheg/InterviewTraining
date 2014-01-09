@@ -61,6 +61,9 @@ public class SolutionTest {
         solutionTest.testSolveSudoku();
         solutionTest.testCountAndSay();
         solutionTest.testLRUCache();
+        solutionTest.testSortList();
+        solutionTest.testCombinationSum();
+        solutionTest.testCombinationSum2();
     }
 
     public void testTwoSum() {
@@ -672,6 +675,63 @@ public class SolutionTest {
         assertEquals(4, cache.get(2));
         assertEquals(3, cache.get(3));
         assertEquals(-1, cache.get(1));
+    }
+
+    public void testSortList() {
+        ListNode head = new ListNode(1);
+        ListNode newHead = solution.sortList(head);
+        assertEquals(1, newHead.val);
+        assertEquals(null, head.next);
+
+        head = new ListNode(2, new ListNode(1));
+        newHead = solution.sortList(head);
+        assertEquals(1, newHead.val);
+        assertEquals(2, newHead.next.val);
+        assertEquals(null, newHead.next.next);
+
+        head = new ListNode(2, new ListNode(1, new ListNode(3)));
+        newHead = solution.sortList(head);
+        assertEquals(1, newHead.val);
+        assertEquals(2, newHead.next.val);
+        assertEquals(3, newHead.next.next.val);
+        assertEquals(null, newHead.next.next.next);
+
+        head = new ListNode(2, new ListNode(1, new ListNode(5, new ListNode(3, new ListNode(1, new ListNode(10, new ListNode(2)))))));
+        newHead = solution.sortList(head);
+        assertEquals(1, newHead.val);
+        assertEquals(1, newHead.next.val);
+        assertEquals(2, newHead.next.next.val);
+        assertEquals(2, newHead.next.next.next.val);
+        assertEquals(3, newHead.next.next.next.next.val);
+        assertEquals(5, newHead.next.next.next.next.next.val);
+        assertEquals(10, newHead.next.next.next.next.next.next.val);
+        assertEquals(null, newHead.next.next.next.next.next.next.next);
+    }
+
+    public void testCombinationSum() {
+        int[] candidates = new int[]{2, 3, 6, 7};
+        ArrayList<ArrayList<Integer>> expectedCombos = new ArrayList<ArrayList<Integer>>(Arrays.asList(
+                new ArrayList<Integer>(Arrays.asList(2, 2, 3)),
+                new ArrayList<Integer>(Arrays.asList(7))
+        ));
+        assertEquals(expectedCombos, solution.combinationSum(candidates, 7));
+    }
+
+    public void testCombinationSum2() {
+        int[] candidates = new int[]{10, 1, 2, 7, 6, 1, 5};
+        ArrayList<ArrayList<Integer>> expectedCombos = new ArrayList<ArrayList<Integer>>(Arrays.asList(
+                new ArrayList<Integer>(Arrays.asList(1, 2, 5)),
+                new ArrayList<Integer>(Arrays.asList(1, 7)),
+                new ArrayList<Integer>(Arrays.asList(1, 1, 6)),
+                new ArrayList<Integer>(Arrays.asList(2, 6))
+        ));
+        assertEquals(expectedCombos, solution.combinationSum2(candidates, 8));
+
+        candidates = new int[]{1};
+        expectedCombos = new ArrayList<ArrayList<Integer>>(Arrays.asList(
+                new ArrayList<Integer>(Arrays.asList(1))
+        ));
+        assertEquals(expectedCombos, solution.combinationSum2(candidates, 1));
     }
 
     /**
