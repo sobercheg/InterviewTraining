@@ -64,6 +64,7 @@ public class SolutionTest {
         solutionTest.testSortList();
         solutionTest.testCombinationSum();
         solutionTest.testCombinationSum2();
+        solutionTest.testFirstMissingPositive();
     }
 
     public void testTwoSum() {
@@ -732,6 +733,14 @@ public class SolutionTest {
                 new ArrayList<Integer>(Arrays.asList(1))
         ));
         assertEquals(expectedCombos, solution.combinationSum2(candidates, 1));
+    }
+
+    public void testFirstMissingPositive() {
+        assertEquals(3, solution.firstMissingPositive(new int[]{1, 2, 0}));
+        assertEquals(2, solution.firstMissingPositive(new int[]{3, 4, -1, 1}));
+        assertEquals(2, solution.firstMissingPositive(new int[]{3, 4, -1, 1, 1, 1, 1, 1}));
+        assertEquals(6, solution.firstMissingPositive(new int[]{-3, 9, 16, 4, 5, 16, -4, 9, 26, 2, 1, 19, -1, 25, 7, 22, 2, -7, 14, 2, 5, -6, 1, 17, 3, 24, -4, 17, 15}));
+        assertEquals(2, solution.firstMissingPositive(new int[]{3, 4, -1, 3, 3, -3, -1, 1, 1, 1, 1}));
     }
 
     /**

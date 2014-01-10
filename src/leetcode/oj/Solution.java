@@ -2442,7 +2442,7 @@ public class Solution {
                 if (from2 == null) break;
 
                 ListNode prevTail = mergedHeadTail[1];
-                merge(prevFrom1, from1, prevFrom2, from2, chunkLength, mergedHeadTail);
+                merge(from1, from2, chunkLength, mergedHeadTail);
 
                 prevFrom1 = mergedHeadTail[1];
                 currentNode = prevFrom1.next;
@@ -2461,7 +2461,7 @@ public class Solution {
         }
     }
 
-    private void merge(ListNode prevFrom1, ListNode from1, ListNode prevFrom2, ListNode from2, int numOfNodes, ListNode[] headTail) {
+    private void merge(ListNode from1, ListNode from2, int numOfNodes, ListNode[] headTail) {
 
         int counter1 = 0;
         int counter2 = 0;
@@ -2532,20 +2532,55 @@ public class Solution {
         headTail[1] = mergedTail;
     }
 
-
+    /**
+     * <a href="http://oj.leetcode.com/problems/combination-sum/">Combination Sum</a>
+     * Given a set of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+     * <p/>
+     * The same repeated number may be chosen from C unlimited number of times.
+     * <p/>
+     * Note:
+     * <p/>
+     * All numbers (including target) will be positive integers.
+     * Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+     * The solution set must not contain duplicate combinations.
+     * <p/>
+     * For example, given candidate set 2,3,6,7 and target 7,
+     * A solution set is:
+     * [7]
+     * [2, 2, 3]
+     */
     public ArrayList<ArrayList<Integer>> combinationSum(int[] candidates, int target) {
         ArrayList<ArrayList<Integer>> allCombos = new ArrayList<ArrayList<Integer>>();
-        combinationSum(candidates, target, target, 0, new ArrayList<Integer>(), allCombos, true);
+        combinationSum(candidates, target, 0, new ArrayList<Integer>(), allCombos, true);
         return allCombos;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/combination-sum-ii/">Combination Sum II</a>
+     * Given a collection of candidate numbers (C) and a target number (T), find all unique combinations in C where the candidate numbers sums to T.
+     * <p/>
+     * Each number in C may only be used once in the combination.
+     * <p/>
+     * Note:
+     * <p/>
+     * All numbers (including target) will be positive integers.
+     * Elements in a combination (a1, a2, … , ak) must be in non-descending order. (ie, a1 ≤ a2 ≤ … ≤ ak).
+     * The solution set must not contain duplicate combinations.
+     * <p/>
+     * For example, given candidate set 10,1,2,7,6,1,5 and target 8,
+     * A solution set is:
+     * [1, 7]
+     * [1, 2, 5]
+     * [2, 6]
+     * [1, 1, 6]
+     */
     public ArrayList<ArrayList<Integer>> combinationSum2(int[] candidates, int target) {
         ArrayList<ArrayList<Integer>> allCombos = new ArrayList<ArrayList<Integer>>();
-        combinationSum(candidates, target, target, -1, new ArrayList<Integer>(), allCombos, false);
+        combinationSum(candidates, target, -1, new ArrayList<Integer>(), allCombos, false);
         return allCombos;
     }
 
-    private void combinationSum(int[] candidates, int target, int left, int level, ArrayList<Integer> numbers, ArrayList<ArrayList<Integer>> combinations, boolean reuseCandidates) {
+    private void combinationSum(int[] candidates, int left, int level, ArrayList<Integer> numbers, ArrayList<ArrayList<Integer>> combinations, boolean reuseCandidates) {
         if (left == 0) {
             ArrayList<Integer> goodCombo = new ArrayList<Integer>(numbers);
             Collections.sort(goodCombo);
@@ -2559,9 +2594,43 @@ public class Solution {
 
         for (int i = level + (reuseCandidates ? 0 : 1); i < candidates.length; i++) {
             numbers.add(candidates[i]);
-            combinationSum(candidates, target, left - candidates[i], i, numbers, combinations, reuseCandidates);
+            combinationSum(candidates, left - candidates[i], i, numbers, combinations, reuseCandidates);
             numbers.remove((Integer) candidates[i]);
         }
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/first-missing-positive/">First Missing Positive</a>
+     * Given an unsorted integer array, find the first missing positive integer.
+     * <p/>
+     * For example,
+     * Given [1,2,0] return 3,
+     * and [3,4,-1,1] return 2.
+     * <p/>
+     * Your algorithm should run in O(n) time and uses constant space.
+     * <p/>
+     * Solution: try to match array indices and array values.
+     * http://tianrunhe.wordpress.com/2012/07/15/finding-the-1st-missing-positive-int-in-an-array-first-missing-positive/
+     */
+    public int firstMissingPositive(int[] A) {
+        int i = 0;
+        while (i < A.length) {
+            int v = A[i];
+            while (v - 1 != i) {
+                if (v <= 0 || v > A.length || v == A[v - 1])
+                    break;
+                int tmp = A[v - 1];
+                A[v - 1] = A[i];
+                A[i] = tmp;
+                v = A[i];
+            }
+            i++;
+        }
+
+        for (i = 0; i < A.length; i++) {
+            if (A[i] - 1 != i) return i + 1;
+        }
+        return A.length + 1;
+
+    }
 }
