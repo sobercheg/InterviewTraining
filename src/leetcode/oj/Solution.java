@@ -2633,4 +2633,41 @@ public class Solution {
         return A.length + 1;
 
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/trapping-rain-water/">Trapping Rain Water</a>
+     * Given n non-negative integers representing an elevation map where the width of each bar is 1,
+     * compute how much water it is able to trap after raining.
+     * <p/>
+     * For example,
+     * Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.
+     * <p/>
+     * Solution: do two passes: from left to right and from right to left:
+     * Pass 1: keep watermark level raising with bar height
+     * Pass 2: keep watermark level lowering with bar height
+     */
+    public int trap(int[] A) {
+        if (A.length == 0) return 0;
+
+        int[] W = new int[A.length];
+        int watermark = 0;
+        for (int i = 0; i < A.length; i++) {
+            if (A[i] > watermark) {
+                watermark = A[i];
+            }
+            W[i] = watermark;
+        }
+
+        int volume = 0;
+        watermark = A[A.length - 1];
+        for (int i = A.length - 1; i >= 0; i--) {
+            if (A[i] > watermark) {
+                watermark = A[i];
+            }
+            W[i] = Math.min(watermark, W[i]);
+            volume += W[i] - A[i];
+        }
+
+        return volume;
+    }
 }
