@@ -61,11 +61,6 @@ public class Solution {
         int x;
         int y;
 
-        Point() {
-            x = 0;
-            y = 0;
-        }
-
         Point(int x, int y) {
             this.x = x;
             this.y = y;
@@ -459,8 +454,7 @@ public class Solution {
      * <p/>
      * Solution: just look at the examples and implement what you see.
      */
-    public String convert(String s, int nRows) {
-        int n = nRows;
+    public String convert(String s, int n) {
         if (n <= 1) return s;
         int l = s.length();
         if (l <= n) return s;
@@ -954,10 +948,10 @@ public class Solution {
      * (-2, -1, 1, 2)
      * (-2,  0, 0, 2)
      */
-    public ArrayList<ArrayList<Integer>> fourSum(int[] num, int target) {
-        if (num.length < 4) return new ArrayList<ArrayList<Integer>>();
-        List<ArrayList<Integer>> kSums = kSum(num, target, 4);
-        return new ArrayList<ArrayList<Integer>>(kSums);
+    public List<List<Integer>> fourSum(int[] num, int target) {
+        if (num.length < 4) return new ArrayList<List<Integer>>();
+        List<List<Integer>> kSums = kSum(num, target, 4);
+        return new ArrayList<List<Integer>>(kSums);
     }
 
     /**
@@ -970,8 +964,8 @@ public class Solution {
      * For each input element a, check whether S contains both x and a−x, for some number x.
      * (The second step is essentially the O(n2)-time algorithm for 3SUM.) The algorithm runs in O(n(k+1)/2) time.
      */
-    public List<ArrayList<Integer>> kSum(int[] num, int target, int k) {
-        if (num.length < k) return new ArrayList<ArrayList<Integer>>();
+    public List<List<Integer>> kSum(int[] num, int target, int k) {
+        if (num.length < k) return new ArrayList<List<Integer>>();
         // Step 1. Compute all sums of k/2 input elements
         // Probably this step brings most complexity and running time
         // Probably the algo can be redesigned to use n choose k rather than n choose k/2. It'll greatly simplify
@@ -989,7 +983,7 @@ public class Solution {
             sumToCombinations.get(sum).add(indices);
         }
 
-        Set<ArrayList<Integer>> kSums = new HashSet<ArrayList<Integer>>();
+        Set<List<Integer>> kSums = new HashSet<List<Integer>>();
 
         // Step 2. Check whether S contains both some number x and its sibling target−x
         if (k % 2 == 0) {
@@ -1008,7 +1002,7 @@ public class Solution {
                     }
 
                     for (List<Integer> indices : finalCombos) {
-                        ArrayList<Integer> finalValues = new ArrayList<Integer>();
+                        List<Integer> finalValues = new ArrayList<Integer>();
                         for (int index : indices) {
                             finalValues.add(num[index]);
                         }
@@ -1039,7 +1033,7 @@ public class Solution {
                         }
 
                         for (List<Integer> indices : finalCombos) {
-                            ArrayList<Integer> finalValues = new ArrayList<Integer>();
+                            List<Integer> finalValues = new ArrayList<Integer>();
                             for (int index : indices) {
                                 finalValues.add(num[index]);
                             }
@@ -1053,7 +1047,7 @@ public class Solution {
 
         }
 
-        return new ArrayList<ArrayList<Integer>>(kSums);
+        return new ArrayList<List<Integer>>(kSums);
     }
 
     private static List<List<Integer>> choose(int n, int k) {
@@ -1753,12 +1747,12 @@ public class Solution {
      * You should return the indices: [0,9].
      * (order does not matter).
      */
-    public ArrayList<Integer> findSubstring(String S, String[] L) {
+    public List<Integer> findSubstring(String S, String[] L) {
         return findSubstringHashmap(S, L);
     }
 
-    private ArrayList<Integer> findSubstringHashmap(String S, String[] L) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
+    private List<Integer> findSubstringHashmap(String S, String[] L) {
+        List<Integer> result = new ArrayList<Integer>();
         int wordLen = L[0].length();
 
         // init maps
@@ -2406,9 +2400,8 @@ public class Solution {
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) return head;
         int chunkLength = 1;
-        ListNode prevFrom1 = null;
+        ListNode prevFrom1;
         ListNode from1;
-        ListNode prevFrom2 = head;
         ListNode from2;
         ListNode newHead = head;
         boolean isMergeNecessary = true;
@@ -2424,7 +2417,6 @@ public class Solution {
 
                 from1 = currentNode;
                 while (elementsInChunk < chunkLength) { // 1st chunk
-                    prevFrom2 = currentNode;
                     currentNode = currentNode.next;
                     if (currentNode == null) {
                         if (isFirstChunk)
@@ -2670,4 +2662,124 @@ public class Solution {
 
         return volume;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/multiply-strings/">Multiply Strings</a>
+     * Given two numbers represented as strings, return multiplication of the numbers as a string.
+     * <p/>
+     * Note: The numbers can be arbitrarily large and are non-negative.
+     * <p/>
+     * Solution: <a href="https://class.coursera.org/algo-004/lecture/167">Karatsuba algorithm</a>
+     */
+    public String multiply(String num1, String num2) {
+        int maxLen = 9;
+        long limit = (long) Math.pow(10, maxLen);
+        return mult(num1, num2, maxLen, limit, 0);
+    }
+
+    private String mult(String num1, String num2, int maxLen, long limit, int level) {
+        long start = System.nanoTime();
+
+        if (num2 == null || num2.isEmpty()) return num1;
+        if (num1 == null || num1.isEmpty()) return num2;
+        // base case
+        int l1 = num1.length();
+        int l2 = num2.length();
+        if (l1 <= maxLen && l2 <= maxLen) {
+            return Long.toString(Long.parseLong(num1) * Long.parseLong(num2));
+        }
+        // pad with zeros
+        if (l1 != l2) {
+            char[] zeros = new char[Math.abs(l1 - l2)];
+            Arrays.fill(zeros, '0');
+            if (l1 < l2) {
+                num1 = new String(zeros) + num1;
+            } else if (l1 > l2) {
+                num2 = new String(zeros) + num2;
+            }
+        }
+
+        int m = Math.max(l1, l2);
+        int m2 = m / 2 + m % 2;
+
+        String a = num1.substring(0, m - m2);
+        String b = num1.substring(m - m2);
+        String c = num2.substring(0, m - m2);
+        String d = num2.substring(m - m2);
+
+        String ac = mult(a, c, maxLen, limit, level + 1);
+        String bd = mult(b, d, maxLen, limit, level + 1);
+        String a_b__c_d = mult(sum(a, b, maxLen, limit), sum(c, d, maxLen, limit), maxLen, limit, level + 1);
+        String ad_bc = subtr(subtr(a_b__c_d, ac, maxLen, limit), bd, maxLen, limit);
+
+        StringBuilder part1 = new StringBuilder(ac);
+        for (int i = 0; i < m2; i++) part1.append("00");
+        StringBuilder part2 = new StringBuilder(ad_bc);
+        for (int i = 0; i < m2; i++) part2.append("0");
+
+        String part3 = bd;
+
+        String result = sum(sum(part1.toString(), part2.toString(), maxLen, limit), part3, maxLen, limit);
+        return result;
+    }
+
+    private String sum(String num1, String num2, int maxLen, long limit) {
+        if (num1 == null || num1.isEmpty()) return num2;
+        if (num2 == null || num2.isEmpty()) return num1;
+
+        int carryover = 0;
+        int i1 = num1.length();
+        int i2 = num2.length();
+        StringBuilder sum = new StringBuilder();
+        while (i1 > 0 || i2 > 0) {
+            long num1Part = i1 > 0 ? Long.parseLong(num1.substring(Math.max(i1 - maxLen, 0), i1)) : 0;
+            long num2Part = i2 > 0 ? Long.parseLong(num2.substring(Math.max(i2 - maxLen, 0), i2)) : 0;
+            long partSum = num1Part + num2Part + carryover;
+            StringBuilder partSumStr = new StringBuilder(Long.toString(partSum));
+            // pad with leading zeros
+            while (partSumStr.length() < maxLen) partSumStr.insert(0, '0');
+
+            if (partSum >= limit) {
+                carryover = 1;
+                partSumStr.deleteCharAt(0);
+            } else
+                carryover = 0;
+            sum.insert(0, partSumStr);
+            i1 -= maxLen;
+            i2 -= maxLen;
+        }
+        if (carryover > 0) sum.insert(0, carryover);
+        while (sum.charAt(0) == '0' && sum.length() > 1) sum.deleteCharAt(0);
+        return sum.toString();
+
+    }
+
+    private String subtr(String num1, String num2, int maxLen, long limit) {
+        if (num2 == null || num2.isEmpty()) return num1;
+        int carryover = 0;
+        int i1 = num1.length();
+        int i2 = num2.length();
+        StringBuilder sum = new StringBuilder();
+        while (i1 > 0 || i2 > 0) {
+            long num1Part = i1 > 0 ? Long.parseLong(num1.substring(Math.max(i1 - maxLen, 0), i1)) : 0;
+            long num2Part = i2 > 0 ? Long.parseLong(num2.substring(Math.max(i2 - maxLen, 0), i2)) : 0;
+            long partSubstr = num1Part - num2Part + carryover;
+
+            StringBuilder partSumStr = new StringBuilder(Long.toString(partSubstr >= 0 ? partSubstr : limit + partSubstr));
+            // pad with leading zeros
+            while (partSumStr.length() < maxLen) partSumStr.insert(0, '0');
+
+            if (partSubstr < 0) {
+                carryover = -1;
+            } else
+                carryover = 0;
+
+            sum.insert(0, partSumStr);
+            i1 -= maxLen;
+            i2 -= maxLen;
+        }
+        while (sum.charAt(0) == '0' && sum.length() > 1) sum.deleteCharAt(0);
+        return sum.toString();
+    }
 }
+
