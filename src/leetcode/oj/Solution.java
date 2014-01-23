@@ -2678,8 +2678,6 @@ public class Solution {
     }
 
     private String mult(String num1, String num2, int maxLen, long limit, int level) {
-        long start = System.nanoTime();
-
         if (num2 == null || num2.isEmpty()) return num1;
         if (num1 == null || num1.isEmpty()) return num2;
         // base case
@@ -2781,5 +2779,120 @@ public class Solution {
         while (sum.charAt(0) == '0' && sum.length() > 1) sum.deleteCharAt(0);
         return sum.toString();
     }
-}
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/wildcard-matching/">Wildcard Matching</a>
+     * Implement wildcard pattern matching with support for '?' and '*'.
+     * <p/>
+     * '?' Matches any single character.
+     * '*' Matches any sequence of characters (including the empty sequence).
+     * <p/>
+     * The matching should cover the entire input string (not partial).
+     * <p/>
+     * The function prototype should be:
+     * bool isMatch(const char *s, const char *p)
+     * <p/>
+     * Some examples:
+     * isMatch("aa","a") → false
+     * isMatch("aa","aa") → true
+     * isMatch("aaa","aa") → false
+     * isMatch("aa", "*") → true
+     * isMatch("aa", "a*") → true
+     * isMatch("ab", "?*") → true
+     * isMatch("aab", "c*a*b") → false
+     */
+    public boolean isWildcardMatch(String s, String p) {
+        // compress **** -> *
+        StringBuilder psb = new StringBuilder(p);
+        int i = 0;
+        while (i < psb.length() - 1) {
+            if (psb.charAt(i) == '*' && psb.charAt(i + 1) == '*')
+                psb.deleteCharAt(i);
+            else
+                i++;
+        }
+
+//        return isWildcardMatchRecursive(s, 0, psb.toString(), 0);
+        return isWildcardMatchDPOptimal(s, psb.toString());
+//        return isWildcardMatchDP(s, psb.toString());
+    }
+
+    private boolean isWildcardMatchRecursive(String s, int sFrom, String p, int pFrom) {
+        if (sFrom >= s.length() && pFrom >= p.length()) return true;
+        if (s.substring(sFrom).equals(p.substring(pFrom))) return true;
+        if (pFrom == p.length() - 1 && p.charAt(pFrom) == '*') return true;
+
+        if (sFrom >= s.length() && pFrom < p.length()) return false;
+
+        if (sFrom < s.length() && pFrom >= p.length()) return false;
+
+        if (s.charAt(sFrom) == p.charAt(pFrom) || p.charAt(pFrom) == '?')
+            return isWildcardMatchRecursive(s, sFrom + 1, p, pFrom + 1);
+
+        if (p.charAt(pFrom) == '*')
+            return isWildcardMatchRecursive(s, sFrom + 1, p, pFrom) || isWildcardMatchRecursive(s, sFrom, p, pFrom + 1);
+
+        return false;
+    }
+
+    /**
+     * Solution (I was really-really close to exactly this one):
+     * <a href="http://vialgorithms.blogspot.com/2013/11/wildcard-matching.html>Wildcard matching</a>
+     */
+    private boolean isWildcardMatchDP(String s, String p) {
+        boolean[][] A = new boolean[p.length() + 1][s.length() + 1];
+        A[0][0] = true;
+        for (int i = 1; i < p.length(); i++) {
+            if (p.charAt(i - 1) == '*')
+                A[i][0] = A[i - 1][0];
+        }
+
+        for (int i = 0; i < p.length(); i++) {
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(j) == p.charAt(i) || p.charAt(i) == '?') {
+                    A[i + 1][j + 1] = A[i][j];
+                } else if (p.charAt(i) == '*') {
+                    A[i + 1][j + 1] = A[i][j] || A[i + 1][j] || A[i][j + 1];
+                } else {
+                    A[i + 1][j + 1] = false;
+                }
+            }
+        }
+
+        return A[p.length()][s.length()];
+    }
+
+    private boolean isWildcardMatchDPOptimal(String s, String p) {
+        boolean[][] A = new boolean[2][s.length() + 1];
+        A[0][0] = true;
+        A[1][0] = false;
+
+        int curr = 1;
+        int prev = 0;
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '*')
+                A[curr][0] = A[prev][0];
+            else
+                A[curr][0] = false;
+
+            for (int j = 0; j < s.length(); j++) {
+                if (s.charAt(j) == p.charAt(i) || p.charAt(i) == '?') {
+                    A[curr][j + 1] = A[prev][j];
+                } else if (p.charAt(i) == '*') {
+                    A[curr][j + 1] = A[prev][j] || A[curr][j] || A[prev][j + 1];
+                } else {
+                    A[curr][j + 1] = false;
+                }
+            }
+//            System.arraycopy(A[1], 0, A[0], 0, s.length()+1);
+//            for (int j = 0; j <= s.length(); j++) {
+//                A[prev][j] = A[curr][j];
+//            }
+            int tmp = prev;
+            prev = curr;
+            curr = tmp;
+        }
+
+        return A[prev][s.length()];
+    }
+}
