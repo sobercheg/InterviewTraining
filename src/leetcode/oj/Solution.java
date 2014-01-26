@@ -2895,4 +2895,32 @@ public class Solution {
 
         return A[prev][s.length()];
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/jump-game/">Jump Game</a>
+     * Given an array of non-negative integers, you are initially positioned at the first index of the array.
+     * <p/>
+     * Each element in the array represents your maximum jump length at that position.
+     * <p/>
+     * Determine if you are able to reach the last index.
+     * <p/>
+     * For example:
+     * A = [2,3,1,1,4], return true.
+     * <p/>
+     * A = [3,2,1,0,4], return false.
+     */
+    public boolean canJump(int[] A) {
+        int n = A.length;
+        if (n == 0 || n == 1) return true;
+
+        int maxRightPos = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i > maxRightPos) return false;
+            maxRightPos = Math.max(maxRightPos, A[i] + i);
+        }
+        return true;
+
+    }
+
 }
