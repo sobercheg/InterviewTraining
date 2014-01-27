@@ -3058,4 +3058,28 @@ public class Solution {
         return result;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/rotate-image/">Rotate Image</a>
+     * You are given an n x n 2D matrix representing an image.
+     * <p/>
+     * Rotate the image by 90 degrees (clockwise).
+     * <p/>
+     * Follow up:
+     * Could you do this in-place?
+     */
+    public void rotate(int[][] matrix) {
+        int n = matrix.length;
+        if (n < 2) return;
+
+        for (int layer = 0; layer < n / 2; layer++) {
+            int end = n - layer - 1;
+            for (int i = 0; i < end - layer; i++) {
+                int tmp = matrix[layer][layer + i];
+                matrix[layer][layer + i] = matrix[end - i][layer];
+                matrix[end - i][layer] = matrix[end][end - i];
+                matrix[end][end - i] = matrix[layer + i][end];
+                matrix[layer + i][end] = tmp;
+            }
+        }
+    }
 }
