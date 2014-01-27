@@ -3198,4 +3198,35 @@ public class Solution {
             }
         }
     }
+
+    public int totalNQueens(int n) {
+        return solveQueensNum(n, new boolean[n][n], new boolean[n], new boolean[n], new boolean[n * 2], new boolean[n * 2], 0);
+    }
+
+    private int solveQueensNum(int n, boolean[][] board, boolean[] y, boolean[] x, boolean[] diag1, boolean[] diag2,
+                               int queens) {
+        if (queens == n) {
+            return 1;
+        }
+        int i = queens;
+        int total = 0;
+        for (int j = 0; j < n; j++) {
+            if (!y[i] && !x[j] && !diag1[i + j] && !diag2[i - j + n]) {
+                board[i][j] = true;
+                y[i] = true;
+                x[j] = true;
+                diag1[i + j] = true;
+                diag2[i - j + n] = true;
+
+                total += solveQueensNum(n, board, y, x, diag1, diag2, queens + 1);
+
+                board[i][j] = false;
+                y[i] = false;
+                x[j] = false;
+                diag1[i + j] = false;
+                diag2[i - j + n] = false;
+            }
+        }
+        return total;
+    }
 }

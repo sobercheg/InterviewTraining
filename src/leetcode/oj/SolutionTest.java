@@ -77,6 +77,7 @@ public class SolutionTest {
         solutionTest.testAnagrams();
         solutionTest.testPow();
         solutionTest.testSolveNQueens();
+        solutionTest.testTotalNQueens();
     }
 
     public void testTwoSum() {
@@ -915,6 +916,11 @@ public class SolutionTest {
         for (int i = 0; i < solved.size(); i++) {
             assertEquals(expected.get(i), solved.get(i));
         }
+    }
+
+    public void testTotalNQueens() {
+        assertEquals(92, solution.totalNQueens(8));
+        assertEquals(1, solution.totalNQueens(1));
     }
 
     /**
