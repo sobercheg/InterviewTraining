@@ -2923,4 +2923,35 @@ public class Solution {
 
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/jump-game-ii/">Jump Game II</a>
+     * Given an array of non-negative integers, you are initially positioned at the first index of the array.
+     * <p/>
+     * Each element in the array represents your maximum jump length at that position.
+     * <p/>
+     * Your goal is to reach the last index in the minimum number of jumps.
+     * <p/>
+     * For example:
+     * Given array A = [2,3,1,1,4]
+     * <p/>
+     * The minimum number of jumps to reach the last index is 2. (Jump 1 step from index 0 to 1, then 3 steps to the last index.)
+     */
+    public int jump(int[] A) {
+        if (A.length == 0 || A.length == 1) return 0;
+        int maxLast = 0;
+        int currentLast = 0;
+        int numOfJumps = 0;
+
+        for (int i = 0; i < A.length; i++) {
+            if (i > maxLast) {
+                maxLast = currentLast;
+                numOfJumps++;
+            }
+
+            currentLast = Math.max(currentLast, A[i] + i);
+        }
+        return numOfJumps;
+
+    }
+
 }

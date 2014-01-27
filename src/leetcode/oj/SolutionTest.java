@@ -69,6 +69,7 @@ public class SolutionTest {
         solutionTest.testMultiply();
         solutionTest.testIsWildcardMatch();
         solutionTest.testCanJump();
+        solutionTest.testJump();
     }
 
     public void testTwoSum() {
@@ -792,6 +793,10 @@ public class SolutionTest {
         assertEquals(false, solution.canJump(new int[]{1, 0, 1, 0}));
         assertEquals(true, solution.canJump(new int[]{3, 0, 0, 0}));
         assertEquals(false, solution.canJump(new int[]{1, 0, 0, 1, 1, 2, 2, 0, 2, 2}));
+    }
+
+    public void testJump() {
+        assertEquals(2, solution.jump(new int[]{2, 3, 1, 1, 4}));
     }
 
     /**
