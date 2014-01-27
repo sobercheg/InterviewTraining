@@ -3159,6 +3159,31 @@ public class Solution {
         return result;
     }
 
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/n-queens/">N-Queens</a>
+     * The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
+     * <p/>
+     * Given an integer n, return all distinct solutions to the n-queens puzzle.
+     * <p/>
+     * Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both
+     * indicate a queen and an empty space respectively.
+     * <p/>
+     * For example,
+     * There exist two distinct solutions to the 4-queens puzzle:
+     * <p/>
+     * [
+     * [".Q..",  // Solution 1
+     * "...Q",
+     * "Q...",
+     * "..Q."],
+     * <p/>
+     * ["..Q.",  // Solution 2
+     * "Q...",
+     * "...Q",
+     * ".Q.."]
+     * ]
+     */
     public ArrayList<String[]> solveNQueens(int n) {
         ArrayList<String[]> solutions = new ArrayList<String[]>();
         solveQueens(n, new boolean[n][n], new boolean[n], new boolean[n], new boolean[n * 2], new boolean[n * 2], 0, solutions);
@@ -3199,6 +3224,12 @@ public class Solution {
         }
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/n-queens-ii/">N-Queens II</a>
+     * Follow up for N-Queens problem.
+     * <p/>
+     * Now, instead outputting board configurations, return the total number of distinct solutions.
+     */
     public int totalNQueens(int n) {
         return solveQueensNum(n, new boolean[n][n], new boolean[n], new boolean[n], new boolean[n * 2], new boolean[n * 2], 0);
     }
@@ -3228,5 +3259,30 @@ public class Solution {
             }
         }
         return total;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/maximum-subarray/">Maximum Subarray</a>
+     * Find the contiguous subarray within an array (containing at least one number) which has the largest sum.
+     * <p/>
+     * For example, given the array [−2,1,−3,4,−1,2,1,−5,4],
+     * the contiguous subarray [4,−1,2,1] has the largest sum = 6.
+     * <p/>
+     * More practice:
+     * <p/>
+     * If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+     */
+    public int maxSubArray(int[] A) {
+        int currentSum = 0;
+        int max = Integer.MIN_VALUE;
+
+        for (int a : A) {
+            currentSum += a;
+            max = Math.max(max, currentSum);
+            if (currentSum < 0)
+                currentSum = 0;
+        }
+
+        return max;
     }
 }

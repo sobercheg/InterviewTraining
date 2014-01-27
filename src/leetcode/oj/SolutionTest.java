@@ -78,6 +78,7 @@ public class SolutionTest {
         solutionTest.testPow();
         solutionTest.testSolveNQueens();
         solutionTest.testTotalNQueens();
+        solutionTest.testMaxSubArray();
     }
 
     public void testTwoSum() {
@@ -921,6 +922,11 @@ public class SolutionTest {
     public void testTotalNQueens() {
         assertEquals(92, solution.totalNQueens(8));
         assertEquals(1, solution.totalNQueens(1));
+    }
+
+    public void testMaxSubArray() {
+        assertEquals(6, solution.maxSubArray(new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4}));
+        assertEquals(-1, solution.maxSubArray(new int[]{-1}));
     }
 
     /**
