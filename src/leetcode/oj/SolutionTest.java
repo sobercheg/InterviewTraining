@@ -72,6 +72,7 @@ public class SolutionTest {
         solutionTest.testCanJump();
         solutionTest.testJump();
         solutionTest.testPermute();
+        solutionTest.testPermuteUnique();
     }
 
     public void testTwoSum() {
@@ -811,6 +812,31 @@ public class SolutionTest {
                 Arrays.asList(10, 1, 5)
         );
         assertEquals(expected, solution.permute(new int[]{1, 5, 10}));
+    }
+
+    public void testPermuteUnique() {
+        List<List<Integer>> expected = Arrays.asList(
+                Arrays.asList(1, 1, 2),
+                Arrays.asList(1, 2, 1),
+                Arrays.asList(2, 1, 1)
+        );
+        assertEquals(expected, solution.permuteUnique(new int[]{1, 1, 2}));
+
+        expected = Arrays.asList(
+                Arrays.asList(-1, -1, 3, -1),
+                Arrays.asList(-1, -1, -1, 3),
+                Arrays.asList(-1, 3, -1, -1),
+                Arrays.asList(3, -1, -1, -1)
+        );
+        assertEquals(expected, solution.permuteUnique(new int[]{-1, -1, 3, -1}));
+
+        expected = Arrays.asList(
+                Arrays.asList(2, 1, 1),
+                Arrays.asList(1, 2, 1),
+                Arrays.asList(1, 1, 2)
+        );
+        assertEquals(expected, solution.permuteUnique(new int[]{2, 1, 1}));
+
     }
 
     /**

@@ -2963,9 +2963,22 @@ public class Solution {
      * [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
      */
     public ArrayList<ArrayList<Integer>> permute(int[] num) {
-        return permuteBacktracking(num, 0);
-//        return permuteHeap(num, 0);
+        return permuteBacktracking(num, 0, true);
+//        return permuteHeap(num, 0, true);
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/permutations-ii/">Permutations II </a>
+     * Given a collection of numbers that might contain duplicates, return all possible unique permutations.
+     * <p/>
+     * For example,
+     * [1,1,2] have the following unique permutations:
+     * [1,1,2], [1,2,1], and [2,1,1].
+     */
+    public ArrayList<ArrayList<Integer>> permuteUnique(int[] num) {
+        return permuteBacktracking(num, 0, false);
+    }
+
 
     /**
      * <a href="http://www.cse.ohio-state.edu/~gurari/course/cis680/cis680Ch19.html#QQ1-51-133">Generating Permutations</a>
@@ -2981,7 +2994,7 @@ public class Solution {
      * permute(i+1)
      * swap(A[i], A[j])
      */
-    private ArrayList<ArrayList<Integer>> permuteBacktracking(int[] num, int level) {
+    private ArrayList<ArrayList<Integer>> permuteBacktracking(int[] num, int level, boolean keepUniqueIfSorted) {
         if (level == num.length) {
             ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
             ArrayList<Integer> permut = new ArrayList<Integer>();
@@ -2991,9 +3004,12 @@ public class Solution {
         }
 
         ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        Set<Integer> used = new HashSet<Integer>();
         for (int i = level; i < num.length; i++) {
+            if (!keepUniqueIfSorted && used.contains(num[i])) continue;
+            used.add(num[i]);
             exch(num, level, i);
-            result.addAll(permuteBacktracking(num, level + 1));
+            result.addAll(permuteBacktracking(num, level + 1, keepUniqueIfSorted));
             exch(num, level, i);
         }
 
@@ -3001,14 +3017,20 @@ public class Solution {
 
     }
 
+    private void exch(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
     /**
      * <a href="http://en.wikipedia.org/wiki/Heap%27s_algorithm">Heap's algorithm</a>
      * Suppose we have a sequence of different characters with a length of N.
      * Heap found that we can simply interchange the positions of two elements to get a new permutation output.
-     * Let us describe it in a recursive way. If we have got (N − 1)! permutation outputs, fixing the last element.
+     * Let us describe it in a recursive way. If we have got (N - 1)! permutation outputs, fixing the last element.
      * Then if N is odd, we can switch the first element and the last one, while N is even we can switch the ith (i
      * is the step number of the cycle, and now it is 1) element and the last one, then we will continue outputting
-     * the (N − 1)! permutation outputs and switching step for another N − 1 times(N times int total).
+     * the (N - 1)! permutation outputs and switching step for another N − 1 times(N times int total).
      * The following pseudocode outputs permutations of a data array of length N.
      * <p/>
      * procedure generate(N : integer, data : array of any):
@@ -3034,12 +3056,6 @@ public class Solution {
         }
 
         return result;
-    }
-
-    private void exch(int[] arr, int i, int j) {
-        int tmp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = tmp;
     }
 
 }
