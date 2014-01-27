@@ -3159,4 +3159,43 @@ public class Solution {
         return result;
     }
 
+    public ArrayList<String[]> solveNQueens(int n) {
+        ArrayList<String[]> solutions = new ArrayList<String[]>();
+        solveQueens(n, new boolean[n][n], new boolean[n], new boolean[n], new boolean[n * 2], new boolean[n * 2], 0, solutions);
+        return solutions;
+    }
+
+    private void solveQueens(int n, boolean[][] board, boolean[] y, boolean[] x, boolean[] diag1, boolean[] diag2,
+                             int queens, ArrayList<String[]> solutions) {
+        if (queens == n) {
+            String[] solution = new String[n];
+            for (int i = 0; i < board.length; i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < board[i].length; j++) {
+                    sb.append(board[i][j] ? 'Q' : '.');
+                }
+                solution[i] = sb.toString();
+            }
+            solutions.add(solution);
+            return;
+        }
+        int i = queens;
+        for (int j = 0; j < n; j++) {
+            if (!y[i] && !x[j] && !diag1[i + j] && !diag2[i - j + n]) {
+                board[i][j] = true;
+                y[i] = true;
+                x[j] = true;
+                diag1[i + j] = true;
+                diag2[i - j + n] = true;
+
+                solveQueens(n, board, y, x, diag1, diag2, queens + 1, solutions);
+
+                board[i][j] = false;
+                y[i] = false;
+                x[j] = false;
+                diag1[i + j] = false;
+                diag2[i - j + n] = false;
+            }
+        }
+    }
 }

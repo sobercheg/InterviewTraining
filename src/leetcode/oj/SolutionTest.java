@@ -76,6 +76,7 @@ public class SolutionTest {
         solutionTest.testRotate();
         solutionTest.testAnagrams();
         solutionTest.testPow();
+        solutionTest.testSolveNQueens();
     }
 
     public void testTwoSum() {
@@ -885,6 +886,37 @@ public class SolutionTest {
         assertEquals(1 / 4.0d, solution.pow(2, -2));
     }
 
+    public void testSolveNQueens() {
+        ArrayList<String[]> expected = new ArrayList<String[]>();
+        expected.add(new String[]{
+                ".Q..",
+                "...Q",
+                "Q...",
+                "..Q.",
+        });
+
+        expected.add(new String[]{
+                "..Q.",
+                "Q...",
+                "...Q",
+                ".Q..",
+        });
+
+
+        ArrayList<String[]> solved = solution.solveNQueens(4);
+        for (int i = 0; i < solved.size(); i++) {
+            assertEquals(expected.get(i), solved.get(i));
+        }
+
+        expected = new ArrayList<String[]>();
+        expected.add(new String[]{"Q"});
+
+        solved = solution.solveNQueens(1);
+        for (int i = 0; i < solved.size(); i++) {
+            assertEquals(expected.get(i), solved.get(i));
+        }
+    }
+
     /**
      * *************************** Helper test methods ***********************
      */
@@ -895,6 +927,13 @@ public class SolutionTest {
     }
 
     public static void assertEquals(int[] expected, int[] actual) {
+        if (checkNulls(expected, actual)) return;
+        if (!Arrays.equals(expected, actual))
+            throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
+                    Arrays.toString(expected), Arrays.toString(actual)));
+    }
+
+    public static void assertEquals(String[] expected, String[] actual) {
         if (checkNulls(expected, actual)) return;
         if (!Arrays.equals(expected, actual))
             throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
