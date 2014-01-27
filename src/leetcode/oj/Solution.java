@@ -3118,4 +3118,45 @@ public class Solution {
 
         return anagrams;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/powx-n/">Pow(x, n)</a>
+     * Implement pow(x, n).
+     */
+    public double pow(double x, int n) {
+        boolean isExponentNegative = n < 0;
+//        double result = powRecurse(x, Math.abs(n));
+        double result = powBits(x, Math.abs(n));
+
+        return isExponentNegative ? 1 / result : result;
+
+    }
+
+    private double powRecurse(double x, int n) {
+        if (n == 0) return 1;
+        if (n == 1) return x;
+
+        double n2pow = powRecurse(x, n / 2);
+        return n % 2 == 0 ? n2pow * n2pow : x * n2pow * n2pow;
+    }
+
+    /**
+     * <a href="http://discuss.leetcode.com/questions/228/powx-n">Approach</a>
+     */
+    private double powBits(double x, int n) {
+        if (n == 0) return 1;
+        if (n == 1) return x;
+
+        double result = 1;
+        while (n > 0) {
+            if ((n & 1) > 0) {
+                result *= x;
+            }
+            x *= x;
+            n /= 2;
+        }
+
+        return result;
+    }
+
 }
