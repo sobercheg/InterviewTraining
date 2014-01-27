@@ -74,6 +74,7 @@ public class SolutionTest {
         solutionTest.testPermute();
         solutionTest.testPermuteUnique();
         solutionTest.testRotate();
+        solutionTest.testAnagrams();
     }
 
     public void testTwoSum() {
@@ -872,6 +873,10 @@ public class SolutionTest {
 
         solution.rotate(image);
         assertArrayEquals(rotated, image);
+    }
+
+    public void testAnagrams() {
+        assertEquals(Arrays.asList("ab", "ba", "ca", "ac"), solution.anagrams(new String[]{"ab", "bb", "ba", "ca", "cc", "ac", "dd"}));
     }
 
     /**

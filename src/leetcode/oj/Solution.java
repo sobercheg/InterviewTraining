@@ -3082,4 +3082,40 @@ public class Solution {
             }
         }
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/anagrams/">Anagrams</a>
+     * Given an array of strings, return all groups of strings that are anagrams.
+     * <p/>
+     * Note: All inputs will be in lower-case.
+     */
+    public ArrayList<String> anagrams(String[] strs) {
+        Map<Map<Character, Integer>, Integer> frequencyMap = new HashMap<Map<Character, Integer>, Integer>();
+        Map<Map<Character, Integer>, String> frequencyToLastString = new HashMap<Map<Character, Integer>, String>();
+
+        ArrayList<String> anagrams = new ArrayList<String>();
+        for (String str : strs) {
+            Map<Character, Integer> freq = new HashMap<Character, Integer>();
+            for (char ch : str.toCharArray()) {
+                if (!freq.containsKey(ch))
+                    freq.put(ch, 1);
+                else freq.put(ch, freq.get(ch) + 1);
+            }
+
+            if (!frequencyMap.containsKey(freq))
+                frequencyMap.put(freq, 1);
+            else {
+                if (frequencyMap.get(freq) == 1) {
+                    anagrams.add(frequencyToLastString.get(freq));
+                }
+                anagrams.add(str);
+                frequencyMap.put(freq, frequencyMap.get(freq) + 1);
+            }
+
+            frequencyToLastString.put(freq, str);
+
+        }
+
+        return anagrams;
+    }
 }
