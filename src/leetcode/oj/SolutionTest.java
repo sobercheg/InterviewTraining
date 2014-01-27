@@ -2,6 +2,7 @@ package leetcode.oj;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static leetcode.oj.Solution.*;
 
@@ -70,6 +71,7 @@ public class SolutionTest {
         solutionTest.testIsWildcardMatch();
         solutionTest.testCanJump();
         solutionTest.testJump();
+        solutionTest.testPermute();
     }
 
     public void testTwoSum() {
@@ -797,6 +799,18 @@ public class SolutionTest {
 
     public void testJump() {
         assertEquals(2, solution.jump(new int[]{2, 3, 1, 1, 4}));
+    }
+
+    public void testPermute() {
+        List<List<Integer>> expected = Arrays.asList(
+                Arrays.asList(1, 5, 10),
+                Arrays.asList(1, 10, 5),
+                Arrays.asList(5, 1, 10),
+                Arrays.asList(5, 10, 1),
+                Arrays.asList(10, 5, 1),
+                Arrays.asList(10, 1, 5)
+        );
+        assertEquals(expected, solution.permute(new int[]{1, 5, 10}));
     }
 
     /**

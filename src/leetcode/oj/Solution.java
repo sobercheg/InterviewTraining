@@ -2954,4 +2954,92 @@ public class Solution {
 
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/permutations/">Permutations</a>
+     * Given a collection of numbers, return all possible permutations.
+     * <p/>
+     * For example,
+     * [1,2,3] have the following permutations:
+     * [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], and [3,2,1].
+     */
+    public ArrayList<ArrayList<Integer>> permute(int[] num) {
+        return permuteBacktracking(num, 0);
+//        return permuteHeap(num, 0);
+    }
+
+    /**
+     * <a href="http://www.cse.ohio-state.edu/~gurari/course/cis680/cis680Ch19.html#QQ1-51-133">Generating Permutations</a>
+     * At each stage of the permutation process, the given set of elements consists of two parts: a subset of values
+     * that already have been processed, and a subset that still needs to be processed. This logical separation can be
+     * physically realized by exchanging, in the i'th step, the i'th value with the value being chosen at that stage.
+     * That approaches leaves the first subset in the first i locations of the outcome.
+     * permute(i)
+     * if i == N  output A[N]
+     * else
+     * for j = i to N do
+     * swap(A[i], A[j])
+     * permute(i+1)
+     * swap(A[i], A[j])
+     */
+    private ArrayList<ArrayList<Integer>> permuteBacktracking(int[] num, int level) {
+        if (level == num.length) {
+            ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+            ArrayList<Integer> permut = new ArrayList<Integer>();
+            for (int n : num) permut.add(n);
+            result.add(permut);
+            return result;
+        }
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        for (int i = level; i < num.length; i++) {
+            exch(num, level, i);
+            result.addAll(permuteBacktracking(num, level + 1));
+            exch(num, level, i);
+        }
+
+        return result;
+
+    }
+
+    /**
+     * <a href="http://en.wikipedia.org/wiki/Heap%27s_algorithm">Heap's algorithm</a>
+     * Suppose we have a sequence of different characters with a length of N.
+     * Heap found that we can simply interchange the positions of two elements to get a new permutation output.
+     * Let us describe it in a recursive way. If we have got (N − 1)! permutation outputs, fixing the last element.
+     * Then if N is odd, we can switch the first element and the last one, while N is even we can switch the ith (i
+     * is the step number of the cycle, and now it is 1) element and the last one, then we will continue outputting
+     * the (N − 1)! permutation outputs and switching step for another N − 1 times(N times int total).
+     * The following pseudocode outputs permutations of a data array of length N.
+     * <p/>
+     * procedure generate(N : integer, data : array of any):
+     * if N = 1 then
+     * output(data)
+     * else
+     * for c := 1; c <= N; c += 1 do
+     * generate(N - 1, data)
+     * swap(data[if N is odd then 1 else c], data[N])
+     */
+    private ArrayList<ArrayList<Integer>> permuteHeap(int[] num, int level) {
+        if (level == num.length) {
+            ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+            ArrayList<Integer> permut = new ArrayList<Integer>();
+            for (int n : num) permut.add(n);
+            result.add(permut);
+            return result;
+        }
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        for (int i = 0; i <= level; i++) {
+            result.addAll(permuteHeap(num, level + 1));
+            exch(num, level, level % 2 == 0 ? i : 0);
+        }
+
+        return result;
+    }
+
+    private void exch(int[] arr, int i, int j) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+
 }
