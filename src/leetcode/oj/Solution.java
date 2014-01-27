@@ -3285,4 +3285,44 @@ public class Solution {
 
         return max;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/spiral-matrix/">Spiral Matrix</a>
+     * Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+     * <p/>
+     * For example,
+     * Given the following matrix:
+     * <p/>
+     * [
+     * [ 1, 2, 3 ],
+     * [ 4, 5, 6 ],
+     * [ 7, 8, 9 ]
+     * ]
+     * <p/>
+     * You should return [1,2,3,6,9,8,7,4,5].
+     */
+    public ArrayList<Integer> spiralOrder(int[][] matrix) {
+        int m = matrix.length;
+        if (m == 0) return new ArrayList<Integer>();
+        int n = matrix[0].length;
+        int maxLayer = (Math.min(m, n) + 1) / 2;
+
+        ArrayList<Integer> spiral = new ArrayList<Integer>();
+        for (int layer = 0; layer < maxLayer; layer++) {
+            int xMax = n - layer - 1;
+            int yMax = m - layer - 1;
+            for (int i = layer; i <= xMax; i++)
+                spiral.add(matrix[layer][i]);
+            for (int i = layer + 1; i <= yMax; i++)
+                spiral.add(matrix[i][xMax]);
+            if (yMax != layer)
+                for (int i = xMax - 1; i >= layer; i--)
+                    spiral.add(matrix[yMax][i]);
+            if (xMax != layer)
+                for (int i = yMax - 1; i > layer; i--)
+                    spiral.add(matrix[i][layer]);
+        }
+
+        return spiral;
+    }
 }
