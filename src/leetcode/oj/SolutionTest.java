@@ -83,6 +83,7 @@ public class SolutionTest {
         solutionTest.testMerge();
         solutionTest.testInsert();
         solutionTest.testLengthOfLastWord();
+        solutionTest.testGenerateMatrix();
     }
 
     public void testTwoSum() {
@@ -1058,6 +1059,19 @@ public class SolutionTest {
         assertEquals(0, solution.lengthOfLastWord("   "));
         assertEquals(3, solution.lengthOfLastWord("Nice day"));
         assertEquals(1, solution.lengthOfLastWord("a"));
+    }
+
+    public void testGenerateMatrix() {
+        assertArrayEquals(new int[][]{
+                {1, 2, 3, 4},
+                {12, 13, 14, 5},
+                {11, 16, 15, 6},
+                {10, 9, 8, 7}
+        }, solution.generateMatrix(4));
+
+        assertArrayEquals(new int[][]{
+                {1}
+        }, solution.generateMatrix(1));
     }
 
     /**

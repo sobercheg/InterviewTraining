@@ -3483,4 +3483,32 @@ public class Solution {
         if (wordStarted) return wordStart + 1;
         return maxLen;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/spiral-matrix-ii/">Spiral Matrix II</a>
+     * Given an integer n, generate a square matrix filled with elements from 1 to n2 in spiral order.
+     * <p/>
+     * For example,
+     * Given n = 3,
+     * You should return the following matrix:
+     * <p/>
+     * [
+     * [ 1, 2, 3 ],
+     * [ 8, 9, 4 ],
+     * [ 7, 6, 5 ]
+     * ]
+     */
+    public int[][] generateMatrix(int n) {
+        if (n == 0) return new int[0][0];
+        int[][] m = new int[n][n];
+        int c = 1;
+        for (int layer = 0; layer < (n + 1) / 2; layer++) {
+            int end = n - layer - 1;
+            for (int i = layer; i <= end; i++) m[layer][i] = c++;
+            for (int i = layer + 1; i <= end; i++) m[i][end] = c++;
+            for (int i = end - 1; i >= layer; i--) m[end][i] = c++;
+            for (int i = end - 1; i > layer; i--) m[i][layer] = c++;
+        }
+        return m;
+    }
 }
