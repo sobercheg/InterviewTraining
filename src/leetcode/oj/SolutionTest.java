@@ -81,6 +81,7 @@ public class SolutionTest {
         solutionTest.testMaxSubArray();
         solutionTest.testSpiralOrder();
         solutionTest.testMerge();
+        solutionTest.testInsert();
     }
 
     public void testTwoSum() {
@@ -1021,6 +1022,34 @@ public class SolutionTest {
         ));
         assertEquals(merged, solution.merge(input));
 
+    }
+
+    public void testInsert() {
+        ArrayList<Interval> input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3), new Interval(6, 9)
+        ));
+        ArrayList<Interval> inserted = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 5), new Interval(6, 9)
+        ));
+        assertEquals(inserted, solution.insert(input, new Interval(2, 5)));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 2), new Interval(3, 5), new Interval(6, 7), new Interval(8, 10), new Interval(12, 16)
+        ));
+        inserted = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 2), new Interval(3, 10), new Interval(12, 16)
+        ));
+        assertEquals(inserted, solution.insert(input, new Interval(4, 9)));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 5)
+        ));
+        inserted = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 7)
+        ));
+        assertEquals(inserted, solution.insert(input, new Interval(2, 7)));
     }
 
     /**
