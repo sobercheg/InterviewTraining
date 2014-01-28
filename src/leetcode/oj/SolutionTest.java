@@ -80,6 +80,7 @@ public class SolutionTest {
         solutionTest.testTotalNQueens();
         solutionTest.testMaxSubArray();
         solutionTest.testSpiralOrder();
+        solutionTest.testMerge();
     }
 
     public void testTwoSum() {
@@ -967,6 +968,59 @@ public class SolutionTest {
                 {9},
                 {6}
         }));
+    }
+
+    public void testMerge() {
+
+        ArrayList<Interval> input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3), new Interval(2, 6), new Interval(8, 10), new Interval(15, 18)
+        ));
+        ArrayList<Interval> merged = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 6), new Interval(8, 10), new Interval(15, 18)
+        ));
+        assertEquals(merged, solution.merge(input));
+
+
+        input = new ArrayList<Interval>();
+        merged = new ArrayList<Interval>();
+        assertEquals(merged, solution.merge(input));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3)
+        ));
+        merged = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3)
+        ));
+        assertEquals(merged, solution.merge(input));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3), new Interval(4, 6), new Interval(7, 9), new Interval(10, 12), new Interval(5, 11), new Interval(13, 14)
+        ));
+        merged = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 3), new Interval(4, 12), new Interval(13, 14)
+        ));
+        assertEquals(merged, solution.merge(input));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(2, 3), new Interval(5, 5), new Interval(2, 2), new Interval(3, 4), new Interval(3, 4)
+        ));
+        merged = new ArrayList<Interval>(Arrays.asList(
+                new Interval(2, 4), new Interval(5, 5)
+        ));
+        assertEquals(merged, solution.merge(input));
+
+
+        input = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 4), new Interval(1, 5)
+        ));
+        merged = new ArrayList<Interval>(Arrays.asList(
+                new Interval(1, 5)
+        ));
+        assertEquals(merged, solution.merge(input));
+
     }
 
     /**

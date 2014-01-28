@@ -3325,4 +3325,85 @@ public class Solution {
 
         return spiral;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/merge-intervals/">Merge Intervals</a>
+     * Given a collection of intervals, merge all overlapping intervals.
+     * <p/>
+     * For example,
+     * Given [1,3],[2,6],[8,10],[15,18],
+     * return [1,6],[8,10],[15,18].
+     * <p/>
+     * Solution: somewhat a Kadane algorithm
+     */
+    public ArrayList<Interval> merge(ArrayList<Interval> intervals) {
+        if (intervals == null || intervals.isEmpty()) return intervals;
+        TreeSet<Interval> intervalSet = new TreeSet<Interval>(new Comparator<Interval>() {
+            @Override
+            public int compare(Interval o1, Interval o2) {
+                return o1.start == o2.start ? Integer.compare(o1.end, o2.end) : Integer.compare(o1.start, o2.start);
+            }
+        });
+
+        for (Interval interval : intervals) {
+            intervalSet.add(interval);
+        }
+
+        ArrayList<Interval> merged = new ArrayList<Interval>();
+
+        int startInterval = intervalSet.iterator().next().start;
+        int maxEnd = intervalSet.iterator().next().end;
+
+        for (Interval interval : intervalSet) {
+            if (interval.start > maxEnd) {
+                merged.add(new Interval(startInterval, maxEnd));
+                startInterval = interval.start;
+            }
+            maxEnd = Math.max(maxEnd, interval.end);
+        }
+        merged.add(new Interval(startInterval, maxEnd));
+        return merged;
+    }
+
+    static class Interval {
+        int start;
+        int end;
+
+        Interval() {
+            start = 0;
+            end = 0;
+        }
+
+        Interval(int s, int e) {
+            start = s;
+            end = e;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Interval interval = (Interval) o;
+
+            if (end != interval.end) return false;
+            if (start != interval.start) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = start;
+            result = 31 * result + end;
+            return result;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("[%d, %d]", start, end);
+        }
+    }
+
+
 }
