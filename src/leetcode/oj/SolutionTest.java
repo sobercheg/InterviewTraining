@@ -82,6 +82,7 @@ public class SolutionTest {
         solutionTest.testSpiralOrder();
         solutionTest.testMerge();
         solutionTest.testInsert();
+        solutionTest.testLengthOfLastWord();
     }
 
     public void testTwoSum() {
@@ -1050,6 +1051,13 @@ public class SolutionTest {
                 new Interval(1, 7)
         ));
         assertEquals(inserted, solution.insert(input, new Interval(2, 7)));
+    }
+
+    public void testLengthOfLastWord() {
+        assertEquals(5, solution.lengthOfLastWord("Hello World"));
+        assertEquals(0, solution.lengthOfLastWord("   "));
+        assertEquals(3, solution.lengthOfLastWord("Nice day"));
+        assertEquals(1, solution.lengthOfLastWord("a"));
     }
 
     /**

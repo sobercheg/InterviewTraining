@@ -3452,4 +3452,35 @@ public class Solution {
         return inserted;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/length-of-last-word/">Length of Last Word</a>
+     * Given a string s consists of upper/lower-case alphabets and empty space characters ' ',
+     * return the length of last word in the string.
+     * <p/>
+     * If the last word does not exist, return 0.
+     * <p/>
+     * Note: A word is defined as a character sequence consists of non-space characters only.
+     * <p/>
+     * For example,
+     * Given s = "Hello World",
+     * return 5.
+     */
+    public int lengthOfLastWord(String s) {
+        int wordStart = s.length() - 1;
+        int maxLen = 0;
+
+        boolean wordStarted = false;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (s.charAt(i) == ' ') {
+                if (wordStarted) {
+                    maxLen = wordStart - i;
+                    wordStarted = false;
+                    break;
+                }
+                wordStart = i - 1;
+            } else wordStarted = true;
+        }
+        if (wordStarted) return wordStart + 1;
+        return maxLen;
+    }
 }
