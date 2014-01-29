@@ -85,7 +85,7 @@ public class SolutionTest {
         solutionTest.testLengthOfLastWord();
         solutionTest.testGenerateMatrix();
         solutionTest.testGetPermutation();
-        ;
+        solutionTest.testRotateRight();
     }
 
     public void testTwoSum() {
@@ -1079,6 +1079,23 @@ public class SolutionTest {
     public void testGetPermutation() {
         assertEquals("231", solution.getPermutation(3, 4));
         assertEquals("1", solution.getPermutation(1, 1));
+    }
+
+    public void testRotateRight() {
+        ListNode input = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5)))));
+        ListNode rotated = solution.rotateRight(input, 2);
+        assertEquals(4, rotated.val);
+        assertEquals(5, rotated.next.val);
+        assertEquals(1, rotated.next.next.val);
+        assertEquals(2, rotated.next.next.next.val);
+        assertEquals(3, rotated.next.next.next.next.val);
+        assertEquals(null, rotated.next.next.next.next.next);
+
+        input = new ListNode(1, new ListNode(2));
+        rotated = solution.rotateRight(input, 2);
+        assertEquals(1, rotated.val);
+        assertEquals(2, rotated.next.val);
+        assertEquals(null, rotated.next.next);
     }
 
     /**

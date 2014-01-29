@@ -3563,4 +3563,47 @@ public class Solution {
         }
         return sb.toString();
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/rotate-list/">Rotate List</a>
+     * Given a list, rotate the list to the right by k places, where k is non-negative.
+     * <p/>
+     * For example:
+     * Given 1->2->3->4->5->NULL and k = 2,
+     * return 4->5->1->2->3->NULL.
+     */
+    public ListNode rotateRight(ListNode head, int n) {
+        if (head == null || head.next == null) return head;
+        if (n == 0) return head;
+        ListNode slowPointer = head;
+        int countDown = n;
+        ListNode fastPointer = head;
+        int listLength = 0;
+        while (fastPointer.next != null) {
+            if (countDown == 0) slowPointer = slowPointer.next;
+            else countDown--;
+            fastPointer = fastPointer.next;
+            listLength++;
+        }
+
+        listLength++;
+        if (countDown > 0) {
+            n = n % listLength;
+            if (n == 0) return head;
+            countDown = n;
+            slowPointer = head;
+            fastPointer = head;
+            while (fastPointer.next != null) {
+                if (countDown == 0) slowPointer = slowPointer.next;
+                else countDown--;
+                fastPointer = fastPointer.next;
+            }
+
+        }
+
+        ListNode newHead = slowPointer.next;
+        slowPointer.next = null;
+        fastPointer.next = head;
+        return newHead;
+    }
 }
