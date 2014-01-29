@@ -87,6 +87,7 @@ public class SolutionTest {
         solutionTest.testGetPermutation();
         solutionTest.testRotateRight();
         solutionTest.testUniquePaths();
+        solutionTest.testUniquePathsWithObstacles();
     }
 
     public void testTwoSum() {
@@ -1103,6 +1104,24 @@ public class SolutionTest {
         assertEquals(1, solution.uniquePaths(0, 0));
         assertEquals(3, solution.uniquePaths(2, 3));
         assertEquals(1, solution.uniquePaths(1, 2));
+    }
+
+    public void testUniquePathsWithObstacles() {
+        assertEquals(1, solution.uniquePathsWithObstacles(new int[][]{
+                {0, 0},
+                {1, 0},
+                {0, 0}
+        }));
+
+        assertEquals(3, solution.uniquePathsWithObstacles(new int[][]{
+                {0, 0},
+                {0, 0},
+                {0, 0}
+        }));
+
+        assertEquals(0, solution.uniquePathsWithObstacles(new int[][]{
+                {1}
+        }));
     }
 
     /**

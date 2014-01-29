@@ -3647,4 +3647,44 @@ public class Solution {
             }
         return board[m][n];
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/unique-paths-ii/">Unique Paths II</a>
+     * Follow up for "Unique Paths":
+     * <p/>
+     * Now consider if some obstacles are added to the grids. How many unique paths would there be?
+     * <p/>
+     * An obstacle and empty space is marked as 1 and 0 respectively in the grid.
+     * <p/>
+     * For example,
+     * <p/>
+     * There is one obstacle in the middle of a 3x3 grid as illustrated below.
+     * <p/>
+     * [
+     * [0,0,0],
+     * [0,1,0],
+     * [0,0,0]
+     * ]
+     * <p/>
+     * The total number of unique paths is 2.
+     * <p/>
+     * Note: m and n will be at most 100.
+     */
+    public int uniquePathsWithObstacles(int[][] obstacleGrid) {
+        int m = obstacleGrid.length;
+        int n = obstacleGrid[0].length;
+        if (obstacleGrid[m - 1][n - 1] == 1 || obstacleGrid[0][0] == 1) return 0;
+        if (n == 0 && m == 0) return 1;
+        return uniquePathsMemoizationObstacles(m - 1, n - 1, new int[m][n], obstacleGrid);
+    }
+
+    private int uniquePathsMemoizationObstacles(int m, int n, int[][] memo, int[][] obstacleGrid) {
+        if (n == 0 && m == 0) return 1;
+        if (m < 0 || n < 0 || obstacleGrid[m][n] == 1) return 0;
+        if (memo[m][n] == 0)
+            memo[m][n] = uniquePathsMemoizationObstacles(m - 1, n, memo, obstacleGrid)
+                    + uniquePathsMemoizationObstacles(m, n - 1, memo, obstacleGrid);
+
+        return memo[m][n];
+    }
 }
