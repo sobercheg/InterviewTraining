@@ -3511,4 +3511,56 @@ public class Solution {
         }
         return m;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/permutation-sequence">Permutation Sequence</a>
+     * The set [1,2,3,…,n] contains a total of n! unique permutations.
+     * <p/>
+     * By listing and labeling all of the permutations in order,
+     * We get the following sequence (ie, for n = 3):
+     * <p/>
+     * "123"
+     * "132"
+     * "213"
+     * "231"
+     * "312"
+     * "321"
+     * <p/>
+     * Given n and k, return the kth permutation sequence.
+     * <p/>
+     * Note: Given n will be between 1 and 9 inclusive.
+     * <p/>
+     * The solution is based on factoradic numbers (http://en.wikipedia.org/wiki/Factorial_number_system)
+     */
+    public String getPermutation(int n, int k) {
+        int f = 14;
+        int[] factorials = new int[f];
+        factorials[0] = 0;
+        factorials[1] = 1;
+
+        for (int i = 2; i < f; i++) {
+            factorials[i] = i * factorials[i - 1];
+        }
+
+        k--;
+        int[] factoradic = new int[f];
+        for (int i = f - 1; i > 0; i--) {
+            factoradic[i] = (k / factorials[i]);
+            if (k >= factorials[i])
+                k = k % factorials[i];
+        }
+
+        factoradic[0] = 0;
+        List<Character> chars = new ArrayList<Character>();
+        for (char i = 1; i <= n; i++) {
+            chars.add((char) ('0' + i));
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = n - 1; i >= 0; i--) {
+            sb.append(chars.get(factoradic[i]));
+            chars.remove(factoradic[i]);
+        }
+        return sb.toString();
+    }
 }

@@ -84,6 +84,8 @@ public class SolutionTest {
         solutionTest.testInsert();
         solutionTest.testLengthOfLastWord();
         solutionTest.testGenerateMatrix();
+        solutionTest.testGetPermutation();
+        ;
     }
 
     public void testTwoSum() {
@@ -1072,6 +1074,11 @@ public class SolutionTest {
         assertArrayEquals(new int[][]{
                 {1}
         }, solution.generateMatrix(1));
+    }
+
+    public void testGetPermutation() {
+        assertEquals("231", solution.getPermutation(3, 4));
+        assertEquals("1", solution.getPermutation(1, 1));
     }
 
     /**
