@@ -3606,4 +3606,45 @@ public class Solution {
         fastPointer.next = head;
         return newHead;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/unique-paths/">Unique Paths</a>
+     * A robot is located at the top-left corner of a m x n grid (marked 'Start' in the diagram below).
+     * <p/>
+     * The robot can only move either down or right at any point in time. The robot is trying to reach the bottom-right corner of the grid (marked 'Finish' in the diagram below).
+     * <p/>
+     * How many possible unique paths are there?
+     * <p/>
+     * Note: m and n will be at most 100.
+     */
+    public int uniquePaths(int m, int n) {
+        if (m == 0 && n == 0) return 1;
+//        return uniquePathsBacktrack(m, n);
+//        return uniquePathsMemoization(m-1, n-1, new int[m][n]);
+        return uniquePathsDP(m, n);
+    }
+
+    private int uniquePathsBacktrack(int m, int n) {
+        if (n == 0 && m == 0) return 1;
+        return (m > 0 ? uniquePaths(m - 1, n) : 0) + (n > 0 ? uniquePaths(m, n - 1) : 0);
+    }
+
+    private int uniquePathsMemoization(int m, int n, int[][] memo) {
+        if (n == 0 && m == 0) return 1;
+        if (m < 0 || n < 0) return 0;
+        if (memo[m][n] == 0)
+            memo[m][n] = uniquePathsMemoization(m - 1, n, memo) + uniquePathsMemoization(m, n - 1, memo);
+
+        return memo[m][n];
+    }
+
+    private int uniquePathsDP(int m, int n) {
+        int[][] board = new int[m + 1][n + 1];
+        board[1][0] = 1;
+        for (int i = 1; i <= m; i++)
+            for (int j = 1; j <= n; j++) {
+                board[i][j] = board[i - 1][j] + board[i][j - 1];
+            }
+        return board[m][n];
+    }
 }

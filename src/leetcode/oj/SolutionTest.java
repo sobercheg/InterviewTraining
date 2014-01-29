@@ -86,6 +86,7 @@ public class SolutionTest {
         solutionTest.testGenerateMatrix();
         solutionTest.testGetPermutation();
         solutionTest.testRotateRight();
+        solutionTest.testUniquePaths();
     }
 
     public void testTwoSum() {
@@ -1096,6 +1097,12 @@ public class SolutionTest {
         assertEquals(1, rotated.val);
         assertEquals(2, rotated.next.val);
         assertEquals(null, rotated.next.next);
+    }
+
+    public void testUniquePaths() {
+        assertEquals(1, solution.uniquePaths(0, 0));
+        assertEquals(3, solution.uniquePaths(2, 3));
+        assertEquals(1, solution.uniquePaths(1, 2));
     }
 
     /**
