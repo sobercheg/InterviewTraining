@@ -97,4 +97,48 @@ public class Solution2 {
         if (carryover > 0) result.insert(0, '1');
         return result.toString();
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/valid-number/">Valid Number</a>
+     * Validate if a given string is numeric.
+     * <p/>
+     * Some examples:
+     * "0" => true
+     * " 0.1 " => true
+     * "abc" => false
+     * "1 a" => false
+     * "2e10" => true
+     * <p/>
+     * Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
+     * <p/>
+     * The solution is based on automata-based programming http://en.wikipedia.org/wiki/Automata-based_programming
+     */
+    // TODO: implement
+    public boolean isNumber(String s) {
+        return false;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/plus-one/">Plus One</a>
+     * Given a number represented as an array of digits, plus one to the number.
+     */
+    public int[] plusOne(int[] digits) {
+        int carryover = 1;
+        for (int i = digits.length - 1; i >= 0; i--) {
+            int sum = digits[i] + carryover;
+            if (sum > 9) {
+                digits[i] = sum % 10;
+                carryover = 1;
+            } else {
+                digits[i] += carryover;
+                carryover = 0;
+            }
+
+        }
+        if (carryover == 0) return digits;
+        int[] newArray = new int[digits.length + 1];
+        System.arraycopy(digits, 0, newArray, 1, digits.length);
+        newArray[0] = carryover;
+        return newArray;
+    }
 }
