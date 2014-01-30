@@ -1,5 +1,6 @@
 package leetcode.oj;
 
+import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.SolutionTest.assertEquals;
 
 /**
@@ -11,6 +12,7 @@ public class Solution2Test {
     public static void main(String[] args) {
         Solution2Test solutionTest = new Solution2Test();
         solutionTest.testMinPathSum();
+        solutionTest.testMergeTwoLists();
     }
 
     public void testMinPathSum() {
@@ -23,5 +25,31 @@ public class Solution2Test {
         assertEquals(1, solution.minPathSum(new int[][]{
                 {1}
         }));
+    }
+
+    public void testMergeTwoLists() {
+        ListNode list1 = new ListNode(1, new ListNode(3, new ListNode(5)));
+        ListNode list2 = new ListNode(2, new ListNode(4, new ListNode(6)));
+        ListNode merged = solution.mergeTwoLists(list1, list2);
+        assertEquals(1, merged.val);
+        assertEquals(2, merged.next.val);
+        assertEquals(3, merged.next.next.val);
+        assertEquals(4, merged.next.next.next.val);
+        assertEquals(5, merged.next.next.next.next.val);
+        assertEquals(6, merged.next.next.next.next.next.val);
+        assertEquals(null, merged.next.next.next.next.next.next);
+
+        list1 = null;
+        list2 = new ListNode(1);
+        merged = solution.mergeTwoLists(list1, list2);
+        assertEquals(1, merged.val);
+        assertEquals(null, merged.next);
+
+        list1 = new ListNode(2);
+        list2 = new ListNode(1);
+        merged = solution.mergeTwoLists(list1, list2);
+        assertEquals(1, merged.val);
+        assertEquals(2, merged.next.val);
+        assertEquals(null, merged.next.next);
     }
 }
