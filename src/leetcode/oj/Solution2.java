@@ -1,5 +1,7 @@
 package leetcode.oj;
 
+import java.util.Arrays;
+
 import static leetcode.oj.Solution.ListNode;
 
 /**
@@ -65,5 +67,34 @@ public class Solution2 {
                 newHead = prevNode;
         }
         return newHead;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/add-binary/">Add Binary</a>
+     * Given two binary strings, return their sum (also a binary string).
+     * <p/>
+     * For example,
+     * a = "11"
+     * b = "1"
+     * Return "100".
+     */
+    public String addBinary(String a, String b) {
+        // pad with zeros: "11", "1" -> "11", "01"
+        char[] zeros = new char[Math.abs(a.length() - b.length())];
+        Arrays.fill(zeros, '0');
+        if (a.length() < b.length())
+            a = new String(zeros) + a;
+        else
+            b = new String(zeros) + b;
+
+        StringBuilder result = new StringBuilder();
+        int carryover = 0;
+        for (int i = a.length() - 1; i >= 0; i--) {
+            int sum = (a.charAt(i) - '0') + (b.charAt(i) - '0') + carryover;
+            carryover = sum > 1 ? 1 : 0;
+            result.insert(0, (char) ('0' + sum % 2));
+        }
+        if (carryover > 0) result.insert(0, '1');
+        return result.toString();
     }
 }

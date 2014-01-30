@@ -13,6 +13,7 @@ public class Solution2Test {
         Solution2Test solutionTest = new Solution2Test();
         solutionTest.testMinPathSum();
         solutionTest.testMergeTwoLists();
+        solutionTest.testAddBinary();
     }
 
     public void testMinPathSum() {
@@ -51,5 +52,9 @@ public class Solution2Test {
         assertEquals(1, merged.val);
         assertEquals(2, merged.next.val);
         assertEquals(null, merged.next.next);
+    }
+
+    public void testAddBinary() {
+        assertEquals("100", solution.addBinary("11", "1"));
     }
 }
