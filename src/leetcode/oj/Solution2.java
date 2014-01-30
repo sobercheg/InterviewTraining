@@ -1,6 +1,8 @@
 package leetcode.oj;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import static leetcode.oj.Solution.ListNode;
 
@@ -111,11 +113,124 @@ public class Solution2 {
      * <p/>
      * Note: It is intended for the problem statement to be ambiguous. You should gather all requirements up front before implementing one.
      * <p/>
-     * The solution is based on automata-based programming http://en.wikipedia.org/wiki/Automata-based_programming
+     * The solution is based on automata-based programming http://en.wikipedia.org/wiki/Automata-based_programming,
+     * http://discuss.leetcode.com/questions/241/valid-number
      */
-    // TODO: implement
+    static enum State {
+        START_SPACE(0),
+        START_DIGIT(1),
+        SIGN_READ(2),
+        DOT_READ(3),
+        DIGIT_AFTER_DOT(4),
+        EXPONENT(5),
+        EXPONENT_SIGN(6),
+        EXPONENT_DIGIT(7),
+        END_SPACE(8);
+
+        State(int value) {
+            this.value = value;
+        }
+
+        int value;
+    }
+
+    static enum Input {
+        INVALID(0),
+        SPACE(1),
+        SIGN(2),
+        EXPONENT(3),
+        DIGIT(4),
+        DOT(5);
+
+        Input(int value) {
+            this.value = value;
+        }
+
+        int value;
+
+        public static Input of(char ch) {
+            if (ch == ' ') return SPACE;
+            if (ch == '+' || ch == '-') return SIGN;
+            if (ch == 'e' || ch == 'E') return EXPONENT;
+            if (ch >= '0' && ch <= '9') return DIGIT;
+            if (ch == '.') return DOT;
+            return INVALID;
+
+        }
+    }
+
+    static class Transition {
+        State state;
+        Input input;
+
+        Transition(State state, Input input) {
+            this.state = state;
+            this.input = input;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Transition that = (Transition) o;
+
+            if (input != that.input) return false;
+            if (state != that.state) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = state != null ? state.hashCode() : 0;
+            result = 31 * result + (input != null ? input.hashCode() : 0);
+            return result;
+        }
+    }
+
     public boolean isNumber(String s) {
-        return false;
+        Map<Transition, State> transitions = new HashMap<Transition, State>();
+        transitions.put(new Transition(State.START_SPACE, Input.SPACE), State.START_SPACE);
+        transitions.put(new Transition(State.START_SPACE, Input.DIGIT), State.START_DIGIT);
+        transitions.put(new Transition(State.START_SPACE, Input.SIGN), State.SIGN_READ);
+        transitions.put(new Transition(State.START_SPACE, Input.DOT), State.DOT_READ);
+
+        transitions.put(new Transition(State.START_DIGIT, Input.DIGIT), State.START_DIGIT);
+        transitions.put(new Transition(State.START_DIGIT, Input.DOT), State.DIGIT_AFTER_DOT);
+        transitions.put(new Transition(State.START_DIGIT, Input.EXPONENT), State.EXPONENT);
+        transitions.put(new Transition(State.START_DIGIT, Input.SPACE), State.END_SPACE);
+
+        transitions.put(new Transition(State.DOT_READ, Input.DIGIT), State.DIGIT_AFTER_DOT);
+
+        transitions.put(new Transition(State.SIGN_READ, Input.DIGIT), State.START_DIGIT);
+        transitions.put(new Transition(State.SIGN_READ, Input.DOT), State.DOT_READ);
+
+        transitions.put(new Transition(State.DIGIT_AFTER_DOT, Input.DIGIT), State.DIGIT_AFTER_DOT);
+        transitions.put(new Transition(State.DIGIT_AFTER_DOT, Input.SPACE), State.END_SPACE);
+        transitions.put(new Transition(State.DIGIT_AFTER_DOT, Input.EXPONENT), State.EXPONENT);
+
+        transitions.put(new Transition(State.EXPONENT, Input.DIGIT), State.EXPONENT_DIGIT);
+        transitions.put(new Transition(State.EXPONENT, Input.SIGN), State.EXPONENT_SIGN);
+
+        transitions.put(new Transition(State.EXPONENT_SIGN, Input.DIGIT), State.EXPONENT_DIGIT);
+
+        transitions.put(new Transition(State.EXPONENT_DIGIT, Input.DIGIT), State.EXPONENT_DIGIT);
+        transitions.put(new Transition(State.EXPONENT_DIGIT, Input.SPACE), State.END_SPACE);
+
+        transitions.put(new Transition(State.END_SPACE, Input.SPACE), State.END_SPACE);
+
+        State currentState = State.START_SPACE;
+        for (int i = 0; i < s.length(); i++) {
+            Input input = Input.of(s.charAt(i));
+            currentState = transitions.get(new Transition(currentState, input));
+            if (currentState == null) return false;
+        }
+
+        return currentState == State.START_DIGIT
+                || currentState == State.DIGIT_AFTER_DOT
+                || currentState == State.END_SPACE
+                || currentState == State.EXPONENT_DIGIT;
     }
 
     /**
