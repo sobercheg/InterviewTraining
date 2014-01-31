@@ -19,6 +19,7 @@ public class Solution2Test {
         solutionTest.testPlusOne();
         solutionTest.testIsNumber();
         solutionTest.testFullJustify();
+        solutionTest.testClimbStairs();
     }
 
     public void testMinPathSum() {
@@ -111,5 +112,10 @@ public class Solution2Test {
                 solution.fullJustify(
                         new String[]{"world", "owes", "you", "a", "living;", "the", "world"}, 30));
 
+    }
+
+    public void testClimbStairs() {
+        assertEquals(3, solution.climbStairs(3));
+        assertEquals(5, solution.climbStairs(4));
     }
 }

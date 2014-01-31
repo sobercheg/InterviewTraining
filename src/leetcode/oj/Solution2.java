@@ -342,4 +342,21 @@ public class Solution2 {
         return justified;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/climbing-stairs/">Climbing Stairs</a>
+     * You are climbing a stair case. It takes n steps to reach to the top.
+     * <p/>
+     * Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+     */
+    public int climbStairs(int n) {
+        return climbStairs(n, new int[n + 1]);
+    }
+
+    private int climbStairs(int n, int[] memo) {
+        if (n <= 2) return n;
+        if (memo[n] > 0)
+            return memo[n];
+        memo[n] = climbStairs(n - 2, memo) + climbStairs(n - 1, memo);
+        return memo[n];
+    }
 }
