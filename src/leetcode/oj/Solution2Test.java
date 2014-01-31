@@ -3,6 +3,7 @@ package leetcode.oj;
 import java.util.Arrays;
 
 import static leetcode.oj.Solution.ListNode;
+import static leetcode.oj.SolutionTest.assertArrayEquals;
 import static leetcode.oj.SolutionTest.assertEquals;
 
 /**
@@ -22,6 +23,7 @@ public class Solution2Test {
         solutionTest.testClimbStairs();
         solutionTest.testSimplifyPath();
         solutionTest.testMinDistance();
+        solutionTest.testSetZeros();
     }
 
     public void testMinPathSum() {
@@ -129,5 +131,45 @@ public class Solution2Test {
     public void testMinDistance() {
         assertEquals(3, solution.minDistance("bugaga", "bgzgz"));
         assertEquals(1, solution.minDistance("a", ""));
+    }
+
+    public void testSetZeros() {
+        int[][] matrix = new int[][]{
+                {1, 2, 3},
+                {1, 0, 4},
+                {1, 1, 1},
+        };
+        solution.setZeroes(matrix);
+        assertArrayEquals(matrix, new int[][]{
+                {1, 0, 3},
+                {0, 0, 0},
+                {1, 0, 1},
+        });
+
+        matrix = new int[][]{
+                {1, 2},
+                {1, 0},
+        };
+        solution.setZeroes(matrix);
+        assertArrayEquals(matrix, new int[][]{
+                {1, 0},
+                {0, 0},
+        });
+
+        matrix = new int[][]{
+                {0, 0, 0, 5},
+                {4, 3, 1, 4},
+                {0, 1, 1, 4},
+                {1, 2, 1, 3},
+                {0, 0, 1, 1}
+        };
+        solution.setZeroes(matrix);
+        assertArrayEquals(matrix, new int[][]{
+                {0, 0, 0, 0},
+                {0, 0, 0, 4},
+                {0, 0, 0, 0},
+                {0, 0, 0, 3},
+                {0, 0, 0, 0}
+        });
     }
 }
