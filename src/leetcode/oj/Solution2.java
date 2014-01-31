@@ -359,4 +359,24 @@ public class Solution2 {
         memo[n] = climbStairs(n - 2, memo) + climbStairs(n - 1, memo);
         return memo[n];
     }
+
+    public String simplifyPath(String path) {
+        LinkedList<String> elements = new LinkedList<String>();
+        for (String element : path.split("/")) {
+            if (element.isEmpty()) continue;
+            if (element.equals(".")) continue;
+            if (element.equals(".."))
+                elements.poll();
+            else
+                elements.push(element);
+        }
+        if (elements.isEmpty()) return "/";
+        Collections.reverse(elements);
+        StringBuilder simplifiedPath = new StringBuilder();
+        for (String element : elements) {
+            simplifiedPath.append("/");
+            simplifiedPath.append(element);
+        }
+        return simplifiedPath.toString();
+    }
 }

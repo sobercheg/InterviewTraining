@@ -20,6 +20,7 @@ public class Solution2Test {
         solutionTest.testIsNumber();
         solutionTest.testFullJustify();
         solutionTest.testClimbStairs();
+        solutionTest.testSimplifyPath();
     }
 
     public void testMinPathSum() {
@@ -117,5 +118,10 @@ public class Solution2Test {
     public void testClimbStairs() {
         assertEquals(3, solution.climbStairs(3));
         assertEquals(5, solution.climbStairs(4));
+    }
+
+    public void testSimplifyPath() {
+        assertEquals("/home", solution.simplifyPath("/home/"));
+        assertEquals("/c", solution.simplifyPath("/a/./b/../../c/"));
     }
 }
