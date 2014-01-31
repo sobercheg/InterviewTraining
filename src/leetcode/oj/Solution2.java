@@ -360,6 +360,14 @@ public class Solution2 {
         return memo[n];
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/simplify-path/">Simplify Path</a>
+     * Given an absolute path for a file (Unix-style), simplify it.
+     * <p/>
+     * For example,
+     * path = "/home/", => "/home"
+     * path = "/a/./b/../../c/", => "/c"
+     */
     public String simplifyPath(String path) {
         LinkedList<String> elements = new LinkedList<String>();
         for (String element : path.split("/")) {
@@ -378,5 +386,43 @@ public class Solution2 {
             simplifiedPath.append(element);
         }
         return simplifiedPath.toString();
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/edit-distance/">Edit Distance</a>
+     * Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2. (each operation is counted as 1 step.)
+     * <p/>
+     * You have the following 3 operations permitted on a word:
+     * <p/>
+     * a) Insert a character
+     * b) Delete a character
+     * c) Replace a character
+     */
+    public int minDistance(String word1, String word2) {
+
+        int m = word1.length();
+        int n = word2.length();
+        int[][] distance = new int[m + 1][n + 1];
+
+        for (int i = 0; i < m; i++) {
+            distance[i + 1][0] = i + 1;
+        }
+        for (int j = 0; j < n; j++) {
+            distance[0][j + 1] = j + 1;
+        }
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (word1.charAt(i) == word2.charAt(j))
+                    distance[i + 1][j + 1] = distance[i][j];
+                else distance[i + 1][j + 1] = 1 +
+                        Math.min(Math.min(
+                                distance[i][j + 1],
+                                distance[i + 1][j]),
+                                distance[i][j]);
+            }
+        }
+
+        return distance[m][n];
     }
 }

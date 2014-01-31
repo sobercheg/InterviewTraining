@@ -21,6 +21,7 @@ public class Solution2Test {
         solutionTest.testFullJustify();
         solutionTest.testClimbStairs();
         solutionTest.testSimplifyPath();
+        solutionTest.testMinDistance();
     }
 
     public void testMinPathSum() {
@@ -123,5 +124,10 @@ public class Solution2Test {
     public void testSimplifyPath() {
         assertEquals("/home", solution.simplifyPath("/home/"));
         assertEquals("/c", solution.simplifyPath("/a/./b/../../c/"));
+    }
+
+    public void testMinDistance() {
+        assertEquals(3, solution.minDistance("bugaga", "bgzgz"));
+        assertEquals(1, solution.minDistance("a", ""));
     }
 }
