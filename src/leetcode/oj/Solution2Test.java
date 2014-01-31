@@ -1,5 +1,7 @@
 package leetcode.oj;
 
+import java.util.Arrays;
+
 import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.SolutionTest.assertEquals;
 
@@ -16,6 +18,7 @@ public class Solution2Test {
         solutionTest.testAddBinary();
         solutionTest.testPlusOne();
         solutionTest.testIsNumber();
+        solutionTest.testFullJustify();
     }
 
     public void testMinPathSum() {
@@ -75,5 +78,38 @@ public class Solution2Test {
         assertEquals(false, solution.isNumber("-1.2e-23e"));
         assertEquals(false, solution.isNumber("a"));
         assertEquals(false, solution.isNumber(" -."));
+    }
+
+    public void testFullJustify() {
+        assertEquals(Arrays.asList(
+                "This    is    an",
+                "example  of text",
+                "justification.  "),
+                solution.fullJustify(
+                        new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16));
+
+        assertEquals(Arrays.asList(
+                "                "),
+                solution.fullJustify(
+                        new String[]{""}, 16));
+
+        assertEquals(Arrays.asList("a"), solution.fullJustify(new String[]{"a"}, 1));
+
+        assertEquals(Arrays.asList(
+                "Listen",
+                "to    ",
+                "many, ",
+                "speak ",
+                "to   a",
+                "few.  "),
+                solution.fullJustify(
+                        new String[]{"Listen", "to", "many,", "speak", "to", "a", "few."}, 6));
+
+        assertEquals(Arrays.asList(
+                "world  owes  you a living; the",
+                "world                         "),
+                solution.fullJustify(
+                        new String[]{"world", "owes", "you", "a", "living;", "the", "world"}, 30));
+
     }
 }

@@ -1,8 +1,6 @@
 package leetcode.oj;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static leetcode.oj.Solution.ListNode;
 
@@ -256,4 +254,92 @@ public class Solution2 {
         newArray[0] = carryover;
         return newArray;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/text-justification/">Text Justification</a>
+     * Given an array of words and a length L, format the text such that each line has exactly L characters and
+     * is fully (left and right) justified.
+     * <p/>
+     * You should pack your words in a greedy approach; that is, pack as many words as you can in each line.
+     * Pad extra spaces ' ' when necessary so that each line has exactly L characters.
+     * <p/>
+     * Extra spaces between words should be distributed as evenly as possible. If the number of spaces on a line
+     * do not divide evenly between words, the empty slots on the left will be assigned more spaces than the slots on the right.
+     * <p/>
+     * For the last line of text, it should be left justified and no extra space is inserted between words.
+     * <p/>
+     * For example,
+     * words: ["This", "is", "an", "example", "of", "text", "justification."]
+     * L: 16.
+     * <p/>
+     * Return the formatted lines as:
+     * <p/>
+     * [
+     * "This    is    an",
+     * "example  of text",
+     * "justification.  "
+     * ]
+     * <p/>
+     * Note: Each word is guaranteed not to exceed L in length.
+     */
+    public ArrayList<String> fullJustify(String[] words, int L) {
+        ArrayList<String> justified = new ArrayList<String>();
+
+        if (L == 0) {
+            Collections.addAll(justified, words);
+            return justified;
+        }
+
+        int stringLength = 0;
+        int numOfWordsInLine = 0;
+        int lineStartWordIndex = 0;
+        for (int i = 0; i < words.length; i++) {
+            stringLength += words[i].length() + 1;
+            numOfWordsInLine++;
+            if (stringLength + (i < words.length - 1 ? words[i + 1].length() : 0) > L) {
+                int spacesToInsert = L - (stringLength - 1);
+                int baseSpaces = numOfWordsInLine > 1 ? spacesToInsert / (numOfWordsInLine - 1) : 0;
+                int additionalSpaces = numOfWordsInLine > 1 ? spacesToInsert % (numOfWordsInLine - 1) : L - stringLength;
+                StringBuilder line = new StringBuilder();
+                for (int j = lineStartWordIndex; j < i; j++) {
+                    line.append(words[j]);
+                    line.append(' ');
+                    for (int s = 0; s < baseSpaces + (additionalSpaces > 0 ? 1 : 0); s++)
+                        line.append(' ');
+                    if (additionalSpaces > 0)
+                        additionalSpaces--;
+                }
+                line.append(words[i]);
+                if (numOfWordsInLine == 1 && stringLength - 1 < L) {
+                    line.append(' ');
+                    for (int s = 0; s < baseSpaces + additionalSpaces; s++)
+                        line.append(' ');
+                }
+                justified.add(line.toString());
+                lineStartWordIndex = i + 1;
+                numOfWordsInLine = 0;
+                stringLength = 0;
+            }
+
+        }
+
+        if (lineStartWordIndex == words.length) return justified;
+
+        StringBuilder lastLine = new StringBuilder();
+
+        for (int i = lineStartWordIndex; i < words.length; i++) {
+            lastLine.append(words[i]);
+            if (lastLine.length() < L) lastLine.append(' ');
+        }
+
+        if (lastLine.length() < L) {
+            int len = lastLine.length();
+            for (int i = 0; i < L - len; i++) lastLine.append(' ');
+        }
+
+        if (lastLine.length() > 0)
+            justified.add(lastLine.toString());
+        return justified;
+    }
+
 }
