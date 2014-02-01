@@ -26,6 +26,7 @@ public class Solution2Test {
         solutionTest.testSetZeros();
         solutionTest.testMinWindow();
         solutionTest.testSearchMatrix();
+        solutionTest.testSortColors();
     }
 
     public void testMinPathSum() {
@@ -205,4 +206,15 @@ public class Solution2Test {
         assertEquals(true, solution.searchMatrix(matrix, 3));
         assertEquals(false, solution.searchMatrix(matrix, 2));
     }
+
+    public void testSortColors() {
+        int[] colors = new int[]{1, 0, 2, 0, 1, 1, 0, 2, 0};
+        solution.sortColors(colors);
+        assertEquals(new int[]{0, 0, 0, 0, 1, 1, 1, 2, 2}, colors);
+
+        colors = new int[]{2, 1};
+        solution.sortColors(colors);
+        assertEquals(new int[]{1, 2}, colors);
+    }
+
 }
