@@ -25,6 +25,7 @@ public class Solution2Test {
         solutionTest.testMinDistance();
         solutionTest.testSetZeros();
         solutionTest.testMinWindow();
+        solutionTest.testSearchMatrix();
     }
 
     public void testMinPathSum() {
@@ -183,5 +184,25 @@ public class Solution2Test {
         assertEquals("aa", solution.minWindow("aa", "aa"));
         assertEquals("aec", solution.minWindow("cabefgecdaecf", "cae"));
         assertEquals("cwae", solution.minWindow("cabwefgewcwaefgcf", "cae"));
+    }
+
+    public void testSearchMatrix() {
+        int[][] matrix = new int[][]{
+                {1, 3, 5, 7},
+                {10, 11, 16, 20},
+                {23, 30, 34, 50},
+        };
+        assertEquals(true, solution.searchMatrix(matrix, 3));
+        assertEquals(false, solution.searchMatrix(matrix, 4));
+        assertEquals(false, solution.searchMatrix(matrix, 0));
+        assertEquals(false, solution.searchMatrix(matrix, 70));
+        assertEquals(true, solution.searchMatrix(matrix, 11));
+
+        matrix = new int[][]{
+                {1, 3},
+        };
+        assertEquals(true, solution.searchMatrix(matrix, 1));
+        assertEquals(true, solution.searchMatrix(matrix, 3));
+        assertEquals(false, solution.searchMatrix(matrix, 2));
     }
 }

@@ -529,7 +529,9 @@ public class Solution2 {
             char ch = S.charAt(i);
 
             hasFound[ch]++;
-            if (hasFound[ch] <= needToFind[ch]) count++;
+
+            if (hasFound[ch] <= needToFind[ch])
+                count++;
 
             if (count == T.length()) {
                 for (int j = begin; j <= i; j++) {
@@ -552,4 +554,43 @@ public class Solution2 {
 
         return S.substring(minSubstringStart, minSubstringEnd + 1);
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/search-a-2d-matrix/">Search a 2D Matrix</a>
+     * Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+     * <p/>
+     * Integers in each row are sorted from left to right.
+     * The first integer of each row is greater than the last integer of the previous row.
+     * <p/>
+     * For example,
+     * <p/>
+     * Consider the following matrix:
+     * <p/>
+     * [
+     * [1,   3,  5,  7],
+     * [10, 11, 16, 20],
+     * [23, 30, 34, 50]
+     * ]
+     * <p/>
+     * Given target = 3, return true.
+     */
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int start = 0;
+        int c = matrix[0].length;
+
+        int end = matrix.length * matrix[0].length - 1;
+        int mid = 0;
+        while (start <= end) {
+            mid = (end + start) / 2;
+            int val = matrix[mid / c][mid % c];
+            if (val > target)
+                end = mid - 1;
+            else if (val < target)
+                start = mid + 1;
+            else break;
+        }
+
+        return matrix[mid / c][mid % c] == target;
+    }
+
 }
