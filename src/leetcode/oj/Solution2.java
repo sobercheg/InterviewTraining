@@ -637,4 +637,58 @@ public class Solution2 {
         A[i] = A[j];
         A[j] = tmp;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/word-search/">Word Search</a>
+     * Given a 2D board and a word, find if the word exists in the grid.
+     * <p/>
+     * The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are
+     * those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+     * <p/>
+     * For example,
+     * Given board =
+     * <p/>
+     * [
+     * ["ABCE"],
+     * ["SFCS"],
+     * ["ADEE"]
+     * ]
+     * <p/>
+     * word = "ABCCED", -> returns true,
+     * word = "SEE", -> returns true,
+     * word = "ABCB", -> returns false.
+     */
+    public boolean exist(char[][] board, String word) {
+        int m = board.length;
+        int n = board[0].length;
+        boolean[][] visited = new boolean[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (exist(board, word, 0, visited, i, j))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean exist(char[][] board, String word, int letter, boolean[][] visited, int y, int x) {
+        if (letter == word.length())
+            return true;
+
+        if (y < 0 || x < 0 || y >= board.length || x >= board[0].length)
+            return false;
+
+        if (visited[y][x] || board[y][x] != word.charAt(letter))
+            return false;
+
+        visited[y][x] = true;
+
+        boolean exists = exist(board, word, letter + 1, visited, y + 1, x)
+                || exist(board, word, letter + 1, visited, y - 1, x)
+                || exist(board, word, letter + 1, visited, y, x + 1)
+                || exist(board, word, letter + 1, visited, y, x - 1);
+        visited[y][x] = false;
+
+        return exists;
+    }
 }

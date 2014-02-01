@@ -27,6 +27,7 @@ public class Solution2Test {
         solutionTest.testMinWindow();
         solutionTest.testSearchMatrix();
         solutionTest.testSortColors();
+        solutionTest.testExist();
     }
 
     public void testMinPathSum() {
@@ -215,6 +216,24 @@ public class Solution2Test {
         colors = new int[]{2, 1};
         solution.sortColors(colors);
         assertEquals(new int[]{1, 2}, colors);
+    }
+
+    public void testExist() {
+        char[][] board = new char[][]{
+                "abce".toCharArray(),
+                "sfcs".toCharArray(),
+                "adee".toCharArray(),
+        };
+
+        assertEquals(true, solution.exist(board, "abcced"));
+        assertEquals(true, solution.exist(board, "see"));
+        assertEquals(false, solution.exist(board, "abcb"));
+
+        board = new char[][]{
+                {'a'}
+        };
+
+        assertEquals(true, solution.exist(board, "a"));
     }
 
 }
