@@ -24,6 +24,7 @@ public class Solution2Test {
         solutionTest.testSimplifyPath();
         solutionTest.testMinDistance();
         solutionTest.testSetZeros();
+        solutionTest.testMinWindow();
     }
 
     public void testMinPathSum() {
@@ -171,5 +172,16 @@ public class Solution2Test {
                 {0, 0, 0, 3},
                 {0, 0, 0, 0}
         });
+    }
+
+    public void testMinWindow() {
+        assertEquals("ba", solution.minWindow("bba", "ab"));
+        assertEquals("BANC", solution.minWindow("ADOBECODEBANC", "ABC"));
+        assertEquals("", solution.minWindow("ADOBECODEBANC", "ABQ"));
+        assertEquals("a", solution.minWindow("a", "a"));
+        assertEquals("b", solution.minWindow("ab", "b"));
+        assertEquals("aa", solution.minWindow("aa", "aa"));
+        assertEquals("aec", solution.minWindow("cabefgecdaecf", "cae"));
+        assertEquals("cwae", solution.minWindow("cabwefgewcwaefgcf", "cae"));
     }
 }

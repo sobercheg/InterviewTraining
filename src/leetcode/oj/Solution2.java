@@ -493,4 +493,63 @@ public class Solution2 {
         }
 
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/minimum-window-substring/">Minimum Window Substring</a>
+     * Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+     * <p/>
+     * For example,
+     * S = "ADOBECODEBANC"
+     * T = "ABC"
+     * <p/>
+     * Minimum window is "BANC".
+     * <p/>
+     * Note:
+     * If there is no such window in S that covers all characters in T, return the emtpy string "".
+     * <p/>
+     * If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+     * <p/>
+     * Solution: http://oj.leetcode.com/problems/minimum-window-substring/
+     */
+    public String minWindow(String S, String T) {
+
+        int[] needToFind = new int[256];
+        for (char ch : T.toCharArray()) {
+            needToFind[ch]++;
+        }
+        int[] hasFound = new int[256];
+
+        int minSubstringStart = 0;
+        int minSubstringEnd = -1;
+        int minLen = Integer.MAX_VALUE;
+
+        int count = 0;
+        int begin = 0;
+        for (int i = 0; i < S.length(); i++) {
+            char ch = S.charAt(i);
+
+            hasFound[ch]++;
+            if (hasFound[ch] <= needToFind[ch]) count++;
+
+            if (count == T.length()) {
+                for (int j = begin; j <= i; j++) {
+                    char sch = S.charAt(j);
+                    if (hasFound[sch] > needToFind[sch])
+                        hasFound[sch]--;
+                    else {
+                        begin = j;
+                        break;
+                    }
+                }
+
+                if (i - begin < minLen) {
+                    minSubstringStart = begin;
+                    minSubstringEnd = i;
+                    minLen = minSubstringEnd - minSubstringStart;
+                }
+            }
+        }
+
+        return S.substring(minSubstringStart, minSubstringEnd + 1);
+    }
 }
