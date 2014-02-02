@@ -881,4 +881,49 @@ public class Solution2 {
         return head;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/remove-duplicates-from-sorted-list-ii/">Remove Duplicates from Sorted List II</a>
+     * Given a sorted linked list, delete all nodes that have duplicate numbers, leaving only distinct numbers from the original list.
+     * <p/>
+     * For example,
+     * Given 1->2->3->3->4->4->5, return 1->2->5.
+     * Given 1->1->1->2->3, return 2->3.
+     */
+    public ListNode deleteDuplicatesII(ListNode head) {
+        if (head == null || head.next == null) return head;
+        ListNode readNode = head;
+        ListNode writeNode = null;
+        ListNode newHead = null;
+        ListNode prevNode = null;
+
+        while (readNode != null) {
+            boolean shouldWriteNode =
+                    (prevNode == null && readNode.next == null) ||
+                            ((prevNode == null || prevNode.val != readNode.val)
+                                    && (readNode.next == null || readNode.next.val != readNode.val));
+            if (shouldWriteNode) {
+                if (writeNode == null) {
+                    writeNode = readNode;
+                } else {
+                    writeNode.next = readNode;
+                    writeNode = writeNode.next;
+                }
+                if (newHead == null) {
+                    newHead = writeNode;
+                }
+
+            }
+            if (prevNode == null) {
+                prevNode = readNode;
+            } else {
+                prevNode = prevNode.next;
+            }
+            readNode = readNode.next;
+
+        }
+        if (writeNode != null)
+            writeNode.next = null;
+        return newHead;
+    }
+
 }

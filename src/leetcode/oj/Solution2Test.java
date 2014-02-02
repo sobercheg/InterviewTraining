@@ -34,6 +34,7 @@ public class Solution2Test {
         solutionTest.testRemoveDuplicates();
         solutionTest.testSearch();
         solutionTest.testDeleteDuplicates();
+        solutionTest.testDeleteDuplicatesII();
     }
 
     public void testMinPathSum() {
@@ -323,6 +324,34 @@ public class Solution2Test {
         assertEquals(1, noDuplicates.val);
         assertEquals(2, noDuplicates.next.val);
         assertEquals(null, noDuplicates.next.next);
+    }
+
+    public void testDeleteDuplicatesII() {
+        ListNode root = new ListNode(1);
+        ListNode noDuplicates = solution.deleteDuplicatesII(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(null, noDuplicates.next);
+
+        root = new ListNode(1, new ListNode(2, new ListNode(3)));
+        noDuplicates = solution.deleteDuplicatesII(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(2, noDuplicates.next.val);
+        assertEquals(3, noDuplicates.next.next.val);
+        assertEquals(null, noDuplicates.next.next.next);
+
+        root = new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3)))));
+        noDuplicates = solution.deleteDuplicatesII(root);
+        assertEquals(2, noDuplicates.val);
+        assertEquals(3, noDuplicates.next.val);
+        assertEquals(null, noDuplicates.next.next);
+
+        root = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(4, new ListNode(5)))))));
+        noDuplicates = solution.deleteDuplicatesII(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(2, noDuplicates.next.val);
+        assertEquals(5, noDuplicates.next.next.val);
+        assertEquals(null, noDuplicates.next.next.next);
+
     }
 
 }
