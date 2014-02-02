@@ -30,6 +30,7 @@ public class Solution2Test {
         solutionTest.testSortColors();
         solutionTest.testExist();
         solutionTest.testCombine();
+        solutionTest.testSubsets();
     }
 
     public void testMinPathSum() {
@@ -249,4 +250,25 @@ public class Solution2Test {
 
         assertEquals(expected, solution.combine(4, 2));
     }
+
+    public void testSubsets() {
+        ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>();
+        expected.add(new ArrayList<Integer>());
+        expected.add(new ArrayList<Integer>(Arrays.asList(1)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(2)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(3)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 3)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(2, 3)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
+
+        assertEquals(expected, solution.subsets(new int[]{1, 2, 3}));
+
+        expected = new ArrayList<ArrayList<Integer>>();
+        expected.add(new ArrayList<Integer>());
+        expected.add(new ArrayList<Integer>(Arrays.asList(0)));
+
+        assertEquals(expected, solution.subsets(new int[]{0}));
+    }
+
 }

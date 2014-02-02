@@ -1135,9 +1135,15 @@ public class SolutionTest {
 
     public static void assertEquals(int[] expected, int[] actual) {
         if (checkNulls(expected, actual)) return;
-        if (!Arrays.equals(expected, actual))
-            throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
-                    Arrays.toString(expected), Arrays.toString(actual)));
+        assertEquals(expected, actual, Math.max(expected.length, actual.length));
+    }
+
+    public static void assertEquals(int[] expected, int[] actual, int size) {
+        for (int i = 0; i < size; i++) {
+            if (actual.length <= i || expected.length <= i || expected[i] != actual[i])
+                throw new IllegalStateException(String.format("Expected [%s] is not equal to actual [%s]",
+                        Arrays.toString(expected), Arrays.toString(actual)));
+        }
     }
 
     public static void assertEquals(String[] expected, String[] actual) {

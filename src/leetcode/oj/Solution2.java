@@ -726,4 +726,69 @@ public class Solution2 {
         }
         return result;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/subsets/">Subsets</a>
+     * Given a set of distinct integers, S, return all possible subsets.
+     * <p/>
+     * Note:
+     * <p/>
+     * Elements in a subset must be in non-descending order.
+     * The solution set must not contain duplicate subsets.
+     * <p/>
+     * For example,
+     * If S = [1,2,3], a solution is:
+     * <p/>
+     * [
+     * [3],
+     * [1],
+     * [2],
+     * [1,2,3],
+     * [1,3],
+     * [2,3],
+     * [1,2],
+     * []
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> subsets(int[] S) {
+        /*
+        ArrayList<ArrayList<Integer>> combos = new ArrayList<ArrayList<Integer>>();
+        for (int k = 0; k <= S.length; k++)
+            subsetsNofK(S, 0, 0, k, new ArrayList<Integer>(), combos);
+        return combos;
+        */
+        return subsetsBits(S);
+    }
+
+    private void subsetsNofK(int[] S, int level, int start, int maxLevel, ArrayList<Integer> combo, ArrayList<ArrayList<Integer>> combos) {
+        if (level == maxLevel) {
+            ArrayList<Integer> result = new ArrayList<Integer>(combo);
+            Collections.sort(result);
+            combos.add(result);
+            return;
+        }
+
+        for (int i = start; i < S.length; i++) {
+            combo.add(S[i]);
+            subsetsNofK(S, level + 1, i + 1, maxLevel, combo, combos);
+            combo.remove((Integer) S[i]);
+        }
+    }
+
+    private ArrayList<ArrayList<Integer>> subsetsBits(int[] S) {
+        long num = 1 << S.length;
+        ArrayList<ArrayList<Integer>> combos = new ArrayList<ArrayList<Integer>>();
+
+        for (long i = 0; i < num; i++) {
+            ArrayList<Integer> combo = new ArrayList<Integer>();
+            for (long n = i, index = 0; n > 0; n >>= 1, index++) {
+                if ((n & 1) == 1) combo.add(S[(int) index]);
+            }
+            Collections.sort(combo);
+            combos.add(combo);
+        }
+
+        return combos;
+    }
+
 }
