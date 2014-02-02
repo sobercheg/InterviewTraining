@@ -822,4 +822,38 @@ public class Solution2 {
         return storePointer;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/search-in-rotated-sorted-array-ii/">Search in Rotated Sorted Array II</a>
+     * Follow up for "Search in Rotated Sorted Array":
+     * What if duplicates are allowed?
+     * <p/>
+     * Would this affect the run-time complexity? How and why?
+     * <p/>
+     * Write a function to determine if a given target is in the array.
+     * <p/>
+     * Solution is based on http://oj.leetcode.com/discuss/223/when-there-are-duplicates-the-worst-case-is-could-we-do-better
+     */
+    public boolean search(int[] A, int target) {
+        int l = 0;
+        int r = A.length - 1;
+        int mid;
+        while (l <= r) {
+            mid = (l + r) / 2;
+            if (A[mid] == target) return true;
+            if (A[l] < A[mid]) { // left half is sorted
+                if (A[l] <= target && A[mid] > target) {
+                    r = mid - 1;
+                } else {
+                    l = mid + 1;
+                }
+            } else if (A[l] > A[mid]) { // right half is sorted
+                if (A[r] >= target && A[mid] < target) {
+                    l = mid + 1;
+                } else {
+                    r = mid - 1;
+                }
+            } else l++;
+        }
+        return false;
+    }
 }

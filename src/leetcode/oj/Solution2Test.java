@@ -32,6 +32,7 @@ public class Solution2Test {
         solutionTest.testCombine();
         solutionTest.testSubsets();
         solutionTest.testRemoveDuplicates();
+        solutionTest.testSearch();
     }
 
     public void testMinPathSum() {
@@ -257,8 +258,8 @@ public class Solution2Test {
         expected.add(new ArrayList<Integer>());
         expected.add(new ArrayList<Integer>(Arrays.asList(1)));
         expected.add(new ArrayList<Integer>(Arrays.asList(2)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(3)));
         expected.add(new ArrayList<Integer>(Arrays.asList(1, 2)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(3)));
         expected.add(new ArrayList<Integer>(Arrays.asList(1, 3)));
         expected.add(new ArrayList<Integer>(Arrays.asList(2, 3)));
         expected.add(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
@@ -292,6 +293,15 @@ public class Solution2Test {
         a = new int[]{1, 1, 1, 1, 2};
         assertEquals(3, solution.removeDuplicates(a));
         assertEquals(new int[]{1, 1, 2}, a, 3);
+    }
+
+    public void testSearch() {
+        assertEquals(true, solution.search(new int[]{1, 2, 1, 1, 1}, 1));
+        assertEquals(true, solution.search(new int[]{1, 2, 1, 1, 1}, 2));
+        assertEquals(false, solution.search(new int[]{1, 2, 1, 1, 1}, 3));
+        assertEquals(false, solution.search(new int[]{1, 2, 1, 1, 1}, 0));
+        assertEquals(true, solution.search(new int[]{1, 2, 3, 4, 1}, 4));
+        assertEquals(false, solution.search(new int[]{1}, 0));
     }
 
 }
