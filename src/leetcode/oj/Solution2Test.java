@@ -1,5 +1,6 @@
 package leetcode.oj;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import static leetcode.oj.Solution.ListNode;
@@ -28,6 +29,7 @@ public class Solution2Test {
         solutionTest.testSearchMatrix();
         solutionTest.testSortColors();
         solutionTest.testExist();
+        solutionTest.testCombine();
     }
 
     public void testMinPathSum() {
@@ -236,4 +238,15 @@ public class Solution2Test {
         assertEquals(true, solution.exist(board, "a"));
     }
 
+    public void testCombine() {
+        ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>();
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 3)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(1, 4)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(2, 3)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(2, 4)));
+        expected.add(new ArrayList<Integer>(Arrays.asList(3, 4)));
+
+        assertEquals(expected, solution.combine(4, 2));
+    }
 }

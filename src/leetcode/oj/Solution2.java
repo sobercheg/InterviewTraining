@@ -691,4 +691,39 @@ public class Solution2 {
 
         return exists;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/combinations/">Combinations</a>
+     * Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.
+     * <p/>
+     * For example,
+     * If n = 4 and k = 2, a solution is:
+     * <p/>
+     * [
+     * [2,4],
+     * [3,4],
+     * [2,3],
+     * [1,2],
+     * [1,3],
+     * [1,4],
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> combine(int n, int k) {
+        return combine(n, k, 0, 0, new ArrayList<Integer>());
+    }
+
+    private ArrayList<ArrayList<Integer>> combine(int n, int k, int level, int start, ArrayList<Integer> combo) {
+        if (level == k) {
+            ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+            result.add(new ArrayList<Integer>(combo));
+            return result;
+        }
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        for (int i = start; i < n; i++) {
+            combo.add(i + 1);
+            result.addAll(combine(n, k, level + 1, i + 1, combo));
+            combo.remove((Integer) (i + 1));
+        }
+        return result;
+    }
 }
