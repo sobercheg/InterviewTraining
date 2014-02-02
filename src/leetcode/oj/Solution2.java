@@ -791,4 +791,35 @@ public class Solution2 {
         return combos;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/remove-duplicates-from-sorted-array-ii/">Remove Duplicates from Sorted Array II</a>
+     * Follow up for "Remove Duplicates":
+     * What if duplicates are allowed at most twice?
+     * <p/>
+     * For example,
+     * Given sorted array A = [1,1,1,2,2,3],
+     * <p/>
+     * Your function should return length = 5, and A is now [1,1,2,2,3].
+     */
+    public int removeDuplicates(int[] A) {
+        LinkedList<Integer> buf = new LinkedList<Integer>();
+        int storePointer = 0;
+        for (int i = 0; i < A.length; i++) {
+            boolean shouldAddIthNumber =
+                    i - 1 < 0 ||
+                            ((A[i] == A[i - 1] && (i - 2 < 0 || A[i - 1] != A[i - 2]))) ||
+                            (A[i] != A[i - 1]);
+            if (shouldAddIthNumber) {
+                if (buf.size() == 3) {
+                    A[storePointer++] = buf.removeFirst();
+                }
+                buf.add(A[i]);
+            }
+        }
+        for (Integer b : buf) {
+            A[storePointer++] = b;
+        }
+        return storePointer;
+    }
+
 }
