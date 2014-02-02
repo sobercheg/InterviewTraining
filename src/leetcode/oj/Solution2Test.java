@@ -33,6 +33,7 @@ public class Solution2Test {
         solutionTest.testSubsets();
         solutionTest.testRemoveDuplicates();
         solutionTest.testSearch();
+        solutionTest.testDeleteDuplicates();
     }
 
     public void testMinPathSum() {
@@ -302,6 +303,26 @@ public class Solution2Test {
         assertEquals(false, solution.search(new int[]{1, 2, 1, 1, 1}, 0));
         assertEquals(true, solution.search(new int[]{1, 2, 3, 4, 1}, 4));
         assertEquals(false, solution.search(new int[]{1}, 0));
+    }
+
+    public void testDeleteDuplicates() {
+        ListNode root = new ListNode(1);
+        ListNode noDuplicates = solution.deleteDuplicates(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(null, noDuplicates.next);
+
+        root = new ListNode(1, new ListNode(2, new ListNode(3)));
+        noDuplicates = solution.deleteDuplicates(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(2, noDuplicates.next.val);
+        assertEquals(3, noDuplicates.next.next.val);
+        assertEquals(null, noDuplicates.next.next.next);
+
+        root = new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2))));
+        noDuplicates = solution.deleteDuplicates(root);
+        assertEquals(1, noDuplicates.val);
+        assertEquals(2, noDuplicates.next.val);
+        assertEquals(null, noDuplicates.next.next);
     }
 
 }
