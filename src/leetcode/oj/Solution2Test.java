@@ -40,6 +40,7 @@ public class Solution2Test {
         solutionTest.testInorderTraversal();
         solutionTest.testNumTrees();
         solutionTest.testGenerateTrees();
+        solutionTest.testIsValidBST();
     }
 
     public void testMinPathSum() {
@@ -55,21 +56,21 @@ public class Solution2Test {
     }
 
     public void testMergeTwoLists() {
-        ListNode list1 = new ListNode(1, new ListNode(3, new ListNode(5)));
-        ListNode list2 = new ListNode(2, new ListNode(4, new ListNode(6)));
+        ListNode list1 = ListNode.build(1, 3, 5);
+        ListNode list2 = ListNode.build(2, 4, 6);
         ListNode actualMerged = solution.mergeTwoLists(list1, list2);
-        ListNode expectedMerged = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+        ListNode expectedMerged = ListNode.build(1, 2, 3, 4, 5, 6);
         assertEquals(expectedMerged, actualMerged);
 
-        list2 = new ListNode(1);
+        list2 = ListNode.build(1);
         actualMerged = solution.mergeTwoLists(null, list2);
-        expectedMerged = new ListNode(1);
+        expectedMerged = ListNode.build(1);
         assertEquals(expectedMerged, actualMerged);
 
-        list1 = new ListNode(2);
-        list2 = new ListNode(1);
+        list1 = ListNode.build(2);
+        list2 = ListNode.build(1);
         actualMerged = solution.mergeTwoLists(list1, list2);
-        expectedMerged = new ListNode(1, new ListNode(2));
+        expectedMerged = ListNode.build(1, 2);
         assertEquals(expectedMerged, actualMerged);
     }
 
@@ -305,44 +306,41 @@ public class Solution2Test {
     }
 
     public void testDeleteDuplicates() {
-        ListNode root = new ListNode(1);
+        ListNode root = ListNode.build(1);
         ListNode noDuplicates = solution.deleteDuplicates(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(null, noDuplicates.next);
+        ListNode expected = ListNode.build(1);
+        assertEquals(expected, noDuplicates);
 
-        root = new ListNode(1, new ListNode(2, new ListNode(3)));
+        root = ListNode.build(1, 2, 3);
         noDuplicates = solution.deleteDuplicates(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(2, noDuplicates.next.val);
-        assertEquals(3, noDuplicates.next.next.val);
-        assertEquals(null, noDuplicates.next.next.next);
+        expected = ListNode.build(1, 2, 3);
+        assertEquals(expected, noDuplicates);
 
-        root = new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2))));
+        root = ListNode.build(1, 1, 1, 2);
         noDuplicates = solution.deleteDuplicates(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(2, noDuplicates.next.val);
-        assertEquals(null, noDuplicates.next.next);
+        expected = ListNode.build(1, 2);
+        assertEquals(expected, noDuplicates);
     }
 
     public void testDeleteDuplicatesII() {
-        ListNode root = new ListNode(1);
+        ListNode root = ListNode.build(1);
         ListNode noDuplicatesActual = solution.deleteDuplicatesII(root);
-        ListNode noDuplicatesExpected = new ListNode(1);
+        ListNode noDuplicatesExpected = ListNode.build(1);
         assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
-        root = new ListNode(1, new ListNode(2, new ListNode(3)));
+        root = ListNode.build(1, 2, 3);
         noDuplicatesActual = solution.deleteDuplicatesII(root);
-        noDuplicatesExpected = new ListNode(1, new ListNode(2, new ListNode(3)));
+        noDuplicatesExpected = ListNode.build(1, 2, 3);
         assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
-        root = new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3)))));
+        root = ListNode.build(1, 1, 1, 2, 3);
         noDuplicatesActual = solution.deleteDuplicatesII(root);
-        noDuplicatesExpected = new ListNode(2, new ListNode(3));
+        noDuplicatesExpected = ListNode.build(2, 3);
         assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
-        root = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(4, new ListNode(5)))))));
+        root = ListNode.build(1, 2, 3, 3, 4, 4, 5);
         noDuplicatesActual = solution.deleteDuplicatesII(root);
-        noDuplicatesExpected = new ListNode(1, new ListNode(2, new ListNode(5)));
+        noDuplicatesExpected = ListNode.build(1, 2, 5);
         assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
     }
@@ -385,5 +383,9 @@ public class Solution2Test {
         assertEquals(expectedTrees, generatedTrees);
     }
 
+    public void testIsValidBST() {
+        assertEquals(true, solution.isValidBST(new TreeNode(2, new TreeNode(1), new TreeNode(3))));
+        assertEquals(false, solution.isValidBST(new TreeNode(2, new TreeNode(2), new TreeNode(3))));
+    }
 
 }
