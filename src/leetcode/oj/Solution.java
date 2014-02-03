@@ -30,13 +30,45 @@ public class Solution {
 
         @Override
         public String toString() {
-            return "" + val;
+            return "[" + val + (left != null ? "-l>" + left.toString() : "") + (right != null ? "-r>" + right.toString() : "") + "]";
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            TreeNode treeNode = (TreeNode) o;
+
+            if (val != treeNode.val) return false;
+            if (left != null ? !left.equals(treeNode.left) : treeNode.left != null) return false;
+            if (right != null ? !right.equals(treeNode.right) : treeNode.right != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = val;
+            result = 31 * result + (left != null ? left.hashCode() : 0);
+            result = 31 * result + (right != null ? right.hashCode() : 0);
+            return result;
         }
     }
 
     public static class ListNode {
         int val;
         ListNode next;
+
+        static ListNode build(int... vals) {
+            ListNode root = new ListNode(vals[0]);
+            ListNode currentNode = root;
+            for (int i = 1; i < vals.length; i++) {
+                currentNode.next = new ListNode(vals[i]);
+                currentNode = currentNode.next;
+            }
+            return root;
+        }
 
         ListNode(int x) {
             val = x;
@@ -50,7 +82,27 @@ public class Solution {
 
         @Override
         public String toString() {
-            return "" + val;
+            return "" + val + (next != null ? "->" + next.toString() : "");
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            ListNode listNode = (ListNode) o;
+
+            if (val != listNode.val) return false;
+            if (next != null ? !next.equals(listNode.next) : listNode.next != null) return false;
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int result = val;
+            result = 31 * result + (next != null ? next.hashCode() : 0);
+            return result;
         }
     }
 

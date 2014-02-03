@@ -926,4 +926,55 @@ public class Solution2 {
         return newHead;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/largest-rectangle-in-histogram/">Largest Rectangle in Histogram</a>
+     * Given n non-negative integers representing the histogram's bar height where the width of each bar is 1,
+     * find the area of largest rectangle in the histogram.
+     * <p/>
+     * Above is a histogram where width of each bar is 1, given height = [2,1,5,6,2,3].
+     * <p/>
+     * The largest rectangle is shown in the shaded area, which has area = 10 unit.
+     * <p/>
+     * For example,
+     * Given height = [2,1,5,6,2,3],
+     * return 10.
+     * </p>
+     * Solution: divide and conquer (pretty much like the maximum subarray problem)
+     */
+    public int largestRectangleArea(int[] height) {
+        if (height == null || height.length == 0) return 0;
+        return largestRectangleArea(height, 0, height.length - 1);
+    }
+
+    private int largestRectangleArea(int[] A, int l, int r) {
+        if (l == r) return A[l];
+        int mid = (l + r) / 2;
+        int leftArea = largestRectangleArea(A, l, mid);
+        int rightArea = largestRectangleArea(A, mid + 1, r);
+        int crossingArea = crossingArea(A, l, r, mid);
+        return Math.max(leftArea, Math.max(rightArea, crossingArea));
+    }
+
+    private int crossingArea(int[] A, int l, int r, int mid) {
+        int left = mid;
+        int right = mid;
+        int leftMin = A[left];
+        int rightMin = A[right];
+        int bestArea = 0;
+
+        while (left >= l && right <= r) {
+            leftMin = Math.min(A[left], leftMin);
+            rightMin = Math.min(A[right], rightMin);
+
+            bestArea = Math.max(bestArea,
+                    Math.min(leftMin, rightMin) * (right - left + 1));
+            if (left > l && (right == r || A[left - 1] > A[right + 1])) {
+                left--;
+            } else {
+                right++;
+            }
+        }
+        return bestArea;
+    }
+
 }

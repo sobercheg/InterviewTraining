@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static leetcode.oj.Solution.ListNode;
-import static leetcode.oj.SolutionTest.assertArrayEquals;
-import static leetcode.oj.SolutionTest.assertEquals;
+import static leetcode.oj.TestUtils.*;
 
 /**
- * Created by Sobercheg on 1/29/14.
+ * Author: Sobercheg on 1/29/14.
+ * Unit tests for LeetCode OJ solutions.
  */
 public class Solution2Test {
     private final Solution2 solution = new Solution2();
@@ -35,6 +35,7 @@ public class Solution2Test {
         solutionTest.testSearch();
         solutionTest.testDeleteDuplicates();
         solutionTest.testDeleteDuplicatesII();
+        solutionTest.testLargestRectangleArea();
     }
 
     public void testMinPathSum() {
@@ -52,27 +53,20 @@ public class Solution2Test {
     public void testMergeTwoLists() {
         ListNode list1 = new ListNode(1, new ListNode(3, new ListNode(5)));
         ListNode list2 = new ListNode(2, new ListNode(4, new ListNode(6)));
-        ListNode merged = solution.mergeTwoLists(list1, list2);
-        assertEquals(1, merged.val);
-        assertEquals(2, merged.next.val);
-        assertEquals(3, merged.next.next.val);
-        assertEquals(4, merged.next.next.next.val);
-        assertEquals(5, merged.next.next.next.next.val);
-        assertEquals(6, merged.next.next.next.next.next.val);
-        assertEquals(null, merged.next.next.next.next.next.next);
+        ListNode actualMerged = solution.mergeTwoLists(list1, list2);
+        ListNode expectedMerged = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(4, new ListNode(5, new ListNode(6))))));
+        assertEquals(expectedMerged, actualMerged);
 
-        list1 = null;
         list2 = new ListNode(1);
-        merged = solution.mergeTwoLists(list1, list2);
-        assertEquals(1, merged.val);
-        assertEquals(null, merged.next);
+        actualMerged = solution.mergeTwoLists(null, list2);
+        expectedMerged = new ListNode(1);
+        assertEquals(expectedMerged, actualMerged);
 
         list1 = new ListNode(2);
         list2 = new ListNode(1);
-        merged = solution.mergeTwoLists(list1, list2);
-        assertEquals(1, merged.val);
-        assertEquals(2, merged.next.val);
-        assertEquals(null, merged.next.next);
+        actualMerged = solution.mergeTwoLists(list1, list2);
+        expectedMerged = new ListNode(1, new ListNode(2));
+        assertEquals(expectedMerged, actualMerged);
     }
 
     public void testAddBinary() {
@@ -245,12 +239,12 @@ public class Solution2Test {
 
     public void testCombine() {
         ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>();
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 3)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 4)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(2, 3)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(2, 4)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(3, 4)));
+        expected.add(arrayListOf(1, 2));
+        expected.add(arrayListOf(1, 3));
+        expected.add(arrayListOf(1, 4));
+        expected.add(arrayListOf(2, 3));
+        expected.add(arrayListOf(2, 4));
+        expected.add(arrayListOf(3, 4));
 
         assertEquals(expected, solution.combine(4, 2));
     }
@@ -258,13 +252,13 @@ public class Solution2Test {
     public void testSubsets() {
         ArrayList<ArrayList<Integer>> expected = new ArrayList<ArrayList<Integer>>();
         expected.add(new ArrayList<Integer>());
-        expected.add(new ArrayList<Integer>(Arrays.asList(1)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(2)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(3)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 3)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(2, 3)));
-        expected.add(new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
+        expected.add(arrayListOf(1));
+        expected.add(arrayListOf(2));
+        expected.add(arrayListOf(1, 2));
+        expected.add(arrayListOf(3));
+        expected.add(arrayListOf(1, 3));
+        expected.add(arrayListOf(2, 3));
+        expected.add(arrayListOf(1, 2, 3));
 
         assertEquals(expected, solution.subsets(new int[]{1, 2, 3}));
 
@@ -328,30 +322,34 @@ public class Solution2Test {
 
     public void testDeleteDuplicatesII() {
         ListNode root = new ListNode(1);
-        ListNode noDuplicates = solution.deleteDuplicatesII(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(null, noDuplicates.next);
+        ListNode noDuplicatesActual = solution.deleteDuplicatesII(root);
+        ListNode noDuplicatesExpected = new ListNode(1);
+        assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
         root = new ListNode(1, new ListNode(2, new ListNode(3)));
-        noDuplicates = solution.deleteDuplicatesII(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(2, noDuplicates.next.val);
-        assertEquals(3, noDuplicates.next.next.val);
-        assertEquals(null, noDuplicates.next.next.next);
+        noDuplicatesActual = solution.deleteDuplicatesII(root);
+        noDuplicatesExpected = new ListNode(1, new ListNode(2, new ListNode(3)));
+        assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
         root = new ListNode(1, new ListNode(1, new ListNode(1, new ListNode(2, new ListNode(3)))));
-        noDuplicates = solution.deleteDuplicatesII(root);
-        assertEquals(2, noDuplicates.val);
-        assertEquals(3, noDuplicates.next.val);
-        assertEquals(null, noDuplicates.next.next);
+        noDuplicatesActual = solution.deleteDuplicatesII(root);
+        noDuplicatesExpected = new ListNode(2, new ListNode(3));
+        assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
         root = new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(3, new ListNode(4, new ListNode(4, new ListNode(5)))))));
-        noDuplicates = solution.deleteDuplicatesII(root);
-        assertEquals(1, noDuplicates.val);
-        assertEquals(2, noDuplicates.next.val);
-        assertEquals(5, noDuplicates.next.next.val);
-        assertEquals(null, noDuplicates.next.next.next);
+        noDuplicatesActual = solution.deleteDuplicatesII(root);
+        noDuplicatesExpected = new ListNode(1, new ListNode(2, new ListNode(5)));
+        assertEquals(noDuplicatesExpected, noDuplicatesActual);
 
+    }
+
+    public void testLargestRectangleArea() {
+        assertEquals(10, solution.largestRectangleArea(new int[]{2, 1, 5, 6, 2, 3}));
+        assertEquals(10, solution.largestRectangleArea(new int[]{10}));
+        assertEquals(20, solution.largestRectangleArea(new int[]{10, 10}));
+        assertEquals(20, solution.largestRectangleArea(new int[]{10, 11}));
+        assertEquals(3, solution.largestRectangleArea(new int[]{2, 1, 2}));
+        assertEquals(10, solution.largestRectangleArea(new int[]{4, 2, 0, 3, 2, 4, 3, 4}));
     }
 
 }
