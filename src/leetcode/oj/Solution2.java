@@ -3,6 +3,7 @@ package leetcode.oj;
 import java.util.*;
 
 import static leetcode.oj.Solution.ListNode;
+import static leetcode.oj.Solution.TreeNode;
 
 /**
  * Created by Sobercheg on 1/29/14.
@@ -975,6 +976,49 @@ public class Solution2 {
             }
         }
         return bestArea;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-inorder-traversal/">Binary Tree Inorder Traversal</a>
+     * Given a binary tree, return the inorder traversal of its nodes' values.
+     * <p/>
+     * For example:
+     * Given binary tree {1,#,2,3},
+     * <p/>
+     * 1
+     * \
+     * 2
+     * /
+     * 3
+     * <p/>
+     * return [1,3,2].
+     * <p/>
+     * Note: Recursive solution is trivial, could you do it iteratively?
+     * <p/>
+     * confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+     */
+    public ArrayList<Integer> inorderTraversal(TreeNode root) {
+        if (root == null) return new ArrayList<Integer>();
+        TreeNode node = root;
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        ArrayList<Integer> inorder = new ArrayList<Integer>();
+        boolean done = false;
+        while (!done) {
+            if (node != null) {
+                stack.push(node);
+                node = node.left;
+            } else {
+                if (stack.isEmpty()) {
+                    done = true;
+                } else {
+                    node = stack.peek();
+                    stack.pop();
+                    inorder.add(node.val);
+                    node = node.right;
+                }
+            }
+        }
+        return inorder;
     }
 
 }

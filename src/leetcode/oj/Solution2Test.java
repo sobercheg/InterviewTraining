@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static leetcode.oj.Solution.ListNode;
+import static leetcode.oj.Solution.TreeNode;
 import static leetcode.oj.TestUtils.*;
 
 /**
@@ -36,6 +37,7 @@ public class Solution2Test {
         solutionTest.testDeleteDuplicates();
         solutionTest.testDeleteDuplicatesII();
         solutionTest.testLargestRectangleArea();
+        solutionTest.testInorderTraversal();
     }
 
     public void testMinPathSum() {
@@ -350,6 +352,14 @@ public class Solution2Test {
         assertEquals(20, solution.largestRectangleArea(new int[]{10, 11}));
         assertEquals(3, solution.largestRectangleArea(new int[]{2, 1, 2}));
         assertEquals(10, solution.largestRectangleArea(new int[]{4, 2, 0, 3, 2, 4, 3, 4}));
+    }
+
+    public void testInorderTraversal() {
+        Solution.TreeNode root = new TreeNode(1, null, new TreeNode(2, new TreeNode(3), null));
+        assertEquals(Arrays.asList(1, 3, 2), solution.inorderTraversal(root));
+
+        root = new TreeNode(1, new TreeNode(2, new TreeNode(3, new TreeNode(4), null), new TreeNode(5, new TreeNode(6), null)), null);
+        assertEquals(Arrays.asList(4, 3, 2, 6, 5, 1), solution.inorderTraversal(root));
     }
 
 }
