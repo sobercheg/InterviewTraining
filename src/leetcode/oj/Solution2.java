@@ -1150,4 +1150,70 @@ public class Solution2 {
         return root;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/symmetric-tree/">Symmetric Tree</a>
+     * Given a binary tree, check whether it is a mirror of itself (ie, symmetric around its center).
+     * <p/>
+     * For example, this binary tree is symmetric:
+     * <p/>
+     * 1
+     * / \
+     * 2   2
+     * / \ / \
+     * 3  4 4  3
+     * <p/>
+     * But the following is not:
+     * <p/>
+     * 1
+     * / \
+     * 2   2
+     * \   \
+     * 3    3
+     * <p/>
+     * Note:
+     * Bonus points if you could solve it both recursively and iteratively.
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        // return isSymmetricRecursive(root.left, root.right);
+        return isSymmetricIterative(root.left, root.right);
+    }
+
+    private boolean isSymmetricRecursive(TreeNode left, TreeNode right) {
+        if (left == null && right == null) return true;
+        if (left == null || right == null) return false;
+        if (left.val != right.val) return false;
+        return isSymmetricRecursive(left.left, right.right) && isSymmetricRecursive(left.right, right.left);
+    }
+
+    private boolean isSymmetricIterative(TreeNode l, TreeNode r) {
+        if (l == null && r == null) return true;
+        if (l == null || r == null) return false;
+        LinkedList<TreeNode> q1 = new LinkedList<TreeNode>();
+        q1.add(l);
+        LinkedList<TreeNode> q2 = new LinkedList<TreeNode>();
+        q2.add(r);
+
+        while (!q1.isEmpty() && !q2.isEmpty()) {
+            TreeNode left = q1.removeFirst();
+            TreeNode right = q2.removeFirst();
+            if (left.val != right.val) return false;
+            if (left.left != null && right.right != null) {
+                q1.addLast(left.left);
+                q2.addLast(right.right);
+            } else if (left.left != null || right.right != null) {
+                return false;
+            }
+
+            if (left.right != null && right.left != null) {
+                q1.addLast(left.right);
+                q2.addLast(right.left);
+            } else if (left.right != null || right.left != null) {
+                return false;
+            }
+        }
+
+        return q1.isEmpty() && q2.isEmpty();
+
+    }
 }

@@ -43,6 +43,7 @@ public class Solution2Test {
         solutionTest.testIsValidBST();
         solutionTest.testIsSameTree();
         solutionTest.testBuildTree();
+        solutionTest.testIsSymmetric();
     }
 
     public void testMinPathSum() {
@@ -411,6 +412,18 @@ public class Solution2Test {
         assertEquals(5, root.left.right.val);
         assertEquals(6, root.left.right.right.val);
         assertEquals(7, root.left.right.right.left.val);
+    }
+
+    public void testIsSymmetric() {
+        TreeNode root = new TreeNode(1, new TreeNode(2, null, new TreeNode(3)), new TreeNode(2, new TreeNode(3), null));
+        assertEquals(true, solution.isSymmetric(root));
+
+        root = new TreeNode(1, new TreeNode(2, null, new TreeNode(3)), new TreeNode(2, null, new TreeNode(3)));
+        assertEquals(false, solution.isSymmetric(root));
+
+        assertEquals(true, solution.isSymmetric(null));
+
+        assertEquals(true, solution.isSymmetric(new TreeNode(1)));
     }
 
 }
