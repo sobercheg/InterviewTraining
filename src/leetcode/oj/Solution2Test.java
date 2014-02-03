@@ -38,6 +38,7 @@ public class Solution2Test {
         solutionTest.testDeleteDuplicatesII();
         solutionTest.testLargestRectangleArea();
         solutionTest.testInorderTraversal();
+        solutionTest.testNumTrees();
     }
 
     public void testMinPathSum() {
@@ -360,6 +361,11 @@ public class Solution2Test {
 
         root = new TreeNode(1, new TreeNode(2, new TreeNode(3, new TreeNode(4), null), new TreeNode(5, new TreeNode(6), null)), null);
         assertEquals(Arrays.asList(4, 3, 2, 6, 5, 1), solution.inorderTraversal(root));
+    }
+
+    public void testNumTrees() {
+        assertEquals(5, solution.numTrees(3));
+        assertEquals(1, solution.numTrees(1));
     }
 
 }
