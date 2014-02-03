@@ -39,6 +39,7 @@ public class Solution2Test {
         solutionTest.testLargestRectangleArea();
         solutionTest.testInorderTraversal();
         solutionTest.testNumTrees();
+        solutionTest.testGenerateTrees();
     }
 
     public void testMinPathSum() {
@@ -367,5 +368,22 @@ public class Solution2Test {
         assertEquals(5, solution.numTrees(3));
         assertEquals(1, solution.numTrees(1));
     }
+
+    public void testGenerateTrees() {
+        ArrayList<TreeNode> expectedTrees = new ArrayList<TreeNode>();
+        expectedTrees.add(new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3))));
+        expectedTrees.add(new TreeNode(1, null, new TreeNode(3, new TreeNode(2), null)));
+        expectedTrees.add(new TreeNode(2, new TreeNode(1), new TreeNode(3)));
+        expectedTrees.add(new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), null));
+        expectedTrees.add(new TreeNode(3, new TreeNode(2, new TreeNode(1), null), null));
+        ArrayList<TreeNode> generatedTrees = solution.generateTrees(3);
+        assertEquals(expectedTrees, generatedTrees);
+
+        expectedTrees = new ArrayList<TreeNode>();
+        expectedTrees.add(new TreeNode(1));
+        generatedTrees = solution.generateTrees(1);
+        assertEquals(expectedTrees, generatedTrees);
+    }
+
 
 }

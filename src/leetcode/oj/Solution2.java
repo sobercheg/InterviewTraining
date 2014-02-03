@@ -174,10 +174,8 @@ public class Solution2 {
 
             Transition that = (Transition) o;
 
-            if (input != that.input) return false;
-            if (state != that.state) return false;
+            return input == that.input && state == that.state;
 
-            return true;
         }
 
         @Override
@@ -1041,6 +1039,49 @@ public class Solution2 {
             total += numTrees(i) * numTrees(n - i - 1);
         }
         return total;
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/unique-binary-search-trees-ii/">Unique Binary Search Trees II</a>
+     * Given n, generate all structurally unique BST's (binary search trees) that store values 1...n.
+     * <p/>
+     * For example,
+     * Given n = 3, your program should return all 5 unique BST's shown below.
+     * <p/>
+     * 1         3     3      2      1
+     * \       /     /      / \      \
+     * 3     2     1      1   3      2
+     * /     /       \                 \
+     * 2     1         2                 3
+     * <p/>
+     * confused what "{1,#,2,3}" means? > read more on how binary tree is serialized on OJ.
+     */
+    public ArrayList<TreeNode> generateTrees(int n) {
+        return buildTrees(0, n - 1);
+    }
+
+    private ArrayList<TreeNode> buildTrees(int from, int to) {
+        if (from > to) {
+            ArrayList<TreeNode> list = new ArrayList<TreeNode>();
+            list.add(null);
+            return list;
+        }
+
+        ArrayList<TreeNode> allTrees = new ArrayList<TreeNode>();
+        for (int i = from; i <= to; i++) {
+            ArrayList<TreeNode> leftSubtrees = buildTrees(from, i - 1);
+            ArrayList<TreeNode> rightSubtrees = buildTrees(i + 1, to);
+            for (TreeNode leftSubtree : leftSubtrees) {
+                for (TreeNode rightSubtree : rightSubtrees) {
+                    TreeNode newTree = new TreeNode(i + 1);
+                    newTree.left = leftSubtree;
+                    newTree.right = rightSubtree;
+                    allTrees.add(newTree);
+                }
+            }
+        }
+
+        return allTrees;
     }
 
 }
