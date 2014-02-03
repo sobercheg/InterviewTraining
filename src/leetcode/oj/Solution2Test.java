@@ -42,6 +42,7 @@ public class Solution2Test {
         solutionTest.testGenerateTrees();
         solutionTest.testIsValidBST();
         solutionTest.testIsSameTree();
+        solutionTest.testBuildTree();
     }
 
     public void testMinPathSum() {
@@ -397,6 +398,19 @@ public class Solution2Test {
         tree1 = new TreeNode(1, new TreeNode(2), null);
         tree2 = new TreeNode(1, new TreeNode(2), new TreeNode(3));
         assertEquals(false, solution.isSameTree(tree1, tree2));
+    }
+
+    public void testBuildTree() {
+        TreeNode root = solution.buildTree(new int[]{1, 2, 3, 5, 6, 7, 4}, new int[]{3, 2, 5, 7, 6, 1, 4});
+        assertEquals(1, root.val);
+        assertEquals(2, root.left.val);
+        assertEquals(4, root.right.val);
+        assertEquals(null, root.right.right);
+        assertEquals(null, root.right.left);
+        assertEquals(3, root.left.left.val);
+        assertEquals(5, root.left.right.val);
+        assertEquals(6, root.left.right.right.val);
+        assertEquals(7, root.left.right.right.left.val);
     }
 
 }

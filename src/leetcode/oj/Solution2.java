@@ -1118,4 +1118,36 @@ public class Solution2 {
         if (p.val != q.val) return false;
         return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">Construct Binary Tree from Preorder and Inorder Traversal</a>
+     * Given preorder and inorder traversal of a tree, construct the binary tree.
+     * <p/>
+     * Note:
+     * You may assume that duplicates do not exist in the tree.
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int[] pi = new int[1];
+        return buildInPreTree(preorder, inorder, pi, 0, inorder.length - 1);
+    }
+
+    private TreeNode buildInPreTree(int[] p, int[] i, int[] pi, int leftIn, int rightIn) {
+        if (leftIn > rightIn) return null;
+
+        int val = p[pi[0]];
+        TreeNode root = new TreeNode(val);
+        pi[0]++;
+        int foundIn = -1;
+        for (int k = leftIn; k <= rightIn; k++) {
+            if (i[k] == val) {
+                foundIn = k;
+                break;
+            }
+        }
+        root.left = buildInPreTree(p, i, pi, leftIn, foundIn - 1);
+        root.right = buildInPreTree(p, i, pi, foundIn + 1, rightIn);
+
+        return root;
+    }
+
 }
