@@ -45,6 +45,7 @@ public class Solution2Test {
         solutionTest.testBuildTree();
         solutionTest.testIsSymmetric();
         solutionTest.testMaximalRectangle();
+        solutionTest.testPartition();
     }
 
     public void testMinPathSum() {
@@ -437,6 +438,20 @@ public class Solution2Test {
         };
 
         assertEquals(6, solution.maximalRectangle(matrix));
+    }
+
+    public void testPartition() {
+        ListNode list = ListNode.build(1, 4, 3, 2, 5, 2);
+        ListNode partitioned = solution.partition(list, 3);
+        assertEquals(ListNode.build(1, 2, 2, 4, 3, 5), partitioned);
+
+        list = ListNode.build(1, 4, 3, 2, 5, 2);
+        partitioned = solution.partition(list, 6);
+        assertEquals(ListNode.build(1, 4, 3, 2, 5, 2), partitioned);
+
+        list = ListNode.build(1, 4, 3, 2, 5, 2);
+        partitioned = solution.partition(list, 0);
+        assertEquals(ListNode.build(1, 4, 3, 2, 5, 2), partitioned);
     }
 
 }

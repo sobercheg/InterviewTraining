@@ -1241,4 +1241,49 @@ public class Solution2 {
         return maxRect;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/partition-list/">Partition List</a>
+     * Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
+     * <p/>
+     * You should preserve the original relative order of the nodes in each of the two partitions.
+     * <p/>
+     * For example,
+     * Given 1->4->3->2->5->2 and x = 3,
+     * return 1->2->2->4->3->5.
+     */
+    public ListNode partition(ListNode head, int x) {
+        if (head == null || head.next == null) return head;
+        ListNode readNode = head;
+        ListNode lessWrite = null;
+        ListNode greaterWrite = null;
+        ListNode lessWriteHead = null;
+        ListNode greaterWriteHead = null;
+
+        while (readNode != null) {
+            if (readNode.val < x) {
+                if (lessWrite == null) lessWrite = readNode;
+                else {
+                    lessWrite.next = readNode;
+                    lessWrite = lessWrite.next;
+                }
+                if (lessWriteHead == null) lessWriteHead = readNode;
+            } else {
+                if (greaterWrite == null) greaterWrite = readNode;
+                else {
+                    greaterWrite.next = readNode;
+                    greaterWrite = greaterWrite.next;
+                }
+                if (greaterWriteHead == null) greaterWriteHead = readNode;
+            }
+
+            readNode = readNode.next;
+        }
+        if (greaterWrite != null) greaterWrite.next = null;
+        if (lessWrite != null) lessWrite.next = null;
+        if (greaterWriteHead == null) return lessWriteHead;
+        if (lessWriteHead == null) return greaterWriteHead;
+        if (lessWrite != null) lessWrite.next = greaterWriteHead;
+        return lessWriteHead;
+    }
+
 }
