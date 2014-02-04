@@ -1216,4 +1216,29 @@ public class Solution2 {
         return q1.isEmpty() && q2.isEmpty();
 
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/maximal-rectangle/">Maximal Rectangle</a>
+     * Given a 2D binary matrix filled with 0's and 1's, find the largest rectangle containing all ones and return its area.
+     */
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) return 0;
+        int maxRect = 0;
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] intMatrix = new int[m][n];
+        for (int row = 0; row < m; row++) {
+            int[] histogramRow = new int[n];
+            for (int i = 0; i < n; i++) {
+                intMatrix[row][i] = matrix[row][i] - '0';
+                if (row > 0 && intMatrix[row][i] > 0)
+                    intMatrix[row][i] += intMatrix[row - 1][i];
+                histogramRow[i] = intMatrix[row][i];
+            }
+            int maxArea = largestRectangleArea(histogramRow);
+            maxRect = Math.max(maxRect, maxArea);
+        }
+        return maxRect;
+    }
+
 }

@@ -44,6 +44,7 @@ public class Solution2Test {
         solutionTest.testIsSameTree();
         solutionTest.testBuildTree();
         solutionTest.testIsSymmetric();
+        solutionTest.testMaximalRectangle();
     }
 
     public void testMinPathSum() {
@@ -424,6 +425,18 @@ public class Solution2Test {
         assertEquals(true, solution.isSymmetric(null));
 
         assertEquals(true, solution.isSymmetric(new TreeNode(1)));
+    }
+
+    public void testMaximalRectangle() {
+        char[][] matrix = new char[][]{
+                "000000011".toCharArray(),
+                "000011100".toCharArray(),
+                "000011100".toCharArray(),
+                "111100011".toCharArray(),
+                "111000001".toCharArray(),
+        };
+
+        assertEquals(6, solution.maximalRectangle(matrix));
     }
 
 }
