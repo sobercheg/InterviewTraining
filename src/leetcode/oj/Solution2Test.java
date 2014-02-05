@@ -46,6 +46,7 @@ public class Solution2Test {
         solutionTest.testIsSymmetric();
         solutionTest.testMaximalRectangle();
         solutionTest.testPartition();
+        solutionTest.testIsInterleave();
     }
 
     public void testMinPathSum() {
@@ -452,6 +453,15 @@ public class Solution2Test {
         list = ListNode.build(1, 4, 3, 2, 5, 2);
         partitioned = solution.partition(list, 0);
         assertEquals(ListNode.build(1, 4, 3, 2, 5, 2), partitioned);
+    }
+
+    public void testIsInterleave() {
+        assertEquals(true, solution.isInterleave("abc", "cde", "abcdec"));
+        assertEquals(true, solution.isInterleave("abc", "cde", "acbdec"));
+        assertEquals(false, solution.isInterleave("abc", "cde", "cbadec"));
+        assertEquals(true, solution.isInterleave("aabcc", "dbbca", "aadbbcbcac"));
+        assertEquals(false, solution.isInterleave("aabcc", "dbbca", "aadbbbaccc"));
+        assertEquals(false, solution.isInterleave("abc", "def", "zzzzzz"));
     }
 
 }

@@ -1286,4 +1286,48 @@ public class Solution2 {
         return lessWriteHead;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/interleaving-string/">Interleaving String</a>
+     * Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.
+     * <p/>
+     * For example,
+     * Given:
+     * s1 = "aabcc",
+     * s2 = "dbbca",
+     * <p/>
+     * When s3 = "aadbbcbcac", return true.
+     * When s3 = "aadbbbaccc", return false.
+     */
+    public boolean isInterleave(String s1, String s2, String s3) {
+        if (s1 == null || s1.isEmpty()) return s2.equals(s3);
+        if (s2 == null || s2.isEmpty()) return s1.equals(s3);
+        int m = s1.length();
+        int n = s2.length();
+        if (s3.length() != m + n) return false;
+
+        boolean[][] A = new boolean[m + 1][n + 1];
+        for (int i = 0; i <= m; i++) {
+            for (int j = 0; j <= n; j++) {
+                if (i == 0 && j == 0) {
+                    A[i][j] = true;
+                    continue;
+                }
+
+                char s3ch = s3.charAt(i + j - 1);
+                if (i == 0)
+                    A[i][j] = s2.charAt(j - 1) == s3ch && A[i][j - 1];
+                else if (j == 0)
+                    A[i][j] = s1.charAt(i - 1) == s3ch && A[i - 1][j];
+                else if (s1.charAt(i - 1) == s3ch && s2.charAt(j - 1) != s3ch)
+                    A[i][j] = A[i - 1][j];
+                else if (s1.charAt(i - 1) != s3ch && s2.charAt(j - 1) == s3ch)
+                    A[i][j] = A[i][j - 1];
+                else if (s1.charAt(i - 1) == s3ch && s2.charAt(j - 1) == s3ch)
+                    A[i][j] = A[i][j - 1] || A[i - 1][j];
+
+            }
+        }
+
+        return A[m][n];
+    }
 }
