@@ -47,6 +47,7 @@ public class Solution2Test {
         solutionTest.testMaximalRectangle();
         solutionTest.testPartition();
         solutionTest.testIsInterleave();
+        solutionTest.testReorderList();
     }
 
     public void testMinPathSum() {
@@ -462,6 +463,18 @@ public class Solution2Test {
         assertEquals(true, solution.isInterleave("aabcc", "dbbca", "aadbbcbcac"));
         assertEquals(false, solution.isInterleave("aabcc", "dbbca", "aadbbbaccc"));
         assertEquals(false, solution.isInterleave("abc", "def", "zzzzzz"));
+    }
+
+    public void testReorderList() {
+        ListNode list = ListNode.build(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        ListNode reorderedList = ListNode.build(1, 9, 2, 8, 3, 7, 4, 6, 5);
+        solution.reorderList(list);
+        assertEquals(reorderedList, list);
+
+        list = ListNode.build(1, 2);
+        reorderedList = ListNode.build(1, 2);
+        solution.reorderList(list);
+        assertEquals(reorderedList, list);
     }
 
 }

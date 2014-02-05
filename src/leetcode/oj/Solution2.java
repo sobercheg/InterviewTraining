@@ -1330,4 +1330,81 @@ public class Solution2 {
 
         return A[m][n];
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/reorder-list/">Reorder List</a>
+     * Given a singly linked list L: L0→L1→…→Ln-1→Ln,
+     * reorder it to: L0→Ln→L1→Ln-1→L2→Ln-2→…
+     * <p/>
+     * You must do this in-place without altering the nodes' values.
+     * <p/>
+     * For example,
+     * Given {1,2,3,4}, reorder it to {1,4,2,3}.
+     */
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null) return;
+
+        reorderListNoStack(head);
+    }
+
+    private void reorderListStack(ListNode head) {
+        ListNode slowPointer = head;
+        LinkedList<ListNode> stack = new LinkedList<ListNode>();
+        int totalNodes = 0;
+        while (slowPointer != null) {
+            stack.push(slowPointer);
+            slowPointer = slowPointer.next;
+            totalNodes++;
+        }
+
+        while (totalNodes > 0) {
+            ListNode lastNode = stack.poll();
+            lastNode.next = null;
+            ListNode nextNode = head.next;
+            if (head.next != lastNode) {
+                head.next = lastNode;
+                lastNode.next = nextNode;
+                head = nextNode;
+            }
+            totalNodes--;
+            totalNodes--;
+        }
+    }
+
+    // Based on http://oj.leetcode.com/discuss/236/does-this-problem-solution-time-complexity-space-comlexity
+    private void reorderListNoStack(ListNode head) {
+
+        ListNode start = head;
+
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            fast = fast.next.next;
+            slow = slow.next;
+        }
+
+        // slow now points to the second half
+        ListNode reverseHead = slow.next;
+        ListNode prev = null;
+        while (reverseHead != null) {
+            ListNode nextRead = reverseHead.next;
+            reverseHead.next = prev;
+            prev = reverseHead;
+            reverseHead = nextRead;
+        }
+
+        slow.next = null;
+
+        ListNode secondHalfHead = prev;
+        while (secondHalfHead != null) {
+            ListNode firstHalfNext = start.next;
+            ListNode secondHalfNext = secondHalfHead.next;
+            secondHalfHead.next = firstHalfNext;
+            start.next = secondHalfHead;
+            secondHalfHead = secondHalfNext;
+            start = firstHalfNext;
+        }
+
+    }
+
 }
