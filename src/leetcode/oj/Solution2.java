@@ -1407,4 +1407,55 @@ public class Solution2 {
 
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-level-order-traversal/">Binary Tree Level Order Traversal</a>
+     * Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+     * <p/>
+     * For example:
+     * Given binary tree {3,9,20,#,#,15,7},
+     * <p/>
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * <p/>
+     * return its level order traversal as:
+     * <p/>
+     * [
+     * [3],
+     * [9,20],
+     * [15,7]
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> levelOrder(TreeNode root) {
+        if (root == null) return new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        LinkedList<TreeNode> q = new LinkedList<TreeNode>();
+        q.add(root);
+        int currentLevelNodes = 1;
+        int nextLevelNodes = 0;
+        ArrayList<Integer> levelTraveral = new ArrayList<Integer>();
+        while (!q.isEmpty()) {
+            TreeNode nextInQueue = q.removeFirst();
+            levelTraveral.add(nextInQueue.val);
+            currentLevelNodes--;
+            if (nextInQueue.left != null) {
+                q.add(nextInQueue.left);
+                nextLevelNodes++;
+            }
+            if (nextInQueue.right != null) {
+                q.add(nextInQueue.right);
+                nextLevelNodes++;
+            }
+            if (currentLevelNodes == 0) {
+                result.add(levelTraveral);
+                levelTraveral = new ArrayList<Integer>();
+                currentLevelNodes = nextLevelNodes;
+                nextLevelNodes = 0;
+            }
+        }
+        return result;
+    }
+
 }

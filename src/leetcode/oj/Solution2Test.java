@@ -48,6 +48,7 @@ public class Solution2Test {
         solutionTest.testPartition();
         solutionTest.testIsInterleave();
         solutionTest.testReorderList();
+        solutionTest.testLevelOrder();
     }
 
     public void testMinPathSum() {
@@ -477,4 +478,14 @@ public class Solution2Test {
         assertEquals(reorderedList, list);
     }
 
+    public void testLevelOrder() {
+        TreeNode root = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+        ArrayList<ArrayList<Integer>> expectedLevelOrder = arrayListOf(
+                arrayListOf(3),
+                arrayListOf(9, 20),
+                arrayListOf(15, 7)
+        );
+        ArrayList<ArrayList<Integer>> actualLevelOrder = solution.levelOrder(root);
+        assertEquals(expectedLevelOrder, actualLevelOrder);
+    }
 }
