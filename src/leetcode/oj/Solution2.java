@@ -1538,4 +1538,36 @@ public class Solution2 {
         }
         return true;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/merge-sorted-array/">Merge Sorted Array</a>
+     * Given two sorted integer arrays A and B, merge B into A as one sorted array.
+     * <p/>
+     * Note:
+     * You may assume that A has enough space to hold additional elements from B. The number of elements initialized
+     * in A and B are m and n respectively.
+     */
+    public void merge(int A[], int m, int B[], int n) {
+        if (n == 0) return;
+        if (m == 0) {
+            System.arraycopy(B, 0, A, 0, n);
+            return;
+        }
+        int aIndex = m - 1;
+        int bIndex = n - 1;
+        int writeIndex = m + n - 1;
+        while (aIndex >= 0 || bIndex >= 0) {
+            if (aIndex < 0) {
+                A[writeIndex--] = B[bIndex--];
+            } else if (bIndex < 0) {
+                A[writeIndex--] = A[aIndex--];
+            } else if (B[bIndex] >= A[aIndex]) {
+                A[writeIndex--] = B[bIndex--];
+            } else {
+                A[writeIndex--] = A[aIndex--];
+            }
+        }
+    }
+
+
 }

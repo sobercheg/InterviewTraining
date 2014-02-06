@@ -50,6 +50,7 @@ public class Solution2Test {
         solutionTest.testReorderList();
         solutionTest.testLevelOrder();
         solutionTest.testIsScramble();
+        solutionTest.testMerge();
     }
 
     public void testMinPathSum() {
@@ -498,4 +499,17 @@ public class Solution2Test {
         assertEquals(false, solution.isScramble("pcighfdjnbwfkohtklrecxnooxyipj", "npodkfchrfpxliocgtnykhxwjbojie"));
         assertEquals(true, solution.isScramble("abc", "bca"));
     }
+
+    public void testMerge() {
+        int[] A = new int[]{1, 0};
+        int[] B = new int[]{2};
+        solution.merge(A, 1, B, 1);
+        assertEquals(new int[]{1, 2}, A);
+
+        A = new int[]{2, 0};
+        B = new int[]{1};
+        solution.merge(A, 1, B, 1);
+        assertEquals(new int[]{1, 2}, A);
+    }
+
 }
