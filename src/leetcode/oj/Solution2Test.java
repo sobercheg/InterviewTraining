@@ -51,6 +51,7 @@ public class Solution2Test {
         solutionTest.testLevelOrder();
         solutionTest.testIsScramble();
         solutionTest.testMerge();
+        solutionTest.testGrayCode();
     }
 
     public void testMinPathSum() {
@@ -510,6 +511,11 @@ public class Solution2Test {
         B = new int[]{1};
         solution.merge(A, 1, B, 1);
         assertEquals(new int[]{1, 2}, A);
+    }
+
+    public void testGrayCode() {
+        assertEquals(arrayListOf(0, 1, 3, 2), solution.grayCode(2));
+        assertEquals(arrayListOf(0, 1), solution.grayCode(1));
     }
 
 }
