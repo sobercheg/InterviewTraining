@@ -1458,4 +1458,84 @@ public class Solution2 {
         return result;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/scramble-string/">Scramble String</a>
+     * Given a string s1, we may represent it as a binary tree by partitioning it to two non-empty substrings recursively.
+     * <p/>
+     * Below is one possible representation of s1 = "great":
+     * <p/>
+     * great
+     * /    \
+     * gr    eat
+     * / \    /  \
+     * g   r  e   at
+     * / \
+     * a   t
+     * <p/>
+     * To scramble the string, we may choose any non-leaf node and swap its two children.
+     * <p/>
+     * For example, if we choose the node "gr" and swap its two children, it produces a scrambled string "rgeat".
+     * <p/>
+     * rgeat
+     * /    \
+     * rg    eat
+     * / \    /  \
+     * r   g  e   at
+     * / \
+     * a   t
+     * <p/>
+     * We say that "rgeat" is a scrambled string of "great".
+     * <p/>
+     * Similarly, if we continue to swap the children of nodes "eat" and "at", it produces a scrambled string "rgtae".
+     * <p/>
+     * rgtae
+     * /    \
+     * rg    tae
+     * / \    /  \
+     * r   g  ta  e
+     * / \
+     * t   a
+     * <p/>
+     * We say that "rgtae" is a scrambled string of "great".
+     * <p/>
+     * Given two strings s1 and s2 of the same length, determine if s2 is a scrambled string of s1.
+     * <p/>
+     * Some ideas are based on http://discuss.leetcode.com/questions/262/scramble-string
+     */
+    public boolean isScramble(String s1, String s2) {
+        int l1 = s1.length();
+        int l2 = s2.length();
+
+        if (l1 != l2) return false;
+        if (l1 < 2) return s1.equals(s2);
+
+        boolean isScramble = false;
+        for (int i = 1; i < l1; i++) {
+            if (isEqualSet(s1.substring(0, i), s2.substring(0, i))) {
+                if (isScramble(s1.substring(0, i), s2.substring(0, i))
+                        && isScramble(s1.substring(i), s2.substring(i))) {
+                    return true;
+                }
+            }
+
+            if (isEqualSet(s1.substring(0, i), s2.substring(l1 - i)))
+                isScramble = isScramble(s1.substring(0, i), s2.substring(l1 - i))
+                        && isScramble(s1.substring(i), s2.substring(0, l1 - i));
+            if (isScramble) return true;
+        }
+        return false;
+    }
+
+    private boolean isEqualSet(String s1, String s2) {
+        int[] set = new int[256];
+        for (char c : s1.toCharArray()) {
+            set[c]++;
+        }
+        for (char c : s2.toCharArray()) {
+            if (set[c]-- == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

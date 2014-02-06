@@ -49,6 +49,7 @@ public class Solution2Test {
         solutionTest.testIsInterleave();
         solutionTest.testReorderList();
         solutionTest.testLevelOrder();
+        solutionTest.testIsScramble();
     }
 
     public void testMinPathSum() {
@@ -487,5 +488,14 @@ public class Solution2Test {
         );
         ArrayList<ArrayList<Integer>> actualLevelOrder = solution.levelOrder(root);
         assertEquals(expectedLevelOrder, actualLevelOrder);
+    }
+
+    public void testIsScramble() {
+        assertEquals(true, solution.isScramble("rgeat", "great"));
+        assertEquals(true, solution.isScramble("rgtae", "great"));
+        assertEquals(true, solution.isScramble("abb", "bab"));
+        assertEquals(false, solution.isScramble("abcdefghijklmnopq", "efghijklmnopqcadb"));
+        assertEquals(false, solution.isScramble("pcighfdjnbwfkohtklrecxnooxyipj", "npodkfchrfpxliocgtnykhxwjbojie"));
+        assertEquals(true, solution.isScramble("abc", "bca"));
     }
 }
