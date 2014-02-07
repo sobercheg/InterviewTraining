@@ -1639,4 +1639,65 @@ public class Solution2 {
         return num;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/subsets-ii/">Subsets II</a>
+     * Given a collection of integers that might contain duplicates, S, return all possible subsets.
+     * <p/>
+     * Note:
+     * <p/>
+     * Elements in a subset must be in non-descending order.
+     * The solution set must not contain duplicate subsets.
+     * <p/>
+     * For example,
+     * If S = [1,2,2], a solution is:a
+     * <p/>
+     * [
+     * [2],
+     * [1],
+     * [1,2,2],
+     * [2,2],
+     * [1,2],
+     * []
+     * ]
+     * <p/>
+     * Solution is based on the following idea: http://xiaotong-blog.herokuapp.com/posts/44
+     */
+    public ArrayList<ArrayList<Integer>> subsetsWithDup(int[] num) {
+        if (num.length == 0) return new ArrayList<ArrayList<Integer>>();
+        Arrays.sort(num);
+
+        ArrayList<ArrayList<Integer>> prev = new ArrayList<ArrayList<Integer>>();
+        prev.add(new ArrayList<Integer>(Arrays.asList(num[0])));
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        result.add(new ArrayList<Integer>());
+        result.addAll(prev);
+
+        int prevNum = num[0];
+
+        for (int i = 1; i < num.length; i++) {
+            if (num[i] == prevNum) {
+                ArrayList<ArrayList<Integer>> newPowerset = new ArrayList<ArrayList<Integer>>();
+                for (ArrayList<Integer> prevSet : prev) {
+                    ArrayList<Integer> newSet = new ArrayList<Integer>(prevSet);
+                    newSet.add(num[i]);
+                    newPowerset.add(newSet);
+                }
+                prev = newPowerset;
+            } else {
+                prev = new ArrayList<ArrayList<Integer>>();
+                ArrayList<ArrayList<Integer>> resultCopy = new ArrayList<ArrayList<Integer>>(result);
+
+                for (ArrayList<Integer> set : resultCopy) {
+                    ArrayList<Integer> newSet = new ArrayList<Integer>(set);
+                    newSet.add(num[i]);
+                    prev.add(newSet);
+                }
+            }
+            result.addAll(prev);
+            prevNum = num[i];
+        }
+
+        return result;
+    }
+
 }

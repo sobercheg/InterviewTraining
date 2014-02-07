@@ -53,6 +53,7 @@ public class Solution2Test {
         solutionTest.testMerge();
         solutionTest.testGrayCode();
         solutionTest.testNumDecoings();
+        solutionTest.testSubsetsWithDup();
     }
 
     public void testMinPathSum() {
@@ -528,4 +529,21 @@ public class Solution2Test {
         assertEquals(3981312, solution.numDecodings("9371597631128776948387197132267188677349946742344217846154932859125134924241649584251978418763151253"));
     }
 
+    public void testSubsetsWithDup() {
+        assertEquals(arrayListOf(
+                arrayListOf(),
+                arrayListOf(1),
+                arrayListOf(2),
+                arrayListOf(1, 2),
+                arrayListOf(2, 2),
+                arrayListOf(1, 2, 2)
+        ), solution.subsetsWithDup(new int[]{1, 2, 2}));
+
+        assertEquals(arrayListOf(
+                arrayListOf(),
+                arrayListOf(1),
+                arrayListOf(1, 1)
+        ), solution.subsetsWithDup(new int[]{1, 1}));
+
+    }
 }
