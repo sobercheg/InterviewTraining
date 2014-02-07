@@ -1603,4 +1603,40 @@ public class Solution2 {
         return reflectedCodes;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/decode-ways/">Decode Ways</a>
+     * A message containing letters from A-Z is being encoded to numbers using the following mapping:
+     * <p/>
+     * 'A' -> 1
+     * 'B' -> 2
+     * ...
+     * 'Z' -> 26
+     * <p/>
+     * Given an encoded message containing digits, determine the total number of ways to decode it.
+     * <p/>
+     * For example,
+     * Given encoded message "12", it could be decoded as "AB" (1 2) or "L" (12).
+     * <p/>
+     * The number of ways decoding "12" is 2.
+     */
+    public int numDecodings(String s) {
+        if (s.isEmpty()) return 0;
+        Map<String, Integer> memo = new HashMap<String, Integer>();
+        return numDecodings(s, memo);
+    }
+
+    public int numDecodings(String s, Map<String, Integer> memo) {
+        if (memo.containsKey(s)) return memo.get(s);
+        if (s.length() == 0) return 1;
+        if (s.charAt(0) == '0') return 0;
+        if (s.length() == 1) return 1;
+        int num = numDecodings(s.substring(1), memo);
+        if (s.length() > 1) {
+            if (s.charAt(0) < '2') num += numDecodings(s.substring(2), memo);
+            else if (s.charAt(0) == '2' && s.charAt(1) <= '6') num += numDecodings(s.substring(2), memo);
+        }
+        memo.put(s, num);
+        return num;
+    }
+
 }

@@ -52,6 +52,7 @@ public class Solution2Test {
         solutionTest.testIsScramble();
         solutionTest.testMerge();
         solutionTest.testGrayCode();
+        solutionTest.testNumDecoings();
     }
 
     public void testMinPathSum() {
@@ -516,6 +517,15 @@ public class Solution2Test {
     public void testGrayCode() {
         assertEquals(arrayListOf(0, 1, 3, 2), solution.grayCode(2));
         assertEquals(arrayListOf(0, 1), solution.grayCode(1));
+    }
+
+    public void testNumDecoings() {
+        assertEquals(2, solution.numDecodings("12"));
+        assertEquals(0, solution.numDecodings("0"));
+        assertEquals(0, solution.numDecodings("01"));
+        assertEquals(0, solution.numDecodings("100"));
+        assertEquals(1, solution.numDecodings("3102"));
+        assertEquals(3981312, solution.numDecodings("9371597631128776948387197132267188677349946742344217846154932859125134924241649584251978418763151253"));
     }
 
 }

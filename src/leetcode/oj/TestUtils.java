@@ -101,4 +101,10 @@ public class TestUtils {
         arrayLists.add(elem6);
         return arrayLists;
     }
+
+    public static <T> ArrayList<ArrayList<T>> arrayListOf(ArrayList<T> elem1, ArrayList<T> elem2, ArrayList<T> elem3, ArrayList<T> elem4, ArrayList<T> elem5, ArrayList<T> elem6, ArrayList<T> elem7) {
+        ArrayList<ArrayList<T>> arrayLists = arrayListOf(elem1, elem2, elem3, elem4, elem5, elem6);
+        arrayLists.add(elem7);
+        return arrayLists;
+    }
 }
