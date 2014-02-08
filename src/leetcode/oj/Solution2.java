@@ -1700,4 +1700,62 @@ public class Solution2 {
         return result;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/restore-ip-addresses/">Restore IP Addresses</a>
+     * Given a string containing only digits, restore it by returning all possible valid IP address combinations.
+     * <p/>
+     * For example:
+     * Given "25525511135",
+     * <p/>
+     * return ["255.255.11.135", "255.255.111.35"]. (Order does not matter)
+     */
+    public ArrayList<String> restoreIpAddresses(String s) {
+        ArrayList<String> list = new ArrayList<String>();
+        restoreIp(s, list, new ArrayList<String>(), 0);
+        return list;
+    }
+
+    private void restoreIp(String s, ArrayList<String> combos, ArrayList<String> parts, int level) {
+        if (level == 4) {
+            if (s.length() == 0)
+                combos.add(parts.get(0) + "." + parts.get(1) + "." + parts.get(2) + "." + parts.get(3));
+            return;
+        }
+
+        if (s.length() == 0) return;
+
+        // try only one digit
+        backtrackRestore(s, 1, combos, parts, level);
+
+        if (s.charAt(0) == '1') {
+            // try 1*
+            if (s.length() > 1) {
+                backtrackRestore(s, 2, combos, parts, level);
+                // try 1**
+                if (s.length() > 2) {
+                    backtrackRestore(s, 3, combos, parts, level);
+                }
+            }
+        } else if (s.charAt(0) == '2') {
+            // try 2*
+            if (s.length() > 1) {
+                backtrackRestore(s, 2, combos, parts, level);
+                // try up to 255
+                if (s.length() > 2 && (s.charAt(1) < '5' || (s.charAt(1) == '5' && s.charAt(2) < '6'))) {
+                    backtrackRestore(s, 3, combos, parts, level);
+                }
+            }
+        } else if (s.charAt(0) != '0') { // there can be only one leading zero (alredy covered)
+            // try [3-9][0-9] (2 digits)
+            if (s.length() > 1) {
+                backtrackRestore(s, 2, combos, parts, level);
+            }
+        }
+    }
+
+    private void backtrackRestore(String s, int len, ArrayList<String> combos, ArrayList<String> parts, int level) {
+        parts.add(s.substring(0, len));
+        restoreIp(s.substring(len), combos, parts, level + 1);
+        parts.remove(parts.size() - 1);
+    }
 }
