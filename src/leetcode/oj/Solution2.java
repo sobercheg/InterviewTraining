@@ -1745,7 +1745,7 @@ public class Solution2 {
                     backtrackRestore(s, 3, combos, parts, level);
                 }
             }
-        } else if (s.charAt(0) != '0') { // there can be only one leading zero (alredy covered)
+        } else if (s.charAt(0) != '0') { // there can be only one leading zero (already covered)
             // try [3-9][0-9] (2 digits)
             if (s.length() > 1) {
                 backtrackRestore(s, 2, combos, parts, level);
@@ -1757,5 +1757,18 @@ public class Solution2 {
         parts.add(s.substring(0, len));
         restoreIp(s.substring(len), combos, parts, level + 1);
         parts.remove(parts.size() - 1);
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/single-number/">Single Number</a>
+     * Given an array of integers, every element appears twice except for one. Find that single one.
+     * <p/>
+     * Note:
+     * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+     */
+    public int singleNumber(int[] A) {
+        int singleNum = 0;
+        for (int a : A) singleNum ^= a;
+        return singleNum;
     }
 }

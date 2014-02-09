@@ -55,6 +55,7 @@ public class Solution2Test {
         solutionTest.testNumDecoings();
         solutionTest.testSubsetsWithDup();
         solutionTest.testRestoreIp();
+        solutionTest.testSingleNumber();
     }
 
     public void testMinPathSum() {
@@ -551,5 +552,11 @@ public class Solution2Test {
     public void testRestoreIp() {
         assertEquals(arrayListOf("255.255.11.135", "255.255.111.35"), solution.restoreIpAddresses("25525511135"));
         assertEquals(arrayListOf("0.0.0.0"), solution.restoreIpAddresses("0000"));
+    }
+
+    public void testSingleNumber() {
+        assertEquals(2, solution.singleNumber(new int[]{2}));
+        assertEquals(2, solution.singleNumber(new int[]{2, 1, 1}));
+        assertEquals(2, solution.singleNumber(new int[]{1, 3, 2, 3, 1}));
     }
 }
