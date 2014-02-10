@@ -60,6 +60,7 @@ public class Solution2Test {
         solutionTest.testMaxDepth();
         solutionTest.testMinDepth();
         solutionTest.testLevelOrderBottom();
+        solutionTest.testZigzagLevelOrder();
     }
 
     public void testMinPathSum() {
@@ -592,6 +593,17 @@ public class Solution2Test {
                 arrayListOf(1)
         );
         assertEquals(expectedTraversal, solution.levelOrderBottom(root));
+    }
+
+    public void testZigzagLevelOrder() {
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(3), new TreeNode(5)), new TreeNode(4));
+        ArrayList<ArrayList<Integer>> expectedTraversal = arrayListOf(
+                arrayListOf(1),
+                arrayListOf(4, 2),
+                arrayListOf(3, 5)
+        );
+        assertEquals(expectedTraversal, solution.zigzagLevelOrder(root));
+
     }
 
 }

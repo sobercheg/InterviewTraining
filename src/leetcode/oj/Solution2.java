@@ -1878,4 +1878,61 @@ public class Solution2 {
         return result;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-zigzag-level-order-traversal/">Binary Tree Zigzag Level Order Traversal</a>
+     * Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+     * <p/>
+     * For example:
+     * Given binary tree {3,9,20,#,#,15,7},
+     * <p/>
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * <p/>
+     * return its zigzag level order traversal as:
+     * <p/>
+     * [
+     * [3],
+     * [20,9],
+     * [15,7]
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> zigzagLevelOrder(TreeNode root) {
+        if (root == null) return new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
+        ArrayList<Integer> levelPrint = new ArrayList<Integer>();
+        int currCount = 1;
+        int nextCount = 0;
+        queue.add(root);
+        boolean isLeftOriented = false;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.remove(0);
+            if (isLeftOriented)
+                levelPrint.add(0, node.val);
+            else
+                levelPrint.add(node.val);
+            if (node.left != null) {
+                queue.add(node.left);
+                nextCount++;
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+                nextCount++;
+            }
+
+            currCount--;
+            if (currCount == 0) {
+                isLeftOriented = !isLeftOriented;
+                result.add(new ArrayList<Integer>(levelPrint));
+                levelPrint = new ArrayList<Integer>();
+                currCount = nextCount;
+                nextCount = 0;
+            }
+        }
+
+        return result;
+    }
 }
