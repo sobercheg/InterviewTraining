@@ -1825,4 +1825,57 @@ public class Solution2 {
         if (rightDepth == level) return leftDepth;
         return Math.min(leftDepth, rightDepth);
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-level-order-traversal-ii/">Binary Tree Level Order Traversal II</a>
+     * Given a binary tree, return the bottom-up level order traversal of its nodes' values. (ie, from left to right, level by level from leaf to root).
+     * For example:
+     * Given binary tree {3,9,20,#,#,15,7},
+     * <p/>
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * <p/>
+     * return its bottom-up level order traversal as:
+     * <p/>
+     * [
+     * [15,7]
+     * [9,20],
+     * [3],
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> levelOrderBottom(TreeNode root) {
+        if (root == null) return new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<TreeNode> queue = new ArrayList<TreeNode>();
+        ArrayList<Integer> levelPrint = new ArrayList<Integer>();
+        int currCount = 1;
+        int nextCount = 0;
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.remove(0);
+            levelPrint.add(node.val);
+            if (node.left != null) {
+                queue.add(node.left);
+                nextCount++;
+            }
+            if (node.right != null) {
+                queue.add(node.right);
+                nextCount++;
+            }
+
+            currCount--;
+            if (currCount == 0) {
+                result.add(0, new ArrayList<Integer>(levelPrint));
+                levelPrint = new ArrayList<Integer>();
+                currCount = nextCount;
+                nextCount = 0;
+            }
+        }
+
+        return result;
+    }
+
 }

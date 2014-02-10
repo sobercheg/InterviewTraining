@@ -59,6 +59,7 @@ public class Solution2Test {
         solutionTest.testSingleNumberII();
         solutionTest.testMaxDepth();
         solutionTest.testMinDepth();
+        solutionTest.testLevelOrderBottom();
     }
 
     public void testMinPathSum() {
@@ -582,4 +583,15 @@ public class Solution2Test {
         root = new TreeNode(1, null, new TreeNode(2));
         assertEquals(2, solution.minDepth(root));
     }
+
+    public void testLevelOrderBottom() {
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(3), null), new TreeNode(4));
+        ArrayList<ArrayList<Integer>> expectedTraversal = arrayListOf(
+                arrayListOf(3),
+                arrayListOf(2, 4),
+                arrayListOf(1)
+        );
+        assertEquals(expectedTraversal, solution.levelOrderBottom(root));
+    }
+
 }
