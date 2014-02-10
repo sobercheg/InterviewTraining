@@ -61,6 +61,7 @@ public class Solution2Test {
         solutionTest.testMinDepth();
         solutionTest.testLevelOrderBottom();
         solutionTest.testZigzagLevelOrder();
+        solutionTest.testSortedArrayToBST();
     }
 
     public void testMinPathSum() {
@@ -604,6 +605,18 @@ public class Solution2Test {
         );
         assertEquals(expectedTraversal, solution.zigzagLevelOrder(root));
 
+    }
+
+    public void testSortedArrayToBST() {
+        TreeNode actualTree = solution.sortedArrayToBST(new int[]{1, 2, 3, 4, 5});
+        TreeNode expectedTree = new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(4, null, new TreeNode(5)));
+        assertEquals(expectedTree.val, actualTree.val);
+        assertEquals(expectedTree.left.val, actualTree.left.val);
+        assertEquals(expectedTree.left.right.val, actualTree.left.right.val);
+
+        assertEquals(expectedTree.right.val, actualTree.right.val);
+        assertEquals(expectedTree.right.left, actualTree.right.left);
+        assertEquals(expectedTree.right.right.val, actualTree.right.right.val);
     }
 
 }
