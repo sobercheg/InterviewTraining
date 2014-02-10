@@ -1969,4 +1969,25 @@ public class Solution2 {
                 && isBalanced(root.right)) return true;
         return false;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/linked-list-cycle/">Linked List Cycle</a>
+     * Given a linked list, determine if it has a cycle in it.
+     * <p/>
+     * Follow up:
+     * Can you solve it without using extra space?
+     */
+    public boolean hasCycle(ListNode head) {
+        if (head == null) return false;
+        ListNode slowPointer = head;
+        ListNode fastPointer = head.next;
+
+        while (slowPointer != null && fastPointer != null && fastPointer.next != null) {
+            if (slowPointer == fastPointer) return true;
+            slowPointer = slowPointer.next;
+            fastPointer = fastPointer.next.next;
+        }
+        return false;
+    }
+
 }

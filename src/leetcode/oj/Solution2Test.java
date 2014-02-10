@@ -63,6 +63,7 @@ public class Solution2Test {
         solutionTest.testZigzagLevelOrder();
         solutionTest.testSortedArrayToBST();
         solutionTest.testIsBalanced();
+        solutionTest.testHasCycle();
     }
 
     public void testMinPathSum() {
@@ -629,6 +630,14 @@ public class Solution2Test {
 
         balanced = new TreeNode(1, new TreeNode(2, new TreeNode(3), null), null);
         assertEquals(false, solution.isBalanced(balanced));
+    }
+
+    public void testHasCycle() {
+        assertEquals(false, solution.hasCycle(ListNode.build(1, 2, 3, 4, 5)));
+        ListNode cycledList = new ListNode(1);
+        cycledList.next = new ListNode(2);
+        cycledList.next.next = cycledList;
+        assertEquals(true, solution.hasCycle(cycledList));
     }
 
 }
