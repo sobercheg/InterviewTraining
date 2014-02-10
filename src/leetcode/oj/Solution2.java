@@ -1771,4 +1771,27 @@ public class Solution2 {
         for (int a : A) singleNum ^= a;
         return singleNum;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/single-number-ii/">Single Number II</a>
+     * Given an array of integers, every element appears three times except for one. Find that single one.
+     * <p/>
+     * Note:
+     * Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+     * <p/>
+     * Solution is based on http://oj.leetcode.com/discuss/857/constant-space-solution
+     */
+    public int singleNumberII(int[] A) {
+        int[] count = new int[32];
+        int result = 0;
+        for (int i = 0; i < 32; i++) {
+            for (int a : A) {
+                count[i] += ((a >> i) & 1);
+            }
+            result |= ((count[i] % 3) << i);
+        }
+        return result;
+    }
+
+
 }

@@ -56,6 +56,7 @@ public class Solution2Test {
         solutionTest.testSubsetsWithDup();
         solutionTest.testRestoreIp();
         solutionTest.testSingleNumber();
+        solutionTest.testSingleNumberII();
     }
 
     public void testMinPathSum() {
@@ -559,4 +560,11 @@ public class Solution2Test {
         assertEquals(2, solution.singleNumber(new int[]{2, 1, 1}));
         assertEquals(2, solution.singleNumber(new int[]{1, 3, 2, 3, 1}));
     }
+
+    public void testSingleNumberII() {
+        assertEquals(2, solution.singleNumberII(new int[]{2}));
+        assertEquals(2, solution.singleNumberII(new int[]{1, 2, 1, 1, 4, 4, 4}));
+        assertEquals(2, solution.singleNumberII(new int[]{1, 3, 3, 1, 2, 3, 1}));
+    }
+
 }
