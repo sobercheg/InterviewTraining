@@ -57,6 +57,7 @@ public class Solution2Test {
         solutionTest.testRestoreIp();
         solutionTest.testSingleNumber();
         solutionTest.testSingleNumberII();
+        solutionTest.testMaxDepth();
     }
 
     public void testMinPathSum() {
@@ -565,6 +566,13 @@ public class Solution2Test {
         assertEquals(2, solution.singleNumberII(new int[]{2}));
         assertEquals(2, solution.singleNumberII(new int[]{1, 2, 1, 1, 4, 4, 4}));
         assertEquals(2, solution.singleNumberII(new int[]{1, 3, 3, 1, 2, 3, 1}));
+    }
+
+    public void testMaxDepth() {
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(3), null), new TreeNode(4));
+        assertEquals(3, solution.maxDepth(root));
+        root = new TreeNode(1, null, new TreeNode(2));
+        assertEquals(2, solution.maxDepth(root));
     }
 
 }
