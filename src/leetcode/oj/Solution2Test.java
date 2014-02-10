@@ -62,6 +62,7 @@ public class Solution2Test {
         solutionTest.testLevelOrderBottom();
         solutionTest.testZigzagLevelOrder();
         solutionTest.testSortedArrayToBST();
+        solutionTest.testIsBalanced();
     }
 
     public void testMinPathSum() {
@@ -617,6 +618,17 @@ public class Solution2Test {
         assertEquals(expectedTree.right.val, actualTree.right.val);
         assertEquals(expectedTree.right.left, actualTree.right.left);
         assertEquals(expectedTree.right.right.val, actualTree.right.right.val);
+    }
+
+    public void testIsBalanced() {
+        TreeNode balanced = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+        assertEquals(true, solution.isBalanced(balanced));
+
+        balanced = new TreeNode(1, new TreeNode(2), null);
+        assertEquals(true, solution.isBalanced(balanced));
+
+        balanced = new TreeNode(1, new TreeNode(2, new TreeNode(3), null), null);
+        assertEquals(false, solution.isBalanced(balanced));
     }
 
 }
