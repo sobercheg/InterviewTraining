@@ -1990,4 +1990,31 @@ public class Solution2 {
         return false;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/linked-list-cycle-ii/">Linked List Cycle II</a>
+     * Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
+     * <p/>
+     * Follow up:
+     * Can you solve it without using extra space?
+     */
+    public ListNode detectCycle(ListNode head) {
+        if (head == null || head.next == head) return head;
+        if (head.next == null) return null;
+        ListNode slow = head;
+        ListNode fast = head;
+        while (slow != null && fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) break;
+        }
+        if (fast == null || slow != fast) return null;
+
+        slow = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
 }
