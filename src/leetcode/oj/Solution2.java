@@ -2017,4 +2017,55 @@ public class Solution2 {
         return slow;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/longest-consecutive-sequence/">Longest Consecutive Sequence</a>
+     * Given an unsorted array of integers, find the length of the longest consecutive elements sequence.
+     * <p/>
+     * For example,
+     * Given [100, 4, 200, 1, 3, 2],
+     * The longest consecutive elements sequence is [1, 2, 3, 4]. Return its length: 4.
+     * <p/>
+     * Your algorithm should run in O(n) complexity.
+     * <p/>
+     * Solution idea: introduce a map with key=v and value=[min to max interval for this value]. As new entries are inserted
+     * we need only update min/max of v-1 and/or v+1 entries keeping calculating max-min.
+     */
+    public int longestConsecutive(int[] num) {
+        if (num.length == 0) return 0;
+        int longestSequence = 1;
+        Map<Integer, int[]> intervalMap = new HashMap<Integer, int[]>();
+
+        for (int v : num) {
+            if (intervalMap.containsKey(v)) continue;
+            int begin = v;
+            int end = v;
+            if (intervalMap.containsKey(v - 1)) {
+                int[] prevInterval = intervalMap.get(v - 1);
+                intervalMap.put(v, new int[]{prevInterval[0], v});
+                begin = prevInterval[0];
+            }
+
+            if (intervalMap.containsKey(v + 1)) {
+                int[] nextInterval = intervalMap.get(v + 1);
+                intervalMap.put(v, new int[]{begin, nextInterval[1]});
+                end = nextInterval[1];
+            }
+
+            if (intervalMap.containsKey(begin)) {
+                intervalMap.get(begin)[1] = end;
+            }
+
+            if (intervalMap.containsKey(end)) {
+                intervalMap.get(end)[0] = begin;
+            }
+
+            if (end - begin + 1 > longestSequence)
+                longestSequence = end - begin + 1;
+
+            if (!intervalMap.containsKey(v - 1) && !intervalMap.containsKey(v + 1))
+                intervalMap.put(v, new int[]{v, v});
+        }
+
+        return longestSequence;
+    }
 }

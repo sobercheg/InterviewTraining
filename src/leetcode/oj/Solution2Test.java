@@ -65,6 +65,7 @@ public class Solution2Test {
         solutionTest.testIsBalanced();
         solutionTest.testHasCycle();
         solutionTest.testDetectCycle();
+        solutionTest.testLongestConsecutive();
     }
 
     public void testMinPathSum() {
@@ -648,6 +649,14 @@ public class Solution2Test {
         cycleNode.next.next.next = cycleNode;
         cycleList.next.next = cycleNode;
         assertEquals(3, solution.detectCycle(cycleList).val);
+    }
+
+    public void testLongestConsecutive() {
+        assertEquals(1, solution.longestConsecutive(new int[]{0, 3, 7}));
+        assertEquals(9, solution.longestConsecutive(new int[]{0, 3, 7, 2, 5, 8, 4, 6, 0, 1}));
+        assertEquals(5, solution.longestConsecutive(new int[]{1, 3, 5, 2, 4}));
+        assertEquals(4, solution.longestConsecutive(new int[]{100, 4, 200, 1, 3, 2}));
+        assertEquals(13, solution.longestConsecutive(new int[]{-1, 9, -3, -6, 7, -8, -6, 2, 9, 2, 3, -2, 4, -1, 0, 6, 1, -9, 6, 8, 6, 5, 2}));
     }
 
 }
