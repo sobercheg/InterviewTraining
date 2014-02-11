@@ -2101,4 +2101,31 @@ public class Solution2 {
         return hasPathSumRecursive(root.left, sum - root.val) || hasPathSumRecursive(root.right, sum - root.val);
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/convert-sorted-list-to-binary-search-tree/">Convert Sorted List to Binary Search Tree</a>
+     * Given a singly linked list where elements are sorted in ascending order, convert it to a height balanced BST.
+     */
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+        int len = 0;
+        ListNode current = head;
+        while (current != null) {
+            len++;
+            current = current.next;
+        }
+        return sortedListToBST(new ListNode[]{head}, 0, len);
+    }
+
+    private TreeNode sortedListToBST(ListNode[] head, int from, int to) {
+        if (from > to || head[0] == null) return null;
+        int mid = (from + to) / 2;
+        TreeNode left = sortedListToBST(head, from, mid - 1);
+        TreeNode node = new TreeNode(head[0].val);
+        head[0] = head[0].next;
+        TreeNode right = sortedListToBST(head, mid + 1, to);
+        node.left = left;
+        node.right = right;
+        return node;
+    }
+
 }

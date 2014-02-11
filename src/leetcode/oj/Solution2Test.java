@@ -67,6 +67,7 @@ public class Solution2Test {
         solutionTest.testDetectCycle();
         solutionTest.testLongestConsecutive();
         solutionTest.testHasPathSum();
+        solutionTest.testSortedListToBST();
     }
 
     public void testMinPathSum() {
@@ -671,4 +672,17 @@ public class Solution2Test {
         assertEquals(true, solution.hasPathSum(new TreeNode(5, null, new TreeNode(4)), 9));
         assertEquals(false, solution.hasPathSum(new TreeNode(1, new TreeNode(2), null), 1));
     }
+
+    public void testSortedListToBST() {
+        ListNode list = ListNode.build(1, 2, 3);
+        TreeNode expectedTree = new TreeNode(2, new TreeNode(1), new TreeNode(3));
+        assertEquals(expectedTree, solution.sortedListToBST(list));
+
+        assertEquals(new TreeNode(1), solution.sortedListToBST(new ListNode(1)));
+
+        list = ListNode.build(1, 2, 3, 4, 5);
+        expectedTree = new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(5, new TreeNode(4), null));
+        assertEquals(expectedTree, solution.sortedListToBST(list));
+    }
+
 }
