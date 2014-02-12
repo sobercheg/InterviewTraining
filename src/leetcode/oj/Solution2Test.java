@@ -69,6 +69,7 @@ public class Solution2Test {
         solutionTest.testHasPathSum();
         solutionTest.testSortedListToBST();
         solutionTest.testReverseBetween();
+        solutionTest.testPathSum();
     }
 
     public void testMinPathSum() {
@@ -699,6 +700,23 @@ public class Solution2Test {
         reversedActual = solution.reverseBetween(ListNode.build(1, 2, 3, 4, 5), 3, 4);
         assertEquals(ListNode.build(1, 2, 4, 3, 5), reversedActual);
 
+    }
+
+    public void testPathSum() {
+        TreeNode root = new TreeNode(5,
+                new TreeNode(4,
+                        new TreeNode(11,
+                                new TreeNode(7), new TreeNode(2)), null),
+                new TreeNode(8,
+                        new TreeNode(13),
+                        new TreeNode(4,
+                                new TreeNode(5), new TreeNode(1))));
+
+        ArrayList<ArrayList<Integer>> expectedPaths = arrayListOf(
+                arrayListOf(5, 4, 11, 2),
+                arrayListOf(5, 8, 4, 5)
+        );
+        assertEquals(expectedPaths, solution.pathSum(root, 22));
     }
 
 }

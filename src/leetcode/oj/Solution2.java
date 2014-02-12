@@ -2168,4 +2168,51 @@ public class Solution2 {
             return head;
         }
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/path-sum-ii/">Path Sum II</a>
+     * Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+     * For example:
+     * Given the below binary tree and sum = 22,
+     * <p/>
+     * 5
+     * / \
+     * 4   8
+     * /   / \
+     * 11  13  4
+     * /  \    / \
+     * 7    2  5   1
+     * <p/>
+     * return
+     * <p/>
+     * [
+     * [5,4,11,2],
+     * [5,8,4,5]
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> pathSum(TreeNode root, int sum) {
+        if (root == null) return new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> paths = new ArrayList<ArrayList<Integer>>();
+        pathSum(root, sum, new ArrayList<Integer>(), paths);
+        return paths;
+    }
+
+    private void pathSum(TreeNode root, int sum, ArrayList<Integer> path, ArrayList<ArrayList<Integer>> paths) {
+        if (root == null) {
+            if (sum == 0)
+                paths.add(new ArrayList<Integer>(path));
+            return;
+        }
+
+        path.add(root.val);
+        if (root.left != null)
+            pathSum(root.left, sum - root.val, path, paths);
+        if (root.right != null)
+            pathSum(root.right, sum - root.val, path, paths);
+        if (root.right == null && root.left == null)
+            pathSum(null, sum - root.val, path, paths);
+        path.remove(path.size() - 1);
+
+    }
+
 }
