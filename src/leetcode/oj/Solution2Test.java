@@ -68,6 +68,7 @@ public class Solution2Test {
         solutionTest.testLongestConsecutive();
         solutionTest.testHasPathSum();
         solutionTest.testSortedListToBST();
+        solutionTest.testReverseBetween();
     }
 
     public void testMinPathSum() {
@@ -683,6 +684,21 @@ public class Solution2Test {
         list = ListNode.build(1, 2, 3, 4, 5);
         expectedTree = new TreeNode(3, new TreeNode(1, null, new TreeNode(2)), new TreeNode(5, new TreeNode(4), null));
         assertEquals(expectedTree, solution.sortedListToBST(list));
+    }
+
+    public void testReverseBetween() {
+        ListNode reversedActual = solution.reverseBetween(ListNode.build(1, 2, 3, 4, 5), 2, 4);
+        assertEquals(ListNode.build(1, 4, 3, 2, 5), reversedActual);
+
+        reversedActual = solution.reverseBetween(ListNode.build(1, 2, 3, 4, 5), 2, 5);
+        assertEquals(ListNode.build(1, 5, 4, 3, 2), reversedActual);
+
+        reversedActual = solution.reverseBetween(ListNode.build(1, 2, 3, 4, 5), 1, 5);
+        assertEquals(ListNode.build(5, 4, 3, 2, 1), reversedActual);
+
+        reversedActual = solution.reverseBetween(ListNode.build(1, 2, 3, 4, 5), 3, 4);
+        assertEquals(ListNode.build(1, 2, 4, 3, 5), reversedActual);
+
     }
 
 }

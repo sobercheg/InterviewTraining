@@ -2128,4 +2128,44 @@ public class Solution2 {
         return node;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/reverse-linked-list-ii/">Reverse Linked List II</a>
+     * Reverse a linked list from position m to n. Do it in-place and in one-pass.
+     * <p/>
+     * For example:
+     * Given 1->2->3->4->5->NULL, m = 2 and n = 4,
+     * <p/>
+     * return 1->4->3->2->5->NULL.
+     * <p/>
+     * Note:
+     * Given m, n satisfy the following condition:
+     * 1 ≤ m ≤ n ≤ length of list.
+     */
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        if (head.next == null) return head;
+        if (m == n) return head;
+        ListNode current = head;
+        int startReverse = m;
+        ListNode prev = null;
+        while (startReverse > 1) {
+            prev = current;
+            current = current.next;
+            startReverse--;
+        }
+
+        ListNode reverseHead = current;
+        for (; m < n; m++) {
+            ListNode next = current.next;
+            current.next = next.next;
+            next.next = reverseHead;
+            reverseHead = next;
+        }
+
+        if (prev == null) {
+            return reverseHead;
+        } else {
+            prev.next = reverseHead;
+            return head;
+        }
+    }
 }
