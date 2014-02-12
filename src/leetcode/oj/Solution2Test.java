@@ -70,6 +70,7 @@ public class Solution2Test {
         solutionTest.testSortedListToBST();
         solutionTest.testReverseBetween();
         solutionTest.testPathSum();
+        solutionTest.testBuildTreePost();
     }
 
     public void testMinPathSum() {
@@ -719,4 +720,15 @@ public class Solution2Test {
         assertEquals(expectedPaths, solution.pathSum(root, 22));
     }
 
+    public void testBuildTreePost() {
+        TreeNode expectedTree = new TreeNode(1,
+                new TreeNode(2,
+                        new TreeNode(3, new TreeNode(4), new TreeNode(5)),
+                        new TreeNode(6)),
+                new TreeNode(7, new TreeNode(8), null));
+        assertEquals(expectedTree, solution.buildTreePost(new int[]{4, 3, 5, 2, 6, 1, 8, 7}, new int[]{4, 5, 3, 6, 2, 8, 7, 1}));
+
+        expectedTree = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+        assertEquals(expectedTree, solution.buildTreePost(new int[]{2, 1, 3}, new int[]{2, 3, 1}));
+    }
 }

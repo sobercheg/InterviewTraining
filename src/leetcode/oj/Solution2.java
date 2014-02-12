@@ -2215,4 +2215,40 @@ public class Solution2 {
 
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/">Construct Binary Tree from Inorder and Postorder Traversal</a>
+     * Given inorder and postorder traversal of a tree, construct the binary tree.
+     * <p/>
+     * Note:
+     * You may assume that duplicates do not exist in the tree.
+     * <p/>
+     * Solution: process postorder from right to left. The rightmost is the root. Then find the number of elements
+     * in the right subtree by searching for the value in inorder and getting the number of elements from this index to
+     * the "to" index in inorder.
+     */
+    public TreeNode buildTreePost(int[] inorder, int[] postorder) {
+        int n = inorder.length - 1;
+        return buildTreePost(inorder, 0, n, postorder, new int[]{n});
+    }
+
+    public TreeNode buildTreePost(int[] inorder, int inFrom, int inTo, int[] postorder, int[] postIndex) {
+        if (inFrom > inTo || postIndex[0] < 0) return null;
+        TreeNode root = new TreeNode(postorder[postIndex[0]]);
+        int inIndex = getIndex(inorder, postorder[postIndex[0]]);
+        postIndex[0]--;
+        // the order here matters: process right first
+        TreeNode right = buildTreePost(inorder, inIndex + 1, inTo, postorder, postIndex);
+        TreeNode left = buildTreePost(inorder, inFrom, inIndex - 1, postorder, postIndex);
+        root.right = right;
+        root.left = left;
+        return root;
+    }
+
+    private int getIndex(int[] in, int value) {
+        for (int i = 0; i < in.length; i++) {
+            if (in[i] == value) return i;
+        }
+        return -1;
+    }
+
 }
