@@ -73,6 +73,7 @@ public class Solution2Test {
         solutionTest.testPathSum();
         solutionTest.testBuildTreePost();
         solutionTest.testWordBreak();
+        solutionTest.testWordBreakII();
     }
 
     public void testMinPathSum() {
@@ -738,4 +739,18 @@ public class Solution2Test {
         assertEquals(true, solution.wordBreak("leetcode", new HashSet<String>(Arrays.asList("code", "leet"))));
         assertEquals(false, solution.wordBreak("buka", new HashSet<String>(Arrays.asList("buk", "ka"))));
     }
+
+    public void testWordBreakII() {
+        ArrayList<String> expectedWords = arrayListOf("cats and dog", "cat sand dog");
+        assertEquals(expectedWords, solution.wordBreakII("catsanddog",
+                new HashSet<String>(Arrays.asList("cat", "cats", "and", "sand", "dog"))));
+
+        expectedWords = arrayListOf();
+        assertEquals(expectedWords, solution.wordBreakII("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+                new HashSet<String>(Arrays.asList("a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"))));
+
+        expectedWords = arrayListOf("a");
+        assertEquals(expectedWords, solution.wordBreakII("a", new HashSet<String>(Arrays.asList("a"))));
+    }
+
 }

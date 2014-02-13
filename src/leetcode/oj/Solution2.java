@@ -2281,4 +2281,42 @@ public class Solution2 {
         return A[s.length()];
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/word-break-ii/">Word Break II</a>
+     * Given a string s and a dictionary of words dict, add spaces in s to construct a sentence where each word is a valid dictionary word.
+     * <p/>
+     * Return all such possible sentences.
+     * <p/>
+     * For example, given
+     * s = "catsanddog",
+     * dict = ["cat", "cats", "and", "sand", "dog"].
+     * <p/>
+     * A solution is ["cats and dog", "cat sand dog"].
+     */
+    public ArrayList<String> wordBreakII(String s, Set<String> dict) {
+        if (s == null || s.isEmpty() || dict.isEmpty()) return new ArrayList<String>();
+        if (!wordBreak(s, dict)) return new ArrayList<String>();
+
+        ArrayList<String>[] solutions = (ArrayList<String>[]) new ArrayList[s.length() + 1];
+        for (int i = 0; i < solutions.length; i++) solutions[i] = new ArrayList<String>();
+        boolean[] A = new boolean[s.length() + 1];
+        A[0] = true;
+
+        for (int i = 1; i <= s.length(); i++) {
+            for (int j = i - 1; j >= 0; j--) {
+                if (A[j] && dict.contains(s.substring(j, i))) {
+                    if (solutions[j].isEmpty()) {
+                        solutions[i].add(s.substring(j, i));
+                    } else {
+                        for (int k = 0; k < solutions[j].size(); k++)
+                            solutions[i].add(solutions[j].get(k) + " " + s.substring(j, i));
+                    }
+                    A[i] = true;
+                }
+            }
+
+        }
+        return solutions[s.length()];
+    }
+
 }
