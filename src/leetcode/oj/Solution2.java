@@ -2319,4 +2319,49 @@ public class Solution2 {
         return solutions[s.length()];
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/flatten-binary-tree-to-linked-list/">Flatten Binary Tree to Linked List</a>
+     * Given a binary tree, flatten it to a linked list in-place.
+     * <p/>
+     * For example,
+     * Given
+     * <p/>
+     * 1
+     * / \
+     * 2   5
+     * / \   \
+     * 3   4   6
+     * <p/>
+     * The flattened tree should look like:
+     * <p/>
+     * 1
+     * \
+     * 2
+     * \
+     * 3
+     * \
+     * 4
+     * \
+     * 5
+     * \
+     * 6
+     */
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+
+        LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+        stack.push(root);
+        TreeNode prevNode = null;
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.right != null) stack.push(node.right);
+            if (node.left != null) stack.push(node.left);
+            if (prevNode != null) {
+                prevNode.left = null;
+                prevNode.right = node;
+            }
+            prevNode = node;
+        }
+
+    }
 }

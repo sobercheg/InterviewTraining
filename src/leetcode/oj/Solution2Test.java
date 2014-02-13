@@ -74,6 +74,7 @@ public class Solution2Test {
         solutionTest.testBuildTreePost();
         solutionTest.testWordBreak();
         solutionTest.testWordBreakII();
+        solutionTest.testFlatten();
     }
 
     public void testMinPathSum() {
@@ -751,6 +752,15 @@ public class Solution2Test {
 
         expectedWords = arrayListOf("a");
         assertEquals(expectedWords, solution.wordBreakII("a", new HashSet<String>(Arrays.asList("a"))));
+    }
+
+    public void testFlatten() {
+        TreeNode tree = new TreeNode(1,
+                new TreeNode(2, new TreeNode(3), new TreeNode(4)),
+                new TreeNode(5, null, new TreeNode(6)));
+        TreeNode expectedFlattened = new TreeNode(1, null, new TreeNode(2, null, new TreeNode(3, null, new TreeNode(4, null, new TreeNode(5, null, new TreeNode(6))))));
+        solution.flatten(tree);
+        assertEquals(expectedFlattened, tree);
     }
 
 }
