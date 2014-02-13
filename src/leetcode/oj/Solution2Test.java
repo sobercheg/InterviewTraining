@@ -2,6 +2,7 @@ package leetcode.oj;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.Solution.TreeNode;
@@ -71,6 +72,7 @@ public class Solution2Test {
         solutionTest.testReverseBetween();
         solutionTest.testPathSum();
         solutionTest.testBuildTreePost();
+        solutionTest.testWordBreak();
     }
 
     public void testMinPathSum() {
@@ -730,5 +732,10 @@ public class Solution2Test {
 
         expectedTree = new TreeNode(1, new TreeNode(2), new TreeNode(3));
         assertEquals(expectedTree, solution.buildTreePost(new int[]{2, 1, 3}, new int[]{2, 3, 1}));
+    }
+
+    public void testWordBreak() {
+        assertEquals(true, solution.wordBreak("leetcode", new HashSet<String>(Arrays.asList("code", "leet"))));
+        assertEquals(false, solution.wordBreak("buka", new HashSet<String>(Arrays.asList("buk", "ka"))));
     }
 }
