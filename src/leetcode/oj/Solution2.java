@@ -2364,4 +2364,35 @@ public class Solution2 {
         }
 
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/binary-tree-maximum-path-sum/">Binary Tree Maximum Path Sum</a>
+     * Given a binary tree, find the maximum path sum.
+     * <p/>
+     * The path may start and end at any node in the tree.
+     * <p/>
+     * For example:
+     * Given the below binary tree,
+     * <p/>
+     * 1
+     * / \
+     * 2   3
+     * <p/>
+     * Return 6.
+     * <p/>
+     * Solution is based on http://discuss.leetcode.com/questions/288/binary-tree-maximum-path-sum/783
+     */
+    public int maxPathSum(TreeNode root) {
+        int max[] = new int[]{Integer.MIN_VALUE};
+        maxPathSum(root, max);
+        return max[0];
+    }
+
+    private int maxPathSum(TreeNode root, int[] max) {
+        if (root == null) return 0;
+        int leftSum = Math.max(0, maxPathSum(root.left, max));
+        int rightSum = Math.max(0, maxPathSum(root.right, max));
+        max[0] = Math.max(max[0], root.val + leftSum + rightSum);
+        return Math.max(root.val + leftSum, root.val + rightSum);
+    }
 }

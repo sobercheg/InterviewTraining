@@ -75,6 +75,7 @@ public class Solution2Test {
         solutionTest.testWordBreak();
         solutionTest.testWordBreakII();
         solutionTest.testFlatten();
+        solutionTest.testMaxPathSum();
     }
 
     public void testMinPathSum() {
@@ -763,4 +764,9 @@ public class Solution2Test {
         assertEquals(expectedFlattened, tree);
     }
 
+    public void testMaxPathSum() {
+        assertEquals(-3, solution.maxPathSum(new TreeNode(-3)));
+        assertEquals(6, solution.maxPathSum(new TreeNode(1, new TreeNode(2), new TreeNode(3))));
+        assertEquals(1, solution.maxPathSum(new TreeNode(-2, new TreeNode(1), null)));
+    }
 }
