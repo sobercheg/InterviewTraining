@@ -76,6 +76,7 @@ public class Solution2Test {
         solutionTest.testWordBreakII();
         solutionTest.testFlatten();
         solutionTest.testMaxPathSum();
+        solutionTest.testSumNumbers();
     }
 
     public void testMinPathSum() {
@@ -768,5 +769,9 @@ public class Solution2Test {
         assertEquals(-3, solution.maxPathSum(new TreeNode(-3)));
         assertEquals(6, solution.maxPathSum(new TreeNode(1, new TreeNode(2), new TreeNode(3))));
         assertEquals(1, solution.maxPathSum(new TreeNode(-2, new TreeNode(1), null)));
+    }
+
+    public void testSumNumbers() {
+        assertEquals(25, solution.sumNumbers(new TreeNode(1, new TreeNode(2), new TreeNode(3))));
     }
 }

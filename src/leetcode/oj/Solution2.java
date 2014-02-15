@@ -416,9 +416,10 @@ public class Solution2 {
                     distance[i + 1][j + 1] = distance[i][j];
                 else distance[i + 1][j + 1] = 1 +
                         Math.min(Math.min(
-                                distance[i][j + 1],
-                                distance[i + 1][j]),
-                                distance[i][j]);
+                                        distance[i][j + 1],
+                                        distance[i + 1][j]),
+                                distance[i][j]
+                        );
             }
         }
 
@@ -2394,5 +2395,43 @@ public class Solution2 {
         int rightSum = Math.max(0, maxPathSum(root.right, max));
         max[0] = Math.max(max[0], root.val + leftSum + rightSum);
         return Math.max(root.val + leftSum, root.val + rightSum);
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/sum-root-to-leaf-numbers/">Sum Root to Leaf Numbers</a>
+     * Given a binary tree containing digits from 0-9 only, each root-to-leaf path could represent a number.
+     * <p/>
+     * An example is the root-to-leaf path 1->2->3 which represents the number 123.
+     * <p/>
+     * Find the total sum of all root-to-leaf numbers.
+     * <p/>
+     * For example,
+     * <p/>
+     * 1
+     * / \
+     * 2   3
+     * <p/>
+     * The root-to-leaf path 1->2 represents the number 12.
+     * The root-to-leaf path 1->3 represents the number 13.
+     * <p/>
+     * Return the sum = 12 + 13 = 25.
+     */
+    public int sumNumbers(TreeNode root) {
+        if (root == null) return 0;
+        int soFar = 0;
+        int[] totalSum = new int[]{0};
+        sumNumbersInternal(root, soFar, totalSum);
+        return totalSum[0];
+    }
+
+    private void sumNumbersInternal(TreeNode root, int sumSoFar, int[] totalSum) {
+        if (root.left == null && root.right == null) {
+            totalSum[0] += sumSoFar * 10 + root.val;
+            return;
+        }
+        sumSoFar = sumSoFar * 10 + root.val;
+        if (root.left != null) sumNumbersInternal(root.left, sumSoFar, totalSum);
+        if (root.right != null) sumNumbersInternal(root.right, sumSoFar, totalSum);
+
     }
 }
