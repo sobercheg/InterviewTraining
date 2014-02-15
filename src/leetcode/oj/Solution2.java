@@ -2434,4 +2434,92 @@ public class Solution2 {
         if (root.right != null) sumNumbersInternal(root.right, sumSoFar, totalSum);
 
     }
+
+    /**
+     * Definition for singly-linked list with a random pointer.
+     */
+    static class RandomListNode {
+        int label;
+        RandomListNode next, random;
+
+        RandomListNode(int x) {
+            this.label = x;
+        }
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/copy-list-with-random-pointer/">Copy List with Random Pointer</a>
+     * A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+     * <p/>
+     * Return a deep copy of the list.
+     */
+    public RandomListNode copyRandomList(RandomListNode head) {
+        return copyRandomListGood(head);
+    }
+
+    private RandomListNode copyRandomListBad(RandomListNode head) {
+        if (head == null) return null;
+
+        RandomListNode newList = new RandomListNode(head.label);
+        RandomListNode current = head.next;
+        RandomListNode newCurrent = newList;
+
+        while (current != null) {
+            newCurrent.next = new RandomListNode(current.label);
+            newCurrent = newCurrent.next;
+            current = current.next;
+        }
+
+        current = head;
+        newCurrent = newList;
+        while (current != null) {
+            if (current.random != null) {
+                RandomListNode currentCounter = head;
+                RandomListNode newCounter = newList;
+                while (currentCounter != current.random) {
+                    currentCounter = currentCounter.next;
+                    newCounter = newCounter.next;
+                }
+                newCurrent.random = newCounter;
+            }
+
+            current = current.next;
+            newCurrent = newCurrent.next;
+        }
+
+        return newList;
+    }
+
+    private RandomListNode copyRandomListGood(RandomListNode head) {
+        if (head == null) return null;
+
+        // insert copies between original nodes
+        RandomListNode current = head;
+        while (current != null) {
+            RandomListNode copy = new RandomListNode(current.label);
+            copy.next = current.next;
+            current.next = copy;
+            current = copy.next;
+        }
+
+        // add random links to copies
+        current = head;
+        RandomListNode newHead = head.next;
+        while (current != null) {
+            if (current.random != null)
+                current.next.random = current.random.next;
+            current = current.next.next;
+        }
+
+        // separate the merged list into two
+        current = head;
+        while (current != null) {
+            RandomListNode nextOrig = current.next.next;
+            if (nextOrig != null) current.next.next = nextOrig.next;
+            current.next = nextOrig;
+            current = current.next;
+        }
+
+        return newHead;
+    }
 }

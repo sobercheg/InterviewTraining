@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.Solution.TreeNode;
+import static leetcode.oj.Solution2.RandomListNode;
 import static leetcode.oj.TestUtils.*;
 
 /**
@@ -77,6 +78,7 @@ public class Solution2Test {
         solutionTest.testFlatten();
         solutionTest.testMaxPathSum();
         solutionTest.testSumNumbers();
+        solutionTest.testCopyRandomList();
     }
 
     public void testMinPathSum() {
@@ -133,34 +135,38 @@ public class Solution2Test {
 
     public void testFullJustify() {
         assertEquals(Arrays.asList(
-                "This    is    an",
-                "example  of text",
-                "justification.  "),
+                        "This    is    an",
+                        "example  of text",
+                        "justification.  "),
                 solution.fullJustify(
-                        new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16));
+                        new String[]{"This", "is", "an", "example", "of", "text", "justification."}, 16)
+        );
 
         assertEquals(Arrays.asList(
-                "                "),
+                        "                "),
                 solution.fullJustify(
-                        new String[]{""}, 16));
+                        new String[]{""}, 16)
+        );
 
         assertEquals(Arrays.asList("a"), solution.fullJustify(new String[]{"a"}, 1));
 
         assertEquals(Arrays.asList(
-                "Listen",
-                "to    ",
-                "many, ",
-                "speak ",
-                "to   a",
-                "few.  "),
+                        "Listen",
+                        "to    ",
+                        "many, ",
+                        "speak ",
+                        "to   a",
+                        "few.  "),
                 solution.fullJustify(
-                        new String[]{"Listen", "to", "many,", "speak", "to", "a", "few."}, 6));
+                        new String[]{"Listen", "to", "many,", "speak", "to", "a", "few."}, 6)
+        );
 
         assertEquals(Arrays.asList(
-                "world  owes  you a living; the",
-                "world                         "),
+                        "world  owes  you a living; the",
+                        "world                         "),
                 solution.fullJustify(
-                        new String[]{"world", "owes", "you", "a", "living;", "the", "world"}, 30));
+                        new String[]{"world", "owes", "you", "a", "living;", "the", "world"}, 30)
+        );
 
     }
 
@@ -674,7 +680,8 @@ public class Solution2Test {
         assertEquals(true, solution.hasPathSum(new TreeNode(5,
                 new TreeNode(4,
                         new TreeNode(11, new TreeNode(7), new TreeNode(2)), null),
-                new TreeNode(8, new TreeNode(13), new TreeNode(4, null, new TreeNode(1)))), 22));
+                new TreeNode(8, new TreeNode(13), new TreeNode(4, null, new TreeNode(1)))
+        ), 22));
 
         assertEquals(false, solution.hasPathSum(new TreeNode(5, null, new TreeNode(4)), 11));
         assertEquals(false, solution.hasPathSum(new TreeNode(5, null, new TreeNode(4)), 1));
@@ -713,11 +720,14 @@ public class Solution2Test {
         TreeNode root = new TreeNode(5,
                 new TreeNode(4,
                         new TreeNode(11,
-                                new TreeNode(7), new TreeNode(2)), null),
+                                new TreeNode(7), new TreeNode(2)), null
+                ),
                 new TreeNode(8,
                         new TreeNode(13),
                         new TreeNode(4,
-                                new TreeNode(5), new TreeNode(1))));
+                                new TreeNode(5), new TreeNode(1))
+                )
+        );
 
         ArrayList<ArrayList<Integer>> expectedPaths = arrayListOf(
                 arrayListOf(5, 4, 11, 2),
@@ -731,7 +741,8 @@ public class Solution2Test {
                 new TreeNode(2,
                         new TreeNode(3, new TreeNode(4), new TreeNode(5)),
                         new TreeNode(6)),
-                new TreeNode(7, new TreeNode(8), null));
+                new TreeNode(7, new TreeNode(8), null)
+        );
         assertEquals(expectedTree, solution.buildTreePost(new int[]{4, 3, 5, 2, 6, 1, 8, 7}, new int[]{4, 5, 3, 6, 2, 8, 7, 1}));
 
         expectedTree = new TreeNode(1, new TreeNode(2), new TreeNode(3));
@@ -773,5 +784,28 @@ public class Solution2Test {
 
     public void testSumNumbers() {
         assertEquals(25, solution.sumNumbers(new TreeNode(1, new TreeNode(2), new TreeNode(3))));
+    }
+
+    public void testCopyRandomList() {
+        RandomListNode origHead = new RandomListNode(1);
+        RandomListNode origNext = new RandomListNode(2);
+        RandomListNode origNextNext = new RandomListNode(3);
+        origHead.next = origNext;
+        origNext.next = origNextNext;
+        origNextNext.random = origNext;
+        origHead.random = origHead;
+
+        RandomListNode copyHead = solution.copyRandomList(origHead);
+        assertEquals(1, copyHead.label);
+        assertEquals(2, copyHead.next.label);
+        assertEquals(3, copyHead.next.next.label);
+        assertEquals(1, copyHead.random.label);
+        assertEquals(2, copyHead.next.next.random.label);
+
+        origHead = new RandomListNode(-1);
+        origHead.next = new RandomListNode(1);
+        copyHead = solution.copyRandomList(origHead);
+        assertEquals(false, origHead == copyHead);
+        assertEquals(false, origHead.next == copyHead.next);
     }
 }
