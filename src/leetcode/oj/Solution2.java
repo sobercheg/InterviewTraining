@@ -2522,4 +2522,40 @@ public class Solution2 {
 
         return newHead;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/recover-binary-search-tree/">Recover Binary Search Tree</a>
+     * Two elements of a binary search tree (BST) are swapped by mistake.
+     * <p/>
+     * Recover the tree without changing its structure.
+     * Note:
+     * A solution using O(n) space is pretty straight forward. Could you devise a constant space solution?
+     */
+    public void recoverTree(TreeNode root) {
+        if (root == null) return;
+        TreeNode[] pre = new TreeNode[1];
+        TreeNode[] wrongOne = new TreeNode[1];
+        TreeNode[] wrongTwo = new TreeNode[1];
+        inOrder(root, pre, wrongOne, wrongTwo);
+        if (wrongTwo[0] == null) wrongTwo[0] = pre[0];
+        int tmp = wrongOne[0].val;
+        wrongOne[0].val = wrongTwo[0].val;
+        wrongTwo[0].val = tmp;
+    }
+
+    private void inOrder(TreeNode root, TreeNode[] pre, TreeNode[] wrongOne, TreeNode[] wrongTwo) {
+        if (root == null) return;
+        inOrder(root.left, pre, wrongOne, wrongTwo);
+
+        if (pre[0] != null && root.val < pre[0].val && wrongOne[0] == null)
+            wrongOne[0] = pre[0];
+        else if (wrongOne[0] != null && root.val > wrongOne[0].val) {
+            wrongTwo[0] = pre[0];
+            return;
+        }
+        pre[0] = root;
+
+        inOrder(root.right, pre, wrongOne, wrongTwo);
+    }
+
 }

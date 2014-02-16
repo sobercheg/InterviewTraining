@@ -79,6 +79,7 @@ public class Solution2Test {
         solutionTest.testMaxPathSum();
         solutionTest.testSumNumbers();
         solutionTest.testCopyRandomList();
+        solutionTest.testRecoverTree();
     }
 
     public void testMinPathSum() {
@@ -807,5 +808,35 @@ public class Solution2Test {
         copyHead = solution.copyRandomList(origHead);
         assertEquals(false, origHead == copyHead);
         assertEquals(false, origHead.next == copyHead.next);
+    }
+
+    public void testRecoverTree() {
+        TreeNode root = new TreeNode(2, new TreeNode(3), new TreeNode(1));
+        solution.recoverTree(root);
+        assertEquals(2, root.val);
+        assertEquals(1, root.left.val);
+        assertEquals(3, root.right.val);
+
+        root = new TreeNode(0, new TreeNode(1), null);
+        solution.recoverTree(root);
+        assertEquals(1, root.val);
+        assertEquals(0, root.left.val);
+
+        root = new TreeNode(1, new TreeNode(2), new TreeNode(3));
+        solution.recoverTree(root);
+        assertEquals(2, root.val);
+        assertEquals(1, root.left.val);
+        assertEquals(3, root.right.val);
+
+        root = new TreeNode(68,
+                new TreeNode(41, new TreeNode(-85,
+                        new TreeNode(-73,
+                                new TreeNode(-98, new TreeNode(-124), null), null), new TreeNode(-49)
+                ), null), null
+        );
+
+        solution.recoverTree(root);
+        assertEquals(-73, root.left.left.val);
+        assertEquals(-85, root.left.left.left.val);
     }
 }
