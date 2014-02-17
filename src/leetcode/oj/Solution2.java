@@ -2618,4 +2618,76 @@ public class Solution2 {
         return total[0];
     }
 
+    /**
+     * Definition for binary tree with next pointer.
+     */
+    static class TreeLinkNode {
+        int val;
+        TreeLinkNode left, right, next;
+
+        TreeLinkNode(int x) {
+            val = x;
+        }
+
+        TreeLinkNode(int x, TreeLinkNode left, TreeLinkNode right) {
+            val = x;
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public String toString() {
+            return "" + val;
+        }
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node/">Populating Next Right Pointers in Each Node</a>
+     * Given a binary tree
+     * <p/>
+     * struct TreeLinkNode {
+     * TreeLinkNode *left;
+     * TreeLinkNode *right;
+     * TreeLinkNode *next;
+     * }
+     * <p/>
+     * Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+     * <p/>
+     * Initially, all next pointers are set to NULL.
+     * <p/>
+     * Note:
+     * <p/>
+     * You may only use constant extra space.
+     * You may assume that it is a perfect binary tree (ie, all leaves are at the same level, and every parent has two children).
+     * <p/>
+     * For example,
+     * Given the following perfect binary tree,
+     * <p/>
+     * 1
+     * /  \
+     * 2    3
+     * / \  / \
+     * 4  5  6  7
+     * <p/>
+     * After calling your function, the tree should look like:
+     * <p/>
+     * 1 -> NULL
+     * /  \
+     * 2 -> 3 -> NULL
+     * / \  / \
+     * 4->5->6->7 -> NULL
+     */
+    public void connect(TreeLinkNode root) {
+        if (root == null) return;
+        connect(root.left, root.right);
+    }
+
+    private void connect(TreeLinkNode left, TreeLinkNode right) {
+        if (left == null) return;
+        left.next = right;
+        connect(left.left, left.right);
+        connect(left.right, right.left);
+        connect(right.left, right.right);
+    }
+
 }
