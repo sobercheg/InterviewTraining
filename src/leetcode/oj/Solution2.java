@@ -2742,4 +2742,39 @@ public class Solution2 {
         connectII(left);
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/pascals-triangle/">Pascal's Triangle</a>
+     * Given numRows, generate the first numRows of Pascal's triangle.
+     * <p/>
+     * For example, given numRows = 5,
+     * Return
+     * <p/>
+     * [
+     * [1],
+     * [1,1],
+     * [1,2,1],
+     * [1,3,3,1],
+     * [1,4,6,4,1]
+     * ]
+     */
+    public ArrayList<ArrayList<Integer>> generate(int numRows) {
+        if (numRows == 0) return new ArrayList<ArrayList<Integer>>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> prevRow = new ArrayList<Integer>();
+        prevRow.add(1);
+        result.add(prevRow);
+        for (int i = 1; i < numRows; i++) {
+            ArrayList<Integer> newRow = new ArrayList<Integer>();
+            newRow.add(1);
+            for (int j = 1; j < i; j++) {
+                newRow.add(j, prevRow.get(j - 1) + prevRow.get(j));
+            }
+            newRow.add(1);
+            result.add(newRow);
+            prevRow = newRow;
+        }
+
+        return result;
+    }
+
 }
