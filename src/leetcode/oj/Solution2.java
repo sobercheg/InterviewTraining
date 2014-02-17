@@ -2690,4 +2690,56 @@ public class Solution2 {
         connect(right.left, right.right);
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/">Populating Next Right Pointers in Each Node II</a>
+     * Follow up for problem "Populating Next Right Pointers in Each Node".
+     * <p/>
+     * What if the given tree could be any binary tree? Would your previous solution still work?
+     * <p/>
+     * Note:
+     * <p/>
+     * You may only use constant extra space.
+     * <p/>
+     * For example,
+     * Given the following binary tree,
+     * <p/>
+     * 1
+     * /  \
+     * 2    3
+     * / \    \
+     * 4   5    7
+     * <p/>
+     * After calling your function, the tree should look like:
+     * <p/>
+     * 1 -> NULL
+     * /  \
+     * 2 -> 3 -> NULL
+     * / \    \
+     * 4-> 5 -> 7 -> NULL
+     */
+    public void connectII(TreeLinkNode root) {
+        if (root == null) return;
+        TreeLinkNode left = null;
+        TreeLinkNode current = root;
+        TreeLinkNode nextSibling = null;
+        TreeLinkNode prevSibling;
+        while (current != null) {
+            if (current.left != null) {
+                prevSibling = nextSibling;
+                nextSibling = current.left;
+                if (prevSibling != null) prevSibling.next = nextSibling;
+                if (left == null) left = current.left;
+            }
+            if (current.right != null) {
+                prevSibling = nextSibling;
+                nextSibling = current.right;
+                if (prevSibling != null) prevSibling.next = nextSibling;
+                if (left == null) left = current.right;
+            }
+            current = current.next;
+        }
+
+        connectII(left);
+    }
+
 }

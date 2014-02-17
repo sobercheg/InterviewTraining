@@ -83,6 +83,7 @@ public class Solution2Test {
         solutionTest.testRecoverTree();
         solutionTest.testMinimumTotal();
         solutionTest.testConnect();
+        solutionTest.testConnectII();
     }
 
     public void testMinPathSum() {
@@ -874,6 +875,45 @@ public class Solution2Test {
         assertEquals(5, root.left.left.next.val);
         assertEquals(6, root.left.right.next.val);
         assertEquals(7, root.right.left.next.val);
+    }
+
+    public void testConnectII() {
+        TreeLinkNode root = new TreeLinkNode(1,
+                new TreeLinkNode(2, new TreeLinkNode(4), new TreeLinkNode(5)),
+                new TreeLinkNode(3, null, new TreeLinkNode(7)));
+
+        solution.connectII(root);
+        assertEquals(3, root.left.next.val);
+        assertEquals(5, root.left.left.next.val);
+        assertEquals(7, root.left.right.next.val);
+
+        root = new TreeLinkNode(1,
+                new TreeLinkNode(2, new TreeLinkNode(3, new TreeLinkNode(13), null), null),
+                new TreeLinkNode(4, null, new TreeLinkNode(5, null, new TreeLinkNode(15))));
+        solution.connectII(root);
+        assertEquals(4, root.left.next.val);
+        assertEquals(5, root.left.left.next.val);
+        assertEquals(15, root.left.left.left.next.val);
+
+        root = new TreeLinkNode(1,
+                new TreeLinkNode(2,
+                        new TreeLinkNode(4, new TreeLinkNode(7), null), new TreeLinkNode(5)),
+                new TreeLinkNode(3, null, new TreeLinkNode(6, null, new TreeLinkNode(8)))
+        );
+        solution.connectII(root);
+        assertEquals(3, root.left.next.val);
+        assertEquals(5, root.left.left.next.val);
+        assertEquals(6, root.left.right.next.val);
+        assertEquals(8, root.left.left.left.next.val);
+
+        root = new TreeLinkNode(-9,
+                new TreeLinkNode(-3, null, new TreeLinkNode(4, new TreeLinkNode(-6), null)),
+                new TreeLinkNode(-2, new TreeLinkNode(4, new TreeLinkNode(-5), null), new TreeLinkNode(0)));
+        solution.connectII(root);
+        assertEquals(-2, root.left.next.val);
+        assertEquals(4, root.left.right.next.val);
+        assertEquals(0, root.right.left.next.val);
+        assertEquals(-5, root.left.right.left.next.val);
     }
 
 }
