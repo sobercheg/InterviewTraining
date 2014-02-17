@@ -2807,4 +2807,43 @@ public class Solution2 {
         result.addAll(reverse);
         return result;
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/valid-palindrome/">Valid Palindrome</a>
+     * Given a string, determine if it is a palindrome, considering only alphanumeric characters and ignoring cases.
+     * <p/>
+     * For example,
+     * "A man, a plan, a canal: Panama" is a palindrome.
+     * "race a car" is not a palindrome.
+     * <p/>
+     * Note:
+     * Have you consider that the string might be empty? This is a good question to ask during an interview.
+     * <p/>
+     * For the purpose of this problem, we define empty string as valid palindrome.
+     */
+    public boolean isPalindrome(String s) {
+        int l = 0;
+        int r = s.length() - 1;
+        while (l < r) {
+            if (!isAlphanumeric(s.charAt(l))) {
+                l++;
+                continue;
+            }
+            if (!isAlphanumeric(s.charAt(r))) {
+                r--;
+                continue;
+            }
+            if (s.substring(l, l + 1).equalsIgnoreCase(s.substring(r, r + 1))) {
+                l++;
+                r--;
+            } else {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean isAlphanumeric(char ch) {
+        return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
+    }
 }

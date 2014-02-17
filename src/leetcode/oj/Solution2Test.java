@@ -86,6 +86,7 @@ public class Solution2Test {
         solutionTest.testConnectII();
         solutionTest.testGenerate();
         solutionTest.testGetRow();
+        solutionTest.testIsPalindrome();
     }
 
     public void testMinPathSum() {
@@ -933,5 +934,12 @@ public class Solution2Test {
         assertEquals(arrayListOf(1, 2, 1), solution.getRow(2));
         assertEquals(arrayListOf(1, 3, 3, 1), solution.getRow(3));
         assertEquals(arrayListOf(1, 4, 6, 4, 1), solution.getRow(4));
+    }
+
+    public void testIsPalindrome() {
+        assertEquals(true, solution.isPalindrome("A man, a plan, a canal: Panama"));
+        assertEquals(false, solution.isPalindrome("race a car"));
+        assertEquals(true, solution.isPalindrome(""));
+        assertEquals(true, solution.isPalindrome(" "));
     }
 }
