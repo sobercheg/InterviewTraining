@@ -2558,4 +2558,64 @@ public class Solution2 {
         inOrder(root.right, pre, wrongOne, wrongTwo);
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/triangle/">Triangle</a>
+     * Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+     * <p/>
+     * For example, given the following triangle
+     * <p/>
+     * [
+     * [2],
+     * [3,4],
+     * [6,5,7],
+     * [4,1,8,3]
+     * ]
+     * <p/>
+     * The minimum path sum from top to bottom is 11 (i.e., 2 + 3 + 5 + 1 = 11).
+     * <p/>
+     * Note:
+     * Bonus point if you are able to do this using only O(n) extra space, where n is the total number of rows in the triangle.
+     */
+    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+/*
+        int minTotal = Integer.MAX_VALUE;
+        int maxLevel = triangle.size() - 1;
+        for (int index = 0; index < triangle.get(maxLevel).size(); index++) {
+            minTotal = Math.min(minTotal, minTotalRecursive(triangle, maxLevel, index, new int[maxLevel + 1]));
+        }
+        return minTotal;
+*/
+        return minimumTotalBottomUp(triangle);
+    }
+
+    private int minTotalRecursive(ArrayList<ArrayList<Integer>> triangle, int level, int index) {
+        if (level == 0) return triangle.get(level).get(0);
+        int min = triangle.get(level).get(index);
+
+        if (index > 0 && index < level) min += Math.min(
+                minTotalRecursive(triangle, level - 1, index - 1),
+                minTotalRecursive(triangle, level - 1, index));
+        else if (index == 0)
+            min += minTotalRecursive(triangle, level - 1, index);
+        else
+            min += minTotalRecursive(triangle, level - 1, index - 1);
+        return min;
+    }
+
+    /**
+     * Based on http://www.programcreek.com/2013/01/leetcode-triangle-java/
+     */
+    private int minimumTotalBottomUp(ArrayList<ArrayList<Integer>> triangle) {
+        int s = triangle.size();
+        int[] total = new int[s];
+        for (int i = 0; i < s; i++) total[i] = triangle.get(s - 1).get(i);
+        for (int l = s - 2; l >= 0; l--) {
+            for (int i = 0; i <= l; i++) {
+                total[i] = triangle.get(l).get(i) + Math.min(total[i], total[i + 1]);
+            }
+        }
+
+        return total[0];
+    }
+
 }

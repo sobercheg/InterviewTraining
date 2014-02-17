@@ -80,6 +80,7 @@ public class Solution2Test {
         solutionTest.testSumNumbers();
         solutionTest.testCopyRandomList();
         solutionTest.testRecoverTree();
+        solutionTest.testMinimumTotal();
     }
 
     public void testMinPathSum() {
@@ -839,4 +840,26 @@ public class Solution2Test {
         assertEquals(-73, root.left.left.val);
         assertEquals(-85, root.left.left.left.val);
     }
+
+    public void testMinimumTotal() {
+        assertEquals(1, solution.minimumTotal(arrayListOf(
+                arrayListOf(-1),
+                arrayListOf(2, 3)
+        )));
+
+        assertEquals(-1, solution.minimumTotal(arrayListOf(
+                arrayListOf(-1),
+                arrayListOf(2, 3),
+                arrayListOf(1, -1, -3)
+        )));
+
+        assertEquals(11, solution.minimumTotal(arrayListOf(
+                arrayListOf(2),
+                arrayListOf(3, 4),
+                arrayListOf(6, 5, 7),
+                arrayListOf(4, 1, 8, 3)
+        )));
+
+    }
+
 }
