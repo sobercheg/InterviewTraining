@@ -85,6 +85,7 @@ public class Solution2Test {
         solutionTest.testConnect();
         solutionTest.testConnectII();
         solutionTest.testGenerate();
+        solutionTest.testGetRow();
     }
 
     public void testMinPathSum() {
@@ -925,5 +926,12 @@ public class Solution2Test {
                 arrayListOf(1, 3, 3, 1),
                 arrayListOf(1, 4, 6, 4, 1)
         ), solution.generate(5));
+    }
+
+    public void testGetRow() {
+        assertEquals(arrayListOf(1, 1), solution.getRow(1));
+        assertEquals(arrayListOf(1, 2, 1), solution.getRow(2));
+        assertEquals(arrayListOf(1, 3, 3, 1), solution.getRow(3));
+        assertEquals(arrayListOf(1, 4, 6, 4, 1), solution.getRow(4));
     }
 }

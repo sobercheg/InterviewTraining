@@ -2777,4 +2777,34 @@ public class Solution2 {
         return result;
     }
 
+    /**
+     * <a href="http://oj.leetcode.com/problems/pascals-triangle-ii/">Pascal's Triangle II</a>
+     * Given an index k, return the kth row of the Pascal's triangle.
+     * <p/>
+     * For example, given k = 3,
+     * Return [1,3,3,1].
+     * <p/>
+     * Note:
+     * Could you optimize your algorithm to use only O(k) extra space?
+     */
+    public ArrayList<Integer> getRow(int rowIndex) {
+        int[] column = new int[rowIndex + 1];
+        int[] prevColumn = new int[rowIndex + 1];
+        for (int i = 0; i < column.length; i++) prevColumn[i] = 1;
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        result.add(1);
+        for (int col = 1; col <= rowIndex / 2; col++) {
+            column[col] = 1;
+            for (int row = col + 1; row <= rowIndex; row++) {
+                column[row] = column[row - 1] + prevColumn[row - 1];
+            }
+            result.add(column[rowIndex]);
+            System.arraycopy(column, 0, prevColumn, 0, column.length);
+        }
+        ArrayList<Integer> reverse = new ArrayList<Integer>(result);
+        Collections.reverse(reverse);
+        if (rowIndex % 2 == 0) reverse.remove(0);
+        result.addAll(reverse);
+        return result;
+    }
 }
