@@ -2846,4 +2846,74 @@ public class Solution2 {
     private boolean isAlphanumeric(char ch) {
         return (ch >= '0' && ch <= '9') || (ch >= 'A' && ch <= 'Z') || (ch >= 'a' && ch <= 'z');
     }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/surrounded-regions/">Surrounded Regions</a>
+     * Given a 2D board containing 'X' and 'O', capture all regions surrounded by 'X'.
+     * <p/>
+     * A region is captured by flipping all 'O's into 'X's in that surrounded region .
+     * <p/>
+     * For example,
+     * <p/>
+     * X X X X
+     * X O O X
+     * X X O X
+     * X O X X
+     * <p/>
+     * After running your function, the board should be:
+     * <p/>
+     * X X X X
+     * X X X X
+     * X X X X
+     * X O X X
+     * </p>
+     * Solution: think opposite: how to find all regions NOT surrounded by 'X'? Those are regions having at least one 'O'
+     * adjacent to a border. So, first pass: find all 'O' adjacent to borders, do DFS/BFS, mark as 'A'. Then mark the rest
+     * ('X' and 'O') as 'X', then mark 'A' back to 'O'.
+     */
+    public void solve(char[][] board) {
+        if (board == null || board.length == 0 || board[0].length == 0) return;
+
+        // Pass 1. Find all adjacent 'O' to borders, do BFS and and mark as 'A'
+        for (int i = 0; i < board[0].length; i++)
+            if (board[0][i] == 'O')
+                dfs(board, 0, i);
+        for (int i = 0; i < board[0].length; i++)
+            if (board[board.length - 1][i] == 'O')
+                dfs(board, board.length - 1, i);
+        for (int i = 0; i < board.length; i++)
+            if (board[i][0] == 'O')
+                dfs(board, i, 0);
+        for (int i = 0; i < board.length; i++)
+            if (board[i][board[0].length - 1] == 'O')
+                dfs(board, i, board[0].length - 1);
+
+        // Pass 2. Mark all other 'O' as 'X' (not adjacent to borders)
+        // Pass 3. Mark all 'A' as 'O' (adjacent to borders)
+        for (int i = 0; i < board.length; i++)
+            for (int j = 0; j < board[0].length; j++) {
+                if (board[i][j] == 'O') board[i][j] = 'X';
+                if (board[i][j] == 'A') board[i][j] = 'O';
+            }
+    }
+
+    private void dfs(char[][] board, int i, int j) {
+        LinkedList<int[]> queue = new LinkedList<int[]>();
+        queue.add(new int[]{i, j});
+        while (!queue.isEmpty()) {
+            int[] coord = queue.removeLast();
+            int y = coord[0];
+            int x = coord[1];
+            board[y][x] = 'A';
+            if (y > 0 && board[y - 1][x] == 'O')
+                queue.add(new int[]{y - 1, x});
+            if (x > 0 && board[y][x - 1] == 'O')
+                queue.add(new int[]{y, x - 1});
+            if (y < board.length - 1 && board[y + 1][x] == 'O')
+                queue.add(new int[]{y + 1, x});
+            if (x < board[0].length - 1 && board[y][x + 1] == 'O')
+                queue.add(new int[]{y, x + 1});
+        }
+    }
+
 }

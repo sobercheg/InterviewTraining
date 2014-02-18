@@ -87,6 +87,7 @@ public class Solution2Test {
         solutionTest.testGenerate();
         solutionTest.testGetRow();
         solutionTest.testIsPalindrome();
+        solutionTest.testSolve();
     }
 
     public void testMinPathSum() {
@@ -942,4 +943,57 @@ public class Solution2Test {
         assertEquals(true, solution.isPalindrome(""));
         assertEquals(true, solution.isPalindrome(" "));
     }
+
+    public void testSolve() {
+        char[][] board = new char[][]{
+                "XXXX".toCharArray(),
+                "XOOX".toCharArray(),
+                "XXOX".toCharArray(),
+                "XOXX".toCharArray(),
+        };
+        solution.solve(board);
+        assertArrayEquals(new char[][]{
+                "XXXX".toCharArray(),
+                "XXXX".toCharArray(),
+                "XXXX".toCharArray(),
+                "XOXX".toCharArray(),
+        }, board);
+
+        board = new char[][]{
+                "XOOOOOOOOOOOOOOOOOOO".toCharArray(),
+                "OXOOOOXOOOOOOOOOOOXX".toCharArray(),
+                "OOOOOOOOXOOOOOOOOOOX".toCharArray(),
+                "OOXOOOOOOOOOOOOOOOXO".toCharArray(),
+                "OOOOOXOOOOXOOOOOXOOX".toCharArray(),
+                "XOOOXOOOOOXOXOXOXOXO".toCharArray(),
+                "OOOOXOOXOOOOOXOOXOOO".toCharArray(),
+                "XOOOXXXOXOOOOXXOXOOO".toCharArray(),
+                "OOOOOXXXXOOOOXOOXOOO".toCharArray(),
+                "XOOOOXOOOOOOXXOOXOOX".toCharArray(),
+                "OOOOOOOOOOXOOXOOOXOX".toCharArray(),
+                "OOOOXOXOOXXOOOOOXOOO".toCharArray(),
+                "XXOOOOOXOOOOOOOOOOOO".toCharArray(),
+                "OXOXOOOXOXOOOXOXOXOO".toCharArray(),
+                "OOXOOOOOOOXOOOOOXOXO".toCharArray(),
+        };
+        solution.solve(board);
+        assertArrayEquals(new char[][]{
+                "XOOOOOOOOOOOOOOOOOOO".toCharArray(),
+                "OXOOOOXOOOOOOOOOOOXX".toCharArray(),
+                "OOOOOOOOXOOOOOOOOOOX".toCharArray(),
+                "OOXOOOOOOOOOOOOOOOXO".toCharArray(),
+                "OOOOOXOOOOXOOOOOXOOX".toCharArray(),
+                "XOOOXOOOOOXOXOXOXOXO".toCharArray(),
+                "OOOOXOOXOOOOOXOOXOOO".toCharArray(),
+                "XOOOXXXXXOOOOXXOXOOO".toCharArray(),
+                "OOOOOXXXXOOOOXOOXOOO".toCharArray(),
+                "XOOOOXOOOOOOXXOOXOOX".toCharArray(),
+                "OOOOOOOOOOXOOXOOOXOX".toCharArray(),
+                "OOOOXOXOOXXOOOOOXOOO".toCharArray(),
+                "XXOOOOOXOOOOOOOOOOOO".toCharArray(),
+                "OXOXOOOXOXOOOXOXOXOO".toCharArray(),
+                "OOXOOOOOOOXOOOOOXOXO".toCharArray(),
+        }, board);
+    }
+
 }
