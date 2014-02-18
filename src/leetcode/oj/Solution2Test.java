@@ -6,8 +6,7 @@ import java.util.HashSet;
 
 import static leetcode.oj.Solution.ListNode;
 import static leetcode.oj.Solution.TreeNode;
-import static leetcode.oj.Solution2.RandomListNode;
-import static leetcode.oj.Solution2.TreeLinkNode;
+import static leetcode.oj.Solution2.*;
 import static leetcode.oj.TestUtils.*;
 
 /**
@@ -88,6 +87,7 @@ public class Solution2Test {
         solutionTest.testGetRow();
         solutionTest.testIsPalindrome();
         solutionTest.testSolve();
+        solutionTest.testCloneGraph();
     }
 
     public void testMinPathSum() {
@@ -996,4 +996,28 @@ public class Solution2Test {
         }, board);
     }
 
+    public void testCloneGraph() {
+        UndirectedGraphNode graph = new UndirectedGraphNode(0);
+        UndirectedGraphNode node1 = new UndirectedGraphNode(1);
+        UndirectedGraphNode node2 = new UndirectedGraphNode(2);
+        graph.neighbors = arrayListOf(node1, node2);
+        node1.neighbors = arrayListOf(node2);
+        node2.neighbors = arrayListOf(node2);
+        UndirectedGraphNode copy = solution.cloneGraph(graph);
+        assertEquals(0, copy.label);
+        assertEquals(1, copy.neighbors.get(0).label);
+        assertEquals(2, copy.neighbors.get(1).label);
+        assertEquals(2, copy.neighbors.get(0).neighbors.get(0).label);
+        assertEquals(2, copy.neighbors.get(1).neighbors.get(0).label);
+
+        graph = new UndirectedGraphNode(0);
+        graph.neighbors = new ArrayList<UndirectedGraphNode>();
+        graph.neighbors.add(graph);
+        graph.neighbors.add(graph);
+        copy = solution.cloneGraph(graph);
+        assertEquals(0, copy.label);
+        assertEquals(2, copy.neighbors.size());
+        assertEquals(0, copy.neighbors.get(0).label);
+        assertEquals(0, copy.neighbors.get(1).label);
+    }
 }

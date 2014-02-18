@@ -2888,7 +2888,7 @@ public class Solution2 {
             if (board[i][board[0].length - 1] == 'O')
                 dfs(board, i, board[0].length - 1);
 
-        // Pass 2. Mark all other 'O' as 'X' (not adjacent to borders)
+        // Pass 2. Mark all oather 'O' as 'X' (not adjacent to borders)
         // Pass 3. Mark all 'A' as 'O' (adjacent to borders)
         for (int i = 0; i < board.length; i++)
             for (int j = 0; j < board[0].length; j++) {
@@ -2914,6 +2914,76 @@ public class Solution2 {
             if (x < board[0].length - 1 && board[y][x + 1] == 'O')
                 queue.add(new int[]{y, x + 1});
         }
+    }
+
+    /**
+     * Definition for undirected graph.
+     */
+    static class UndirectedGraphNode {
+        int label;
+        ArrayList<UndirectedGraphNode> neighbors;
+
+        UndirectedGraphNode(int x) {
+            label = x;
+            neighbors = new ArrayList<UndirectedGraphNode>();
+        }
+    }
+
+    /**
+     * <a href="http://oj.leetcode.com/problems/clone-graph/">Clone Graph</a>
+     * Clone an undirected graph. Each node in the graph contains a label and a list of its neighbors.
+     * <p/>
+     * OJ's undirected graph serialization:
+     * <p/>
+     * Nodes are labeled uniquely.
+     * We use # as a separator for each node, and , as a separator for node label and each neighbor of the node.
+     * <p/>
+     * As an example, consider the serialized graph {0,1,2#1,2#2,2}.
+     * <p/>
+     * The graph has a total of three nodes, and therefore contains three parts as separated by #.
+     * <p/>
+     * First node is labeled as 0. Connect node 0 to both nodes 1 and 2.
+     * Second node is labeled as 1. Connect node 1 to node 2.
+     * Third node is labeled as 2. Connect node 2 to node 2 (itself), thus forming a self-cycle.
+     * <p/>
+     * Visually, the graph looks like the following:
+     * <p/>
+     * 1
+     * / \
+     * /   \
+     * 0 --- 2
+     * / \
+     * \_/
+     */
+    public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
+        if (node == null) return null;
+        Map<UndirectedGraphNode, UndirectedGraphNode> visited = new HashMap<UndirectedGraphNode, UndirectedGraphNode>();
+        UndirectedGraphNode copy = new UndirectedGraphNode(node.label);
+        Queue<UndirectedGraphNode> queue = new ArrayDeque<UndirectedGraphNode>();
+        Queue<UndirectedGraphNode> copyQueue = new ArrayDeque<UndirectedGraphNode>();
+        queue.add(node);
+        copyQueue.add(copy);
+        visited.put(node, copy);
+        while (!queue.isEmpty()) {
+            UndirectedGraphNode current = queue.remove();
+            UndirectedGraphNode copyCurrent = copyQueue.remove();
+            if (current.neighbors != null) {
+                for (UndirectedGraphNode adj : current.neighbors) {
+                    if (copyCurrent.neighbors == null)
+                        copyCurrent.neighbors = new ArrayList<UndirectedGraphNode>();
+                    if (!visited.containsKey(adj)) {
+                        UndirectedGraphNode newNode = new UndirectedGraphNode(adj.label);
+                        copyCurrent.neighbors.add(newNode);
+                        visited.put(adj, newNode);
+                        queue.add(adj);
+                        copyQueue.add(newNode);
+                    } else {
+                        copyCurrent.neighbors.add(visited.get(adj));
+                    }
+                }
+            }
+        }
+        return copy;
     }
 
 }
