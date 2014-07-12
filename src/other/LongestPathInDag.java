@@ -10,14 +10,14 @@ import java.util.Stack;
 /**
  * Created by sobercheg on 12/8/13.
  */
-public class LongestPathInDAG {
+public class LongestPathInDag {
 
     private final Graph graph;
     private final int source;
     private double[] distTo;
     private int[] pathTo;
 
-    public LongestPathInDAG(Graph graph, int source) {
+    public LongestPathInDag(Graph graph, int source) {
         this.graph = graph;
         this.source = source;
         this.distTo = new double[graph.getSize()];
@@ -68,7 +68,7 @@ public class LongestPathInDAG {
         g.addEdge(3, 5, 1);
         g.addEdge(3, 4, -1);
         g.addEdge(4, 5, -2);
-        LongestPathInDAG longestPathInDAG = new LongestPathInDAG(g, 1);
+        LongestPathInDag longestPathInDAG = new LongestPathInDag(g, 1);
         System.out.println(Arrays.toString(longestPathInDAG.getDistTo()));
     }
 }
